@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Navbar from 'componentes/common/Navbar';
 
 function Home() {
   return (
     <>
+      <Navbar />
       <Link to="/main">
         <button>메인 페이지</button>
       </Link>
