@@ -9,12 +9,14 @@ const Container = styled.div`
 const ColorBlue = styled.span`
   color: var(--main-color);
 `;
-const NavBar = styled.div`
+const NavBar = styled.ul`
   display: flex;
   align-items: center;
 `;
 
-const LeftNav = styled.ul`
+const Logo = styled.li``;
+
+const LeftNav = styled.li`
   display: flex;
 
   & li {
@@ -24,7 +26,7 @@ const LeftNav = styled.ul`
   }
 `;
 
-const RightNav = styled.ul`
+const RightNav = styled.li`
   display: flex;
 
   & li {
@@ -37,10 +39,10 @@ function Navbar() {
   return (
     <Container>
       <NavBar>
+        <Logo>
+          유캔<ColorBlue>FUN</ColorBlue>딩
+        </Logo>
         <LeftNav>
-          <li>
-            유캔<ColorBlue>FUN</ColorBlue>딩
-          </li>
           <li>펀딩 예정</li>
           <li>펀딩 종료</li>
         </LeftNav>
