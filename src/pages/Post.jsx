@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from 'componentes/common/Navbar';
+import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
 
 function Post() {
