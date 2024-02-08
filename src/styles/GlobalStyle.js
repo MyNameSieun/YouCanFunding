@@ -10,6 +10,10 @@ const GlobalStyle = createGlobalStyle`
   }
   a{text-decoration:none;}
   a:visited { color:black; }
+  :root{
+    --main-color: #4B7BEC;
+    --sub-color: #FF6348;
+  }
 `;
 
 export default GlobalStyle;
