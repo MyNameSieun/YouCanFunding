@@ -10,14 +10,18 @@ const GlobalStyle = createGlobalStyle`
     max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
+
   }
-  a{text-decoration:none;}
-  a:visited { color:black; }
   :root{
     --main-color: #4B7BEC;
     --sub-color: #FF6348;
   }
-  
+  a:hover, a:visited, a:link, a:active
+{
+    text-decoration: none;
+    color:black;
+}
+
 `;
 
 export default GlobalStyle;

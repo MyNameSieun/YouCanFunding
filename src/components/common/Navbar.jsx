@@ -7,6 +7,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 19px;
 `;
 const ColorBlue = styled.span`
   color: var(--main-color);
@@ -31,6 +32,7 @@ const Schedule = styled.span`
 const LeftNav = styled.li`
   font-size: 22px;
   font-weight: bold;
+  text-decoration: none;
 
   & li {
     display: inline-block;
@@ -40,11 +42,14 @@ const LeftNav = styled.li`
 
 const RightNav = styled.li`
   font-size: 17px;
-  color: #8d8d8d;
 
   & span {
     margin-right: 20px;
   }
+`;
+const AuthLink = styled(Link)`
+  margin-right: 20px;
+  color: #8d8d8d;
 `;
 const Addbtn = styled.span`
   color: white;
@@ -63,20 +68,20 @@ function Navbar() {
               유캔<ColorBlue>FUN</ColorBlue>딩
             </Link>
           </Logo>
-          <Link to={'/scheduled'}>
+          <Link to={'./scheduled'}>
             <Schedule>펀딩 예정</Schedule>
-          </Link>{' '}
-          <Link to={'/completed'}>
+          </Link>
+          <Link to={'./completed'}>
             <span>펀딩 종료</span>
           </Link>
         </LeftNav>
         <RightNav>
-          <Link to={'/login'}>
+          <AuthLink to={'/login'}>
             <span>로그인</span>
-          </Link>
-          <Link to={'/singup'}>
+          </AuthLink>
+          <AuthLink to={'/singup'}>
             <span>회원가입</span>
-          </Link>
+          </AuthLink>
           <Link to={'/register'}>
             <Addbtn>프로젝트 등록</Addbtn>
           </Link>
