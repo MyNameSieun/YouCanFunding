@@ -37,7 +37,7 @@ function Login() {
 
   return (
     <div>
-      <h2>로그인 페이지</h2>
+      <h2>이메일로 로그인</h2>
       <form onSubmit={handleLogin}>
         <div>
           <input
