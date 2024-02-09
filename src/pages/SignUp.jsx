@@ -45,8 +45,8 @@ function SignUp() {
       // 사용자 정보 Firestore에 저장
       await addDoc(collection(db, 'users'), {
         uid: userId,
-        nickname: nickname,
-        email: email
+        nickname,
+        email
       });
 
       console.log('user', userCredential.user);
@@ -116,6 +116,10 @@ function SignUp() {
         <p>다른 방법으로 회원가입</p>
         <button>구글로 회원가입</button>
         <button>애플로 회원가입</button>
+      </div>
+      <div>
+        <p>이미 계정이 있으신가요?</p>
+        <a href="/login">기존 계정으로 로그인하기</a>
       </div>
     </div>
   );
