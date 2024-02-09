@@ -12,8 +12,8 @@ function SignUp() {
   const [emailConfirmation, setEmailConfirmation] = useState('');
   const [isEmailMatching, setIsEmailMathching] = useState('true');
   const [password, setPassword] = useState('');
-  // const [confirmPassword, setConfirmPassword] = useState('');
-  // const [nicknameError, setNicknameError] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [isPasswordMatching, setIsPasswordMathching] = useState('true');
   const navigate = useNavigate();
 
   const handleNicknameChange = (event) => {
@@ -36,11 +36,13 @@ function SignUp() {
     setPassword(event.target.value);
   };
 
-  // const handleConfirmPasswordChange = (event) => {
-  //   setConfirmPassword(event.target.value);
-  // };
+  const handlePasswordConfirmationChange = (event) => {
+    setPasswordConfirmation(event.target.value);
+    // 비밀번호 일치 여부 검사
+    setIsPasswordMathching(event.target.value === password);
+  };
 
-  const handleCheckAvailability = async () => {
+  const handleNicknameCheckAvailability = async () => {
     try {
       // 닉네임 중복 확인
       const nicknameQuery = query(collection(db, 'users'), where('nickname', '==', nickname));
@@ -113,7 +115,7 @@ function SignUp() {
             required
             onChange={handleNicknameChange}
           />
-          <button type="button" onClick={handleCheckAvailability}>
+          <button type="button" onClick={handleNicknameCheckAvailability}>
             중복 확인
           </button>
           {isNicknameCheckButtonClicked && (
@@ -138,7 +140,6 @@ function SignUp() {
             required
             onChange={handleEmailConfirmationChange}
           />
-          <br />
           {!isEmailMatching && <p>이메일 주소가 일치하지 않습니다.</p>}
           <br />
           <label>비밀번호</label>
@@ -150,6 +151,15 @@ function SignUp() {
             required
             onChange={handlePasswordChange}
           />
+          <br />
+          <input
+            type="password"
+            value={passwordConfirmation}
+            placeholder="비밀번호를 확인합니다."
+            required
+            onChange={handlePasswordConfirmationChange}
+          />
+          {!isPasswordMatching && <p>비밀번호가 일치하지 않습니다.</p>}
           <br />
           {/* <input
             type="password"
