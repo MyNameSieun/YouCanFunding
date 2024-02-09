@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 const TabBox = styled.div`
   height: 80px;
@@ -20,11 +19,9 @@ const Hr = styled.div`
   margin-top: 10px;
 `;
 
-function CategoryTab() {
-  const [activeTab, setActiveTab] = useState(0);
-
+function CategoryTab({ activeTab, setActiveTab }) {
   const handleTapBtn = (index) => {
-    setActiveTab(index);
+    setActiveTab(data[index].category);
   };
 
   const data = [
