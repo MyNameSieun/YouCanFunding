@@ -1,10 +1,12 @@
 import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -20,8 +22,7 @@ function Login() {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log(userCredential);
-      setEmail('');
-      setPassword('');
+      navigate('/main');
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -34,9 +35,21 @@ function Login() {
       <h2>로그인 페이지</h2>
       <form onSubmit={handleLogin}>
         <div>
-          <input type="email" value={email} placeholder="이메일" required onChange={handleEmailChange} />
+          <input
+            type="email"
+            value={email}
+            placeholder="이메일 주소를 입력해주세요."
+            required
+            onChange={handleEmailChange}
+          />
           <br />
-          <input type="password" value={password} placeholder="비밀번호" required onChange={handlePasswordChange} />
+          <input
+            type="password"
+            value={password}
+            placeholder="비밀번호를 입력해주세요."
+            required
+            onChange={handlePasswordChange}
+          />
         </div>
         <button type="submit">로그인</button>
       </form>
@@ -49,6 +62,10 @@ function Login() {
         <p>다른 방법으로 로그인</p>
         <button>구글로 로그인</button>
         <button>애플로 로그인</button>
+      </div>
+      <div>
+        <p>아직 계정이 없으신가요?</p>
+        <a href="/signup">회원가입</a>
       </div>
     </div>
   );
