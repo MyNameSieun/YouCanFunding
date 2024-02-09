@@ -42,6 +42,18 @@ function SignUp() {
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
+      //  switch (error.code) {
+      //   case 'auth/invalid-email':
+      //   case 'auth/email-already-in-use':
+      //     setEmailError(error.message);
+      //     break;
+      //   case 'auth/weak-password':
+      //     setPasswordError(error.message);
+      //     break;
+      //   default:
+      //     // Handle other errors
+      //     break;
+      // }
       console.log('error with signUp', errorCode, errorMessage);
     }
   };
