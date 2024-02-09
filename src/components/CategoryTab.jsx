@@ -42,7 +42,7 @@ function CategoryTab() {
     { category: '영화', content: '내용' },
     { category: '홈·리빙', content: '내용' },
     { category: '예술', content: '내용' },
-    { ncategoryame: '캐릭터·굿즈', content: '내용' },
+    { category: '캐릭터·굿즈', content: '내용' },
     { category: '디자인·문구', content: '내용' },
     { category: '도서·전자책', content: '내용' },
     { category: '키즈', content: '내용' }
