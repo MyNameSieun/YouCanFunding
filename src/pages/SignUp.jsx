@@ -6,12 +6,12 @@ import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
   const [nickname, setNickname] = useState('');
+  const [isNicknameAvailable, setIsNicknameAvailable] = useState(true);
+  const [isNicknameCheckButtonClicked, setIsNicknameCheckButtonClicked] = useState(false);
   const [email, setEmail] = useState('');
   const [emailConfirmation, setEmailConfirmation] = useState('');
   const [isEmailMatching, setIsEmailMathching] = useState('true');
   const [password, setPassword] = useState('');
-  const [isNicknameAvailable, setIsNicknameAvailable] = useState(true);
-  const [isCheckButtonClicked, setIsCheckButtonClicked] = useState(false);
   // const [confirmPassword, setConfirmPassword] = useState('');
   // const [nicknameError, setNicknameError] = useState('');
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ function SignUp() {
 
       // 중복된 닉네임 존재 시 상태 업데이트
       setIsNicknameAvailable(nicknameSnapshot.empty);
-      setIsCheckButtonClicked(true);
+      setIsNicknameCheckButtonClicked(true);
     } catch (error) {
       console.error('error checking nickname availability', error);
     }
@@ -58,6 +58,11 @@ function SignUp() {
     event.preventDefault();
 
     try {
+      // 닉네임 중복 확인 여부 검사
+      if (!isNicknameCheckButtonClicked || !isNicknameAvailable) {
+        alert('닉네임 중복 확인을 해주세요.');
+        return;
+      }
       // Firebase Authentication으로 회원가입
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
@@ -111,7 +116,7 @@ function SignUp() {
           <button type="button" onClick={handleCheckAvailability}>
             중복 확인
           </button>
-          {isCheckButtonClicked && (
+          {isNicknameCheckButtonClicked && (
             <>{isNicknameAvailable ? <p>사용 가능한 닉네임입니다.</p> : <p>이미 사용 중인 닉네임입니다.</p>}</>
           )}
 
