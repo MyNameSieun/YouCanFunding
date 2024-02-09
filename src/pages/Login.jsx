@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  // 에러 메시지 상태 추가
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const handleEmailChange = (event) => {
@@ -27,6 +29,9 @@ function Login() {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.error('Error with login', errorCode, errorMessage);
+      // 에러 메시지 표시
+      setErrorMessage('이메일 주소 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.');
+      setPassword('');
     }
   };
 
@@ -52,6 +57,8 @@ function Login() {
           />
         </div>
         <button type="submit">로그인</button>
+        {/* 에러 메시지 표서 */}
+        {errorMessage && <p>{errorMessage}</p>}
       </form>
       <div>
         {/* <a>회원가입</a>
