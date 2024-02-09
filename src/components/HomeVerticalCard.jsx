@@ -24,9 +24,7 @@ const Image = styled.img`
 `;
 
 const Title = styled.div`
-  position: absolute;
-  bottom: 40px;
-  left: 0px;
+  margin-top: 10px;
   font-size: 14px;
   font-weight: bold;
   margin-left: 10px;

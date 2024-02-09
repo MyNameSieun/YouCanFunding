@@ -8,9 +8,7 @@ const GlobalStyle = createGlobalStyle`
     background-color:#F5F5F5;
     height:100vh;
     max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
-
+    margin: 0 auto;
   }
   :root{
     --main-color: #4B7BEC;

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const Container = styled.div`
+const NavContainer = styled.div`
   height: 90px;
   display: flex;
   flex-direction: row;
@@ -56,7 +56,7 @@ const Addbtn = styled.span`
 
 function Navbar() {
   return (
-    <Container>
+    <NavContainer>
       <NavBar>
         <LeftNav>
           <Logo>
@@ -83,7 +83,7 @@ function Navbar() {
           </Link>
         </RightNav>
       </NavBar>
-    </Container>
+    </NavContainer>
   );
 }
 
