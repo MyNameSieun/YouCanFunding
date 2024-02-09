@@ -49,7 +49,7 @@ function CategoryTab({ activeTab, setActiveTab }) {
     <TabBox>
       <Ul>
         {data.map((item, index) => (
-          <Li onClick={() => handleTapBtn(index)} activeTab={index === activeTab}>
+          <Li onClick={() => handleTapBtn(index)} activeTab={item.category === activeTab}>
             {item.category}
           </Li>
         ))}
