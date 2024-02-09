@@ -40,6 +40,8 @@ function Login() {
       <h2>이메일로 로그인</h2>
       <form onSubmit={handleLogin}>
         <div>
+          <label>이메일 주소</label>
+          <br />
           <input
             type="email"
             value={email}
@@ -47,6 +49,8 @@ function Login() {
             required
             onChange={handleEmailChange}
           />
+          <br />
+          <label>비밀번호</label>
           <br />
           <input
             type="password"

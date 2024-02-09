@@ -1,13 +1,15 @@
 import { auth, db } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isNicknameAvailable, setIsNicknameAvailable] = useState(true);
+  const [isCheckButtonClicked, setIsCheckButtonClicked] = useState(false);
   // const [confirmPassword, setConfirmPassword] = useState('');
   // const [nicknameError, setNicknameError] = useState('');
   const navigate = useNavigate();
@@ -31,6 +33,20 @@ function SignUp() {
   // const handleConfirmPasswordChange = (event) => {
   //   setConfirmPassword(event.target.value);
   // };
+
+  const handleCheckAvailability = async () => {
+    try {
+      // 닉네임 중복 확인
+      const nicknameQuery = query(collection(db, 'users'), where('nickname', '==', nickname));
+      const nicknameSnapshot = await getDocs(nicknameQuery);
+
+      // 중복된 닉네임 존재 시 상태 업데이트
+      setIsNicknameAvailable(nicknameSnapshot.empty);
+      setIsCheckButtonClicked(true);
+    } catch (error) {
+      console.error('error checking nickname availability', error);
+    }
+  };
 
   const handleSignUp = async (event) => {
     event.preventDefault();
@@ -77,6 +93,8 @@ function SignUp() {
       <h2>이메일로 회원가입</h2>
       <form onSubmit={handleSignUp}>
         <div>
+          <label>닉네임</label>
+          <br />
           <input
             type="text"
             value={nickname}
@@ -84,6 +102,15 @@ function SignUp() {
             required
             onChange={handleNicknameChange}
           />
+          <button type="button" onClick={handleCheckAvailability}>
+            중복 확인
+          </button>
+          {isCheckButtonClicked && (
+            <>{isNicknameAvailable ? <p>사용 가능한 닉네임입니다.</p> : <p>이미 사용 중인 닉네임입니다.</p>}</>
+          )}
+
+          <br />
+          <label>이메일 주소</label>
           <br />
           <input
             type="email"
@@ -92,6 +119,8 @@ function SignUp() {
             required
             onChange={handleEmailChange}
           />
+          <br />
+          <label>비밀번호</label>
           <br />
           <input
             type="password"
