@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 function SignUp() {
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
+  const [emailConfirmation, setEmailConfirmation] = useState('');
+  const [isEmailMatching, setIsEmailMathching] = useState('true');
   const [password, setPassword] = useState('');
   const [isNicknameAvailable, setIsNicknameAvailable] = useState(true);
   const [isCheckButtonClicked, setIsCheckButtonClicked] = useState(false);
@@ -22,8 +24,12 @@ function SignUp() {
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
-    // 이메일 유효성 검사
-    // 이메일 형식
+  };
+
+  const handleEmailConfirmationChange = (event) => {
+    setEmailConfirmation(event.target.value);
+    // 이메일 일치 여부 검사
+    setIsEmailMathching(event.target.value === email);
   };
 
   const handlePasswordChange = (event) => {
@@ -119,6 +125,16 @@ function SignUp() {
             required
             onChange={handleEmailChange}
           />
+          <br />
+          <input
+            type="email"
+            value={emailConfirmation}
+            placeholder="이메일 주소를 확인합니다."
+            required
+            onChange={handleEmailConfirmationChange}
+          />
+          <br />
+          {!isEmailMatching && <p>이메일 주소가 일치하지 않습니다.</p>}
           <br />
           <label>비밀번호</label>
           <br />
