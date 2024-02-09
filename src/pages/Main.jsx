@@ -7,8 +7,6 @@ import HomeVerticalCard from 'components/HomeVerticalCard';
 import HomeAddBtn from 'components/HomeAddBtn';
 
 function Main() {
-  const [products, setProduces] = useState([]);
-
   const Banner = styled.div`
     background-color: #ffcd6b;
     height: 350px;
