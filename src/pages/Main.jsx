@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Navbar from 'components/common/Navbar';
 import Search from 'components/Search';
 import CategoryTab from 'components/CategoryTab';
+import HomeVerticalCard from 'components/HomeVerticalCard';
+import HomeAddBtn from 'components/HomeAddBtn';
 
 function Main() {
+  const [products, setProduces] = useState([]);
+
   const Banner = styled.div`
     background-color: #ffcd6b;
     height: 350px;
@@ -17,6 +21,8 @@ function Main() {
       <Banner />
       <Search />
       <CategoryTab />
+      <HomeVerticalCard />
+      <HomeAddBtn />
     </>
   );
 }

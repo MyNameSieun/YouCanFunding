@@ -1,0 +1,25 @@
+{
+  "product": [
+    {
+      "id": 1,
+      "name": "[캣닢 장난감] 고양이를 사랑한 오렌지",
+      "category": "반려동물",
+      "achievementRate": "35%",
+      "image": "/assets/images/image001.jpg"
+    },
+    {
+      "id": 2,
+      "name": "닭 한마리에 1%! 한 팩으로 간편하게 즐기는 닭 특수부위 미식요리",
+      "category": "푸드",
+      "achievementRate": "325%",
+      "image": "/assets/images/image002.jpg"
+    },
+    {
+      "id": 3,
+      "name": "아이브 스페셜 앨범 정규 1집 Ive IVE 아이엠 I AM 키치 Special",
+      "provider": "음악",
+      "achievementRate": "89%",
+      "image": "/assets/images/image003.jpg"
+    }
+  ]
+}

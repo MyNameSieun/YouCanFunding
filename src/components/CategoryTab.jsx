@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
 const TabBox = styled.div`
   height: 80px;
 `;
@@ -21,7 +20,9 @@ const Hr = styled.div`
   margin-top: 10px;
 `;
 
-function CategoryTab() {
+function CategoryTab({ products, setProduces }) {
+  useEffect(() => {});
+
   const [activeTab, setActiveTab] = useState(0);
 
   const handleTapBtn = (index) => {
@@ -43,8 +44,8 @@ function CategoryTab() {
     { name: '영화', content: '내용' },
     { name: '홈·리빙', content: '내용' },
     { name: '예술', content: '내용' },
-    { name: '캐릭터 · 굿즈', content: '내용' },
-    { name: '디자인 · 문구', content: '내용' },
+    { name: '캐릭터·굿즈', content: '내용' },
+    { name: '디자인·문구', content: '내용' },
     { name: '도서·전자책', content: '내용' },
     { name: '키즈', content: '내용' }
   ];

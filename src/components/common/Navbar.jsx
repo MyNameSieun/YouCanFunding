@@ -42,10 +42,6 @@ const LeftNav = styled.li`
 
 const RightNav = styled.li`
   font-size: 17px;
-
-  & span {
-    margin-right: 20px;
-  }
 `;
 const AuthLink = styled(Link)`
   margin-right: 20px;
