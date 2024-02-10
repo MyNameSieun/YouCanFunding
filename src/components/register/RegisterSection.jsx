@@ -9,6 +9,8 @@ import {
   RegisterContainer,
   RegisterSectionTitle
 } from 'styles/registerSection/RegisterSectionStyle';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 function RegisterSection() {
   // 목표 금액
@@ -76,7 +78,7 @@ function RegisterSection() {
         {/* 상세 설명 입력 메뉴 */}
         <ProjectInfoContainer>
           <ProjectInfoTitle>상세 설명</ProjectInfoTitle>
-          quill
+          <ReactQuill />
         </ProjectInfoContainer>
       </ProjectInfoListContainer>
     </RegisterContainer>
