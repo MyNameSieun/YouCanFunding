@@ -1,5 +1,5 @@
 import { auth, db } from '../firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import React, { useState } from 'react';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
@@ -195,19 +195,33 @@ function SignUp() {
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
-      //  switch (error.code) {
-      //   case 'auth/invalid-email':
-      //   case 'auth/email-already-in-use':
-      //     setEmailError(error.message);
-      //     break;
-      //   case 'auth/weak-password':
-      //     setPasswordError(error.message);
-      //     break;
-      //   default:
-      //     // Handle other errors
-      //     break;
-      // }
       console.log('Error with signUp', errorCode, errorMessage);
+    }
+  };
+
+  // 구글로 회원가입
+  const handleGoogleSignUp = async () => {
+    try {
+      const provider = new GoogleAuthProvider(); // provider를 구글로 설정
+      const userCredential = await signInWithPopup(auth, provider);
+
+      const user = userCredential.user;
+
+      // 사용자 정보 Firestore에 저장
+      await addDoc(collection(db, 'users'), {
+        uid: user.uid,
+        nickname: user.displayName,
+        email: user.email
+      });
+
+      console.log('user', userCredential.user);
+
+      alert('회원가입이 완료되었습니다.');
+      navigate('/login');
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error('Error with Google signUp:', errorCode, errorMessage);
     }
   };
 
@@ -290,7 +304,7 @@ function SignUp() {
       </form>
       <div>
         <p>다른 방법으로 회원가입</p>
-        <button>구글로 회원가입</button>
+        <button onClick={handleGoogleSignUp}>구글로 회원가입</button>
         <button>애플로 회원가입</button>
       </div>
       <div>

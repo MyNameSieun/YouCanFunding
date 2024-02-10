@@ -110,7 +110,7 @@ function Login() {
       </div>
       <div>
         <button onClick={handleForgotPassword} disabled={isLoading}>
-          비밀번호 찾기
+          비밀번호 재설정
         </button>
       </div>
       <div>
