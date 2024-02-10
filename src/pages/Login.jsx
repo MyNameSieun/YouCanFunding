@@ -33,8 +33,17 @@ function Login() {
     event.preventDefault();
 
     try {
+      // 현재 로그인된 사용자 정보 가져오기
+      const currentUser = auth.currentUser;
+
+      if (currentUser) {
+        alert('이미 로그인되어 있습니다.');
+        return;
+      }
+
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log(userCredential);
+      alert('로그인 되었습니다.');
       navigate('/main');
     } catch (error) {
       const errorCode = error.code;
@@ -75,7 +84,7 @@ function Login() {
 
       console.log('user', userCredential.user);
 
-      alert('로그인이 완료되었습니다.');
+      alert('로그인 되었습니다.');
       navigate('/main');
     } catch (error) {
       const errorCode = error.code;
