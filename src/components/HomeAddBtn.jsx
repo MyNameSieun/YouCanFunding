@@ -20,7 +20,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-function HomeAddBtn({ visibleProducts, setVisibleProducts }) {
+function HomeAddBtn({ setVisibleProducts }) {
   const MoreBtn = () => {
     setVisibleProducts((visibleProducts) => visibleProducts + 12);
   };

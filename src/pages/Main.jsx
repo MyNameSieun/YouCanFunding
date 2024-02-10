@@ -17,7 +17,7 @@ function Main() {
       <Banner />
       <SearchInput search={search} setSearch={setSearch} />
       <CategoryTab activeTab={activeTab} setActiveTab={setActiveTab} />
-      <HomeVerticalCard activeTab={activeTab} search={search} setSearch={setSearch} visibleProducts={visibleProducts} />
+      <HomeVerticalCard activeTab={activeTab} search={search} setSearch={setSearch} />
       <HomeAddBtn visibleProducts={visibleProducts} setVisibleProducts={setVisibleProducts} />
     </>
   );
