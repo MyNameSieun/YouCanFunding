@@ -50,7 +50,8 @@ function CategoryTab({ activeTab, setActiveTab }) {
     <TabBox>
       <Ul>
         {data.map((item, index) => (
-          <Li key={item.category} onClick={() => handleTapBtn(index)} $activeTab={item.category === activeTab}>
+          //  $붙히면 안보이는 오류
+          <Li key={item.category} onClick={() => handleTapBtn(index)} activeTab={item.category === activeTab}>
             {item.category}
           </Li>
         ))}
