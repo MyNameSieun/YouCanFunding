@@ -65,8 +65,7 @@ function Login() {
         {errorMessage && <p>{errorMessage}</p>}
       </form>
       <div>
-        {/* <a>회원가입</a>
-          <a>아이디 찾기</a>
+        {/*<a>아이디 찾기</a>
           <a>비밀번호 찾기</a> */}
       </div>
       <div>

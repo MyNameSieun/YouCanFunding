@@ -18,6 +18,7 @@ function SignUp() {
   const [isEmailMatching, setIsEmailMatching] = useState('true');
   const [isEmailAvailable, setIsEmailAvailable] = useState(true);
   const [isEmailCheckButtonClicked, setISEmailCheckButtonClicked] = useState(false);
+  const [isEmailValidCondition, setIsEmailValidCondition] = useState(true);
 
   // 비밀번호
   const [password, setPassword] = useState('');
@@ -63,7 +64,13 @@ function SignUp() {
 
   // 이메일
   const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+    const newEmail = event.target.value;
+
+    // 이메일 유효성 검사
+    const emailValidCondition = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail);
+
+    setEmail(newEmail);
+    setIsEmailValidCondition(emailValidCondition);
   };
 
   // 이메일 중복 확인
@@ -147,6 +154,12 @@ function SignUp() {
       // 이메일 중복 확인 여부 검사
       if (!isEmailCheckButtonClicked || !isEmailAvailable) {
         alert('이메일 주소 중복 확인을 해주세요.');
+        return;
+      }
+
+      // 이메일 유효성 검사
+      if (!isEmailValidCondition) {
+        alert('유효하지 않은 이메일 형식입니다.');
         return;
       }
 
@@ -234,6 +247,7 @@ function SignUp() {
           <button type="button" onClick={handleEmailCheckAvailability}>
             중복 확인
           </button>
+          {!isEmailValidCondition && <p>유효하지 않은 이메일 형식입니다.</p>}
           {isEmailCheckButtonClicked && (
             <>{isEmailAvailable ? <p>사용 가능한 이메일 주소입니다.</p> : <p>이미 사용 중인 이메일 주소입니다.</p>}</>
           )}
@@ -270,14 +284,6 @@ function SignUp() {
             onChange={handlePasswordConfirmationChange}
           />
           {!isPasswordMatching && <p>비밀번호가 일치하지 않습니다.</p>}
-          <br />
-          {/* <input
-            type="password"
-            value={confirmPassword}
-            placeholder="비밀번호 확인"
-            required
-            onChange={handleConfirmPasswordChange}
-          /> */}
         </div>
 
         <button type="submit">회원가입</button>
