@@ -58,6 +58,9 @@ function SignUp() {
     }
   };
 
+  // 닉네임 중복 버튼 활성화 여부
+  const isNicknameCheckButtonEnabled = isNicknameLengthValid && isNicknameValidCondition;
+
   // 이메일
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -209,7 +212,7 @@ function SignUp() {
             required
             onChange={handleNicknameChange}
           />
-          <button type="button" onClick={handleNicknameCheckAvailability}>
+          <button type="button" onClick={handleNicknameCheckAvailability} disabled={!isNicknameCheckButtonEnabled}>
             중복 확인
           </button>
           {!isNicknameLengthValid && <p>닉네임은 2자 이상, 10자 이하로 입력해 주세요.</p>}
