@@ -9,6 +9,8 @@ function SignUp() {
   const [nickname, setNickname] = useState('');
   const [isNicknameAvailable, setIsNicknameAvailable] = useState(true);
   const [isNicknameCheckButtonClicked, setIsNicknameCheckButtonClicked] = useState(false);
+  const [isNicknameValidCondition, setIsNicknameValidCondition] = useState(true);
+  const [isNicknameLengthValid, setIsNicknameLengthValid] = useState(true);
 
   // 이메일
   const [email, setEmail] = useState('');
@@ -28,9 +30,18 @@ function SignUp() {
 
   // 닉네임
   const handleNicknameChange = (event) => {
-    setNickname(event.target.value);
+    const newNickname = event.target.value;
+
     // 닉네임 유효성 검사
-    // 특수문자 불가능, 글자 길이 제한
+    // 닉네임 길이 검사
+    const nicknameLengthValid = newNickname.length >= 2 && newNickname.length <= 10;
+
+    // 닉네임 조건 검사
+    const nicknameValidCondition = /^[a-zA-Z0-9가-힣]+$/.test(newNickname);
+
+    setNickname(newNickname);
+    setIsNicknameLengthValid(nicknameLengthValid);
+    setIsNicknameValidCondition(nicknameValidCondition);
   };
 
   // 닉네임 중복 확인
@@ -119,6 +130,17 @@ function SignUp() {
         return;
       }
 
+      // 닉네임 길이에 대한 유효성 검사
+      if (!isNicknameLengthValid) {
+        alert('닉네임은 2글자 이상, 10글자 이하로 입력해 주세요.');
+        return;
+      }
+
+      // 닉네임 조건에 대한 유효성 검사
+      if (!isNicknameValidCondition) {
+        alert('닉네임은 한글, 영문 대소문자, 숫자로만 작성해 주세요.');
+      }
+
       // 이메일 중복 확인 여부 검사
       if (!isEmailCheckButtonClicked || !isEmailAvailable) {
         alert('이메일 주소 중복 확인을 해주세요.');
@@ -131,7 +153,7 @@ function SignUp() {
         return;
       }
 
-      // 비밀번호 복잡성에 대한 유효성 검사
+      // 비밀번호 복잡성 조건에 대한 유효성 검사
       if (!isPasswordValidCondition) {
         alert('비밀번호는 숫자, 영문 대소문자, 특수문자 중 2가지 이상을 조합해 주세요.');
         return;
@@ -190,6 +212,8 @@ function SignUp() {
           <button type="button" onClick={handleNicknameCheckAvailability}>
             중복 확인
           </button>
+          {!isNicknameLengthValid && <p>닉네임은 2자 이상, 10자 이하로 입력해 주세요.</p>}
+          {isNicknameLengthValid && !isNicknameValidCondition && <p>한글, 영문 대소문자, 숫자로만 작성해 주세요.</p>}
           {isNicknameCheckButtonClicked && (
             <>{isNicknameAvailable ? <p>사용 가능한 닉네임입니다.</p> : <p>이미 사용 중인 닉네임입니다.</p>}</>
           )}
