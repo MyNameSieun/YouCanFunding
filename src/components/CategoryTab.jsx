@@ -8,7 +8,8 @@ const Ul = styled.div`
   margin-top: 60px;
 `;
 const Li = styled.div`
-  color: ${(props) => (props.activeTab ? 'black; font-weight: bold;' : '#878f97')};
+  color: ${(props) => (props.activeTab ? 'black' : '#878f97')};
+  font-weight: ${(props) => (props.activeTab ? 'bold' : 'normal')};
   display: inline-block;
   margin-right: 20px;
   cursor: pointer;
@@ -49,7 +50,7 @@ function CategoryTab({ activeTab, setActiveTab }) {
     <TabBox>
       <Ul>
         {data.map((item, index) => (
-          <Li onClick={() => handleTapBtn(index)} activeTab={item.category === activeTab}>
+          <Li key={item.category} onClick={() => handleTapBtn(index)} $activeTab={item.category === activeTab}>
             {item.category}
           </Li>
         ))}

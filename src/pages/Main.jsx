@@ -6,14 +6,14 @@ import CategoryTab from 'components/CategoryTab';
 import HomeVerticalCard from 'components/HomeVerticalCard';
 import HomeAddBtn from 'components/HomeAddBtn';
 
-function Main() {
-  const [activeTab, setActiveTab] = useState(0);
+const Banner = styled.div`
+  background-color: #ffcd6b;
+  height: 350px;
+  width: 100%;
+`;
 
-  const Banner = styled.div`
-    background-color: #ffcd6b;
-    height: 350px;
-    width: 100%;
-  `;
+function Main() {
+  const [activeTab, setActiveTab] = useState('전체');
 
   return (
     <>

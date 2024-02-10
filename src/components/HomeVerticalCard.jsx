@@ -47,9 +47,6 @@ const PointColor = styled.span`
 `;
 
 function HomeVerticalCard({ activeTab }) {
-  // console.log(activeTab);
-  // console.log(ProductsList.productList.map((product) => product.category));
-
   return (
     <CardContainer>
       {ProductsList.productList
