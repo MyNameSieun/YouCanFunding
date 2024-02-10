@@ -46,11 +46,15 @@ const PointColor = styled.span`
   font-weight: bold;
 `;
 
-function HomeVerticalCard({ activeTab }) {
+function HomeVerticalCard({ activeTab, search }) {
   return (
     <CardContainer>
       {ProductsList.productList
-        .filter((product) => activeTab === '전체' || activeTab === product.category)
+        .filter(
+          (product) =>
+            (activeTab === '전체' || activeTab === product.category) &&
+            (!search || product.name.toLowerCase().includes(search.toLowerCase()))
+        )
         .map((product) => (
           <CardItems key={product.id}>
             <Image src={product.image} alt={product.name} />

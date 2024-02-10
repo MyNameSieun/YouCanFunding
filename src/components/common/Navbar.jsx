@@ -1,6 +1,6 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
 
 const NavContainer = styled.div`
   height: 90px;
@@ -26,10 +26,10 @@ const Logo = styled.span`
   margin-right: 34px;
 `;
 
-const NavLink = styled.span`
-  margin-right: 24px;
-  color: ${(props) => (props.activeNavTab ? 'black' : '#878f97')};
+const Tab = styled.span`
   cursor: pointer;
+  margin-right: 24px;
+  color: ${(props) => (props.activeTab ? 'black' : '#878f97')};
 `;
 
 const LeftNav = styled.li`
@@ -55,18 +55,16 @@ const Addbtn = styled.span`
   background-color: #3867d6;
   padding: 15px 16px;
   border-radius: 9px;
+  &:hover {
+    background-color: #0056b3;
+  }
 `;
 
-const tabs = [
-  { id: 'schedule', label: '펀딩 예정' },
-  { id: 'completed', label: '펀딩 종료' }
-];
-
 function Navbar() {
-  const [activeNavTab, setActiveNavTab] = useState();
+  const [activeTab, setActiveTab] = useState('');
 
-  const handleNavBtn = (tab) => {
-    setActiveNavTab(tab);
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
   };
 
   return (
@@ -78,11 +76,12 @@ function Navbar() {
               유캔<ColorBlue>FUN</ColorBlue>딩
             </Link>
           </Logo>
-          {tabs.map((tab) => (
-            <NavLink key={tab.id} onClick={() => handleNavBtn(tab.id)} activeNavTab={activeNavTab === tab.id}>
-              {tab.label}
-            </NavLink>
-          ))}
+          <Tab activeTab={activeTab === 'scheduled'} onClick={() => handleTabClick('scheduled')}>
+            펀딩 예정
+          </Tab>
+          <Tab activeTab={activeTab === 'completed'} onClick={() => handleTabClick('completed')}>
+            펀딩 종료
+          </Tab>
         </LeftNav>
         <RightNav>
           <AuthLink to={'/login'}>
