@@ -1,5 +1,14 @@
-import { auth } from '../firebase';
-import { fetchSignInMethodsForEmail, getAuth, sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
+import Logout from 'components/common/Logout';
+import { auth, db } from '../firebase';
+import {
+  GoogleAuthProvider,
+  fetchSignInMethodsForEmail,
+  getAuth,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup
+} from 'firebase/auth';
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -34,6 +43,44 @@ function Login() {
       // 에러 메시지 표시
       setErrorMessage('이메일 주소 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.');
       setPassword('');
+    }
+  };
+
+  // 구글로 로그인
+  const handleGoogleLogin = async () => {
+    try {
+      // 현재 로그인된 사용자 정보 가져오기
+      const currentUser = auth.currentUser;
+
+      if (currentUser) {
+        alert('이미 로그인되어 있습니다.');
+        return;
+      }
+
+      const provider = new GoogleAuthProvider(); // provider를 구글로 설정
+      const userCredential = await signInWithPopup(auth, provider);
+
+      const user = userCredential.user;
+      const existingUserQuery = query(collection(db, 'users'), where('email', '==', user.email));
+      const existingUserSnapshot = await getDocs(existingUserQuery);
+
+      if (existingUserSnapshot.empty) {
+        // 중복된 사용자가 없으면 사용자 정보 Firestore에 저장
+        await addDoc(collection(db, 'users'), {
+          uid: user.uid,
+          nickname: user.displayName,
+          email: user.email
+        });
+      }
+
+      console.log('user', userCredential.user);
+
+      alert('로그인이 완료되었습니다.');
+      navigate('/main');
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error('Error with Google signUp:', errorCode, errorMessage);
     }
   };
 
@@ -105,7 +152,7 @@ function Login() {
       </form>
       <div>
         <p>다른 방법으로 로그인</p>
-        <button>구글로 로그인</button>
+        <button onClick={handleGoogleLogin}>구글로 로그인</button>
         <button>애플로 로그인</button>
       </div>
       <div>
@@ -117,6 +164,7 @@ function Login() {
         <p>아직 계정이 없으신가요?</p>
         <a href="/signup">회원가입</a>
       </div>
+      <Logout />
     </div>
   );
 }
