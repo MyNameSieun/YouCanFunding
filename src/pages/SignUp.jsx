@@ -5,17 +5,25 @@ import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
+  // 닉네임
   const [nickname, setNickname] = useState('');
   const [isNicknameAvailable, setIsNicknameAvailable] = useState(true);
   const [isNicknameCheckButtonClicked, setIsNicknameCheckButtonClicked] = useState(false);
+
+  // 이메일
   const [email, setEmail] = useState('');
   const [emailConfirmation, setEmailConfirmation] = useState('');
   const [isEmailMatching, setIsEmailMatching] = useState('true');
+  const [isEmailAvailable, setIsEmailAvailable] = useState(true);
+  const [isEmailCheckButtonClicked, setISEmailCheckButtonClicked] = useState(false);
+
+  // 비밀번호
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [isPasswordMatching, setIsPasswordMatching] = useState('true');
   const [isPasswordValidCondition, setIsPasswordValidCondition] = useState(true);
   const [isPasswordLengthValid, setIsPasswordLengthValid] = useState(true);
-  const [isPasswordMatching, setIsPasswordMatching] = useState('true');
+
   const navigate = useNavigate();
 
   // 닉네임
@@ -25,9 +33,9 @@ function SignUp() {
     // 특수문자 불가능, 글자 길이 제한
   };
 
+  // 닉네임 중복 확인
   const handleNicknameCheckAvailability = async () => {
     try {
-      // 닉네임 중복 확인
       const nicknameQuery = query(collection(db, 'users'), where('nickname', '==', nickname));
       const nicknameSnapshot = await getDocs(nicknameQuery);
 
@@ -42,6 +50,20 @@ function SignUp() {
   // 이메일
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
+  };
+
+  // 이메일 중복 확인
+  const handleEmailCheckAvailability = async () => {
+    try {
+      const emailQuery = query(collection(db, 'users'), where('email', '==', email));
+      const emailSnapshot = await getDocs(emailQuery);
+
+      // 중복된 이메일 존재 시 상태 업데이트
+      setIsEmailAvailable(emailSnapshot.empty);
+      setISEmailCheckButtonClicked(true);
+    } catch (error) {
+      console.error('error checking email availability', error);
+    }
   };
 
   const handleEmailConfirmationChange = (event) => {
@@ -94,6 +116,12 @@ function SignUp() {
       // 닉네임 중복 확인 여부 검사
       if (!isNicknameCheckButtonClicked || !isNicknameAvailable) {
         alert('닉네임 중복 확인을 해주세요.');
+        return;
+      }
+
+      // 이메일 중복 확인 여부 검사
+      if (!isEmailCheckButtonClicked || !isEmailAvailable) {
+        alert('이메일 주소 중복 확인을 해주세요.');
         return;
       }
 
@@ -176,6 +204,12 @@ function SignUp() {
             required
             onChange={handleEmailChange}
           />
+          <button type="button" onClick={handleEmailCheckAvailability}>
+            중복 확인
+          </button>
+          {isEmailCheckButtonClicked && (
+            <>{isEmailAvailable ? <p>사용 가능한 이메일 주소입니다.</p> : <p>이미 사용 중인 이메일 주소입니다.</p>}</>
+          )}
           <br />
           <input
             type="email"
