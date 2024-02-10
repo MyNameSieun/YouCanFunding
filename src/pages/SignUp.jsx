@@ -207,7 +207,7 @@ function SignUp() {
       //     // Handle other errors
       //     break;
       // }
-      console.log('error with signUp', errorCode, errorMessage);
+      console.log('Error with signUp', errorCode, errorMessage);
     }
   };
 
