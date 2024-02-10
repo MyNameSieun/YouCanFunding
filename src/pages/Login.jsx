@@ -1,3 +1,4 @@
+import Logout from 'components/common/Logout';
 import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
@@ -77,6 +78,7 @@ function Login() {
         <p>아직 계정이 없으신가요?</p>
         <a href="/signup">회원가입</a>
       </div>
+      <Logout />
     </div>
   );
 }
