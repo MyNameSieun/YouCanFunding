@@ -20,9 +20,9 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-function HomeAddBtn() {
+function HomeAddBtn({ visibleProducts, setVisibleProducts }) {
   const MoreBtn = () => {
-    alert('더보기');
+    setVisibleProducts((visibleProducts) => visibleProducts + 12);
   };
   return (
     <BtnContainer>

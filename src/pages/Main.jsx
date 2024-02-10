@@ -15,6 +15,7 @@ const Banner = styled.div`
 function Main() {
   const [activeTab, setActiveTab] = useState('전체');
   const [search, setSearch] = useState();
+  const [visibleProducts, setVisibleProducts] = useState(12);
 
   return (
     <>
@@ -22,8 +23,8 @@ function Main() {
       <Banner />
       <SearchInput search={search} setSearch={setSearch} />
       <CategoryTab activeTab={activeTab} setActiveTab={setActiveTab} />
-      <HomeVerticalCard activeTab={activeTab} search={search} setSearch={setSearch} />
-      <HomeAddBtn />
+      <HomeVerticalCard activeTab={activeTab} search={search} setSearch={setSearch} visibleProducts={visibleProducts} />
+      <HomeAddBtn visibleProducts={visibleProducts} setVisibleProducts={setVisibleProducts} />
     </>
   );
 }
