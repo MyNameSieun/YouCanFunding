@@ -12,6 +12,7 @@ function Logout() {
     // 현재 로그인된 사용자 정보 가져오기
     const currentUser = auth.currentUser;
 
+    // 로그인 상태인 경우에만
     if (currentUser) {
       try {
         await signOut(auth);

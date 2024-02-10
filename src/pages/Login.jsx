@@ -3,7 +3,6 @@ import { auth, db } from '../firebase';
 import {
   GoogleAuthProvider,
   fetchSignInMethodsForEmail,
-  getAuth,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup
@@ -61,6 +60,7 @@ function Login() {
       // 현재 로그인된 사용자 정보 가져오기
       const currentUser = auth.currentUser;
 
+      // 로그아웃 상태인 경우에만
       if (currentUser) {
         alert('이미 로그인되어 있습니다.');
         return;

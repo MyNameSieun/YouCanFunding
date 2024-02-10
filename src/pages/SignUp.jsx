@@ -1,5 +1,5 @@
 import { auth, db } from '../firebase';
-import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import React, { useState } from 'react';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
@@ -206,18 +206,25 @@ function SignUp() {
       const userCredential = await signInWithPopup(auth, provider);
 
       const user = userCredential.user;
+      const existingUserQuery = query(collection(db, 'users'), where('email', '==', user.email));
+      const existingUserSnapshot = await getDocs(existingUserQuery);
 
-      // 사용자 정보 Firestore에 저장
-      await addDoc(collection(db, 'users'), {
-        uid: user.uid,
-        nickname: user.displayName,
-        email: user.email
-      });
+      if (existingUserSnapshot.empty) {
+        // 중복된 사용자가 없으면 사용자 정보 Firestore에 저장
+        await addDoc(collection(db, 'users'), {
+          uid: user.uid,
+          nickname: user.displayName,
+          email: user.email
+        });
 
-      console.log('user', userCredential.user);
+        console.log('user', userCredential.user);
 
-      alert('회원가입이 완료되었습니다.');
-      navigate('/login');
+        alert('회원가입이 완료되었습니다.');
+        navigate('/login');
+      } else {
+        alert('이미 등록된 구글 계정입니다.');
+        await signOut(auth);
+      }
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
