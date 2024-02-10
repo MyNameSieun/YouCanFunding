@@ -13,7 +13,8 @@ function SignUp() {
   const [isEmailMatching, setIsEmailMatching] = useState('true');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [isPasswordValid, setIsPasswordValid] = useState(true);
+  const [isPasswordValidCondition, setIsPasswordValidCondition] = useState(true);
+  const [isPasswordLengthValid, setIsPasswordLengthValid] = useState(true);
   const [isPasswordMatching, setIsPasswordMatching] = useState('true');
   const navigate = useNavigate();
 
@@ -53,6 +54,10 @@ function SignUp() {
   const handlePasswordChange = (event) => {
     const newPassword = event.target.value;
 
+    // 비밀번호 유효성 검사
+    // 비밀번호 길이 검사
+    const passwordLengthValid = newPassword.length >= 8 && newPassword.length <= 20;
+
     // 비밀번호 조건 검사
     const hasUpperCase = /[A-Z]/.test(newPassword);
     const hasLowerCase = /[a-z]/.test(newPassword);
@@ -69,11 +74,13 @@ function SignUp() {
       (hasDigit && hasSpecialChar);
 
     setPassword(newPassword);
-    setIsPasswordValid(passwordValidCondition);
+    setIsPasswordLengthValid(passwordLengthValid);
+    setIsPasswordValidCondition(passwordValidCondition);
   };
 
   const handlePasswordConfirmationChange = (event) => {
     const newPasswordConfirmation = event.target.value;
+
     // 비밀번호 일치 여부 검사
     setIsPasswordMatching(newPasswordConfirmation === password);
     setPasswordConfirmation(newPasswordConfirmation);
@@ -90,8 +97,14 @@ function SignUp() {
         return;
       }
 
+      // 비밀번호 길이에 대한 유효성 검사
+      if (!isPasswordLengthValid) {
+        alert('비밀번호는 8글자 이상, 20글자 이하로 입력해 주세요.');
+        return;
+      }
+
       // 비밀번호 복잡성에 대한 유효성 검사
-      if (!isPasswordValid) {
+      if (!isPasswordValidCondition) {
         alert('비밀번호는 숫자, 영문 대소문자, 특수문자 중 2가지 이상을 조합해 주세요.');
         return;
       }
@@ -183,7 +196,10 @@ function SignUp() {
             onChange={handlePasswordChange}
           />
           <br />
-          {!isPasswordValid && <p>숫자, 영문 대소문자, 특수문자 중 2가지 이상을 조합해 주세요.</p>}
+          {!isPasswordLengthValid && <p>비밀번호는 8자 이상, 20자 이하로 입력해 주세요.</p>}
+          {isPasswordLengthValid && !isPasswordValidCondition && (
+            <p>숫자, 영문 대소문자, 특수문자 중 2가지 이상을 조합해 주세요.</p>
+          )}
           <br />
           <input
             type="password"
