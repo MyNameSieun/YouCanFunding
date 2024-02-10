@@ -10,36 +10,18 @@ function SignUp() {
   const [isNicknameCheckButtonClicked, setIsNicknameCheckButtonClicked] = useState(false);
   const [email, setEmail] = useState('');
   const [emailConfirmation, setEmailConfirmation] = useState('');
-  const [isEmailMatching, setIsEmailMathching] = useState('true');
+  const [isEmailMatching, setIsEmailMatching] = useState('true');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [isPasswordMatching, setIsPasswordMathching] = useState('true');
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
+  const [isPasswordMatching, setIsPasswordMatching] = useState('true');
   const navigate = useNavigate();
 
+  // 닉네임
   const handleNicknameChange = (event) => {
     setNickname(event.target.value);
     // 닉네임 유효성 검사
     // 특수문자 불가능, 글자 길이 제한
-  };
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handleEmailConfirmationChange = (event) => {
-    setEmailConfirmation(event.target.value);
-    // 이메일 일치 여부 검사
-    setIsEmailMathching(event.target.value === email);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handlePasswordConfirmationChange = (event) => {
-    setPasswordConfirmation(event.target.value);
-    // 비밀번호 일치 여부 검사
-    setIsPasswordMathching(event.target.value === password);
   };
 
   const handleNicknameCheckAvailability = async () => {
@@ -56,6 +38,48 @@ function SignUp() {
     }
   };
 
+  // 이메일
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handleEmailConfirmationChange = (event) => {
+    setEmailConfirmation(event.target.value);
+    // 이메일 일치 여부 검사
+    setIsEmailMatching(event.target.value === email);
+  };
+
+  // 비밀번호
+  const handlePasswordChange = (event) => {
+    const newPassword = event.target.value;
+
+    // 비밀번호 조건 검사
+    const hasUpperCase = /[A-Z]/.test(newPassword);
+    const hasLowerCase = /[a-z]/.test(newPassword);
+    const hasDigit = /\d/.test(newPassword);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(newPassword);
+
+    // 조건 충족 여부 확인
+    const passwordValidCondition =
+      (hasUpperCase && hasLowerCase) ||
+      (hasUpperCase && hasDigit) ||
+      (hasUpperCase && hasSpecialChar) ||
+      (hasLowerCase && hasDigit) ||
+      (hasLowerCase && hasSpecialChar) ||
+      (hasDigit && hasSpecialChar);
+
+    setPassword(newPassword);
+    setIsPasswordValid(passwordValidCondition);
+  };
+
+  const handlePasswordConfirmationChange = (event) => {
+    const newPasswordConfirmation = event.target.value;
+    // 비밀번호 일치 여부 검사
+    setIsPasswordMatching(newPasswordConfirmation === password);
+    setPasswordConfirmation(newPasswordConfirmation);
+  };
+
+  // 회원가입
   const handleSignUp = async (event) => {
     event.preventDefault();
 
@@ -65,6 +89,13 @@ function SignUp() {
         alert('닉네임 중복 확인을 해주세요.');
         return;
       }
+
+      // 비밀번호 복잡성에 대한 유효성 검사
+      if (!isPasswordValid) {
+        alert('비밀번호는 숫자, 영문 대소문자, 특수문자 중 2가지 이상을 조합해 주세요.');
+        return;
+      }
+
       // Firebase Authentication으로 회원가입
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
@@ -81,7 +112,7 @@ function SignUp() {
       console.log('user', userCredential.user);
 
       alert('회원가입이 완료되었습니다.');
-      navigate('/main');
+      navigate('/login');
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -151,6 +182,8 @@ function SignUp() {
             required
             onChange={handlePasswordChange}
           />
+          <br />
+          {!isPasswordValid && <p>숫자, 영문 대소문자, 특수문자 중 2가지 이상을 조합해 주세요.</p>}
           <br />
           <input
             type="password"
