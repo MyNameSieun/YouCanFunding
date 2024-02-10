@@ -7,7 +7,7 @@ import HomeVerticalCard from 'components/HomeVerticalCard';
 import HomeAddBtn from 'components/HomeAddBtn';
 
 function Main() {
-  const [products, setProduces] = useState([]);
+  const [activeTab, setActiveTab] = useState(0);
 
   const Banner = styled.div`
     background-color: #ffcd6b;
@@ -20,8 +20,8 @@ function Main() {
       <Navbar />
       <Banner />
       <Search />
-      <CategoryTab />
-      <HomeVerticalCard />
+      <CategoryTab activeTab={activeTab} setActiveTab={setActiveTab} />
+      <HomeVerticalCard activeTab={activeTab} />
       <HomeAddBtn />
     </>
   );

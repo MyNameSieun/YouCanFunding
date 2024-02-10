@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import ProductsList from 'data/products.json';
 
@@ -16,6 +16,7 @@ const CardItems = styled.div`
   height: 246px;
   position: relative;
 `;
+
 const Image = styled.img`
   object-fit: cover;
   width: 100%;
@@ -30,6 +31,7 @@ const Title = styled.div`
   margin-left: 10px;
   margin-right: 10px;
 `;
+
 const AchievementRate = styled.div`
   position: absolute;
   bottom: 10px;
@@ -38,29 +40,30 @@ const AchievementRate = styled.div`
   margin-left: 10px;
   margin-right: 10px;
 `;
+
 const PointColor = styled.span`
   color: var(--sub-color);
   font-weight: bold;
 `;
 
-function HomeVerticalCard() {
-  useEffect(() => {
-    console.log(ProductsList);
-  }, []);
+function HomeVerticalCard({ activeTab }) {
+  // console.log(activeTab);
+  // console.log(ProductsList.productList.map((product) => product.category));
 
   return (
     <CardContainer>
-      {ProductsList.product.map((product) => (
-        <CardItems key={product.id}>
-          <Image src={product.image}></Image>
-          <Title>{product.name}</Title>
-          <AchievementRate>
-            <PointColor>{product.achievementRate}</PointColor> 달성
-          </AchievementRate>
-        </CardItems>
-      ))}
+      {ProductsList.productList
+        .filter((product) => activeTab === '전체' || activeTab === product.category)
+        .map((product) => (
+          <CardItems key={product.id}>
+            <Image src={product.image} alt={product.name} />
+            <Title>{product.name}</Title>
+            <AchievementRate>
+              <PointColor>{product.achievementRate}</PointColor> 달성
+            </AchievementRate>
+          </CardItems>
+        ))}
     </CardContainer>
   );
 }
-
 export default HomeVerticalCard;

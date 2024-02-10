@@ -1,5 +1,5 @@
 {
-  "product": [
+  "productList": [
     {
       "id": 1,
       "name": "[캣닢 장난감] 고양이를 사랑한 오렌지",
@@ -17,9 +17,23 @@
     {
       "id": 3,
       "name": "아이브 스페셜 앨범 정규 1집 Ive IVE 아이엠 I AM 키치 Special",
-      "provider": "음악",
+      "category": "음악",
       "achievementRate": "89%",
       "image": "/assets/images/image003.jpg"
+    },
+    {
+      "id": 4,
+      "name": "패션 아이템",
+      "category": "패션",
+      "achievementRate": "50%",
+      "image": "/assets/images/image004.jpg"
+    },
+    {
+      "id": 5,
+      "name": "푸드 마스터클래스",
+      "category": "푸드",
+      "achievementRate": "75%",
+      "image": "/assets/images/image005.jpg"
     }
   ]
 }
