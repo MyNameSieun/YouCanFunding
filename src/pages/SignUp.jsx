@@ -3,6 +3,8 @@ import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, si
 import React, { useState } from 'react';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import Navbar from 'components/common/Navbar';
+import styled from 'styled-components';
 
 function SignUp() {
   // 닉네임
@@ -266,93 +268,172 @@ function SignUp() {
   // };
 
   return (
-    <div>
-      <h2>이메일로 회원가입</h2>
-      <form onSubmit={handleSignUp}>
-        <div>
-          <label>닉네임</label>
-          <br />
-          <input
-            type="text"
-            value={nickname}
-            placeholder="닉네임을 입력해주세요."
-            required
-            onChange={handleNicknameChange}
-          />
-          <button type="button" onClick={handleNicknameCheckAvailability} disabled={!isNicknameCheckButtonEnabled}>
-            중복 확인
-          </button>
-          {!isNicknameLengthValid && <p>닉네임은 2자 이상, 10자 이하로 입력해 주세요.</p>}
-          {isNicknameLengthValid && !isNicknameValidCondition && <p>한글, 영문 대소문자, 숫자로만 작성해 주세요.</p>}
-          {isNicknameCheckButtonClicked && (
-            <>{isNicknameAvailable ? <p>사용 가능한 닉네임입니다.</p> : <p>이미 사용 중인 닉네임입니다.</p>}</>
-          )}
+    <>
+      <Navbar />
+      <Body>
+        <SignUpContainer>
+          <SignUpTitle>이메일로 가입하기</SignUpTitle>
 
-          <br />
-          <label>이메일 주소</label>
-          <br />
-          <input
-            type="email"
-            value={email}
-            placeholder="이메일 주소를 입력해주세요."
-            required
-            onChange={handleEmailChange}
-          />
-          <button type="button" onClick={handleEmailCheckAvailability}>
-            중복 확인
-          </button>
-          {!isEmailValidCondition && <p>유효하지 않은 이메일 형식입니다.</p>}
-          {isEmailCheckButtonClicked && (
-            <>{isEmailAvailable ? <p>사용 가능한 이메일 주소입니다.</p> : <p>이미 사용 중인 이메일 주소입니다.</p>}</>
-          )}
-          <br />
-          <input
-            type="email"
-            value={emailConfirmation}
-            placeholder="이메일 주소를 확인합니다."
-            required
-            onChange={handleEmailConfirmationChange}
-          />
-          {!isEmailMatching && <p>이메일 주소가 일치하지 않습니다.</p>}
-          <br />
-          <label>비밀번호</label>
-          <br />
-          <input
-            type="password"
-            value={password}
-            placeholder="비밀번호를 입력해주세요."
-            required
-            onChange={handlePasswordChange}
-          />
-          <br />
-          {!isPasswordLengthValid && <p>비밀번호는 8자 이상, 20자 이하로 입력해 주세요.</p>}
-          {isPasswordLengthValid && !isPasswordValidCondition && (
-            <p>숫자, 영문 대소문자, 특수문자 중 2가지 이상을 조합해 주세요.</p>
-          )}
-          <br />
-          <input
-            type="password"
-            value={passwordConfirmation}
-            placeholder="비밀번호를 확인합니다."
-            required
-            onChange={handlePasswordConfirmationChange}
-          />
-          {!isPasswordMatching && <p>비밀번호가 일치하지 않습니다.</p>}
-        </div>
+          <SignUpToLogin>
+            <p>계정이 있으신가요? &nbsp;</p>
+            <a href="/login"> 기존 계정으로 로그인하기 &gt;</a>
+          </SignUpToLogin>
 
-        <button type="submit">회원가입</button>
-      </form>
-      <div>
-        <p>다른 방법으로 회원가입</p>
-        <button onClick={handleGoogleSignUp}>구글로 회원가입</button>
-        {/* <button onClick={handleAppleSignUp}>애플로 회원가입</button> */}
-      </div>
-      <div>
-        <p>이미 계정이 있으신가요?</p>
-        <a href="/login">기존 계정으로 로그인하기</a>
-      </div>
-    </div>
+          <SignUpForm onSubmit={handleSignUp}>
+            <SignUpInput>
+              <label>닉네임</label>
+              <br />
+              <input
+                type="text"
+                value={nickname}
+                placeholder="닉네임을 입력해주세요."
+                required
+                onChange={handleNicknameChange}
+              />
+              <button type="button" onClick={handleNicknameCheckAvailability} disabled={!isNicknameCheckButtonEnabled}>
+                중복 확인
+              </button>
+              {!isNicknameLengthValid && <p>닉네임은 2자 이상, 10자 이하로 입력해 주세요.</p>}
+              {isNicknameLengthValid && !isNicknameValidCondition && (
+                <p>한글, 영문 대소문자, 숫자로만 작성해 주세요.</p>
+              )}
+              {isNicknameCheckButtonClicked && (
+                <>{isNicknameAvailable ? <p>사용 가능한 닉네임입니다.</p> : <p>이미 사용 중인 닉네임입니다.</p>}</>
+              )}
+
+              <br />
+              <label>이메일 주소</label>
+              <br />
+              <input
+                type="email"
+                value={email}
+                placeholder="이메일 주소를 입력해주세요."
+                required
+                onChange={handleEmailChange}
+              />
+              <button type="button" onClick={handleEmailCheckAvailability}>
+                중복 확인
+              </button>
+              {!isEmailValidCondition && <p>유효하지 않은 이메일 형식입니다.</p>}
+              {isEmailCheckButtonClicked && (
+                <>
+                  {isEmailAvailable ? <p>사용 가능한 이메일 주소입니다.</p> : <p>이미 사용 중인 이메일 주소입니다.</p>}
+                </>
+              )}
+              <br />
+              <input
+                type="email"
+                value={emailConfirmation}
+                placeholder="이메일 주소를 확인합니다."
+                required
+                onChange={handleEmailConfirmationChange}
+              />
+              {!isEmailMatching && <p>이메일 주소가 일치하지 않습니다.</p>}
+              <br />
+              <label>비밀번호</label>
+              <br />
+              <input
+                type="password"
+                value={password}
+                placeholder="비밀번호를 입력해주세요."
+                required
+                onChange={handlePasswordChange}
+              />
+              <br />
+              {!isPasswordLengthValid && <p>비밀번호는 8자 이상, 20자 이하로 입력해 주세요.</p>}
+              {isPasswordLengthValid && !isPasswordValidCondition && (
+                <p>숫자, 영문 대소문자, 특수문자 중 2가지 이상을 조합해 주세요.</p>
+              )}
+              <input
+                type="password"
+                value={passwordConfirmation}
+                placeholder="비밀번호를 확인합니다."
+                required
+                onChange={handlePasswordConfirmationChange}
+              />
+              {!isPasswordMatching && <p>비밀번호가 일치하지 않습니다.</p>}
+            </SignUpInput>
+
+            <SignUpButton type="submit">가입하기</SignUpButton>
+          </SignUpForm>
+
+          <SignUpWithOtherMethod>
+            <p>다른 방법으로 회원가입</p>
+            <button onClick={handleGoogleSignUp}>구글로 가입하기</button>
+            {/* <button onClick={handleAppleSignUp}>애플로 회원가입</button> */}
+          </SignUpWithOtherMethod>
+        </SignUpContainer>
+      </Body>
+    </>
   );
 }
 
 export default SignUp;
+
+const Body = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const SignUpContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 32px;
+  border: 1.5px solid rgb(228, 228, 228);
+  border-radius: 5px;
+  width: 350px;
+`;
+
+const SignUpForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 15px;
+  font-weight: 500;
+`;
+
+const SignUpTitle = styled.h2`
+  font-size: 24px;
+  font-weight: 800;
+`;
+
+const SignUpToLogin = styled.div`
+  display: flex;
+  font-size: 13px;
+
+  & a {
+    font-weight: 550;
+    color: var(--main-color);
+  }
+`;
+
+const SignUpInput = styled.div`
+  gap: 15px;
+
+  & input {
+    padding: 7px;
+  }
+`;
+
+const SignUpButton = styled.button`
+  width: 350px;
+  padding: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  background-color: var(--main-color);
+  color: white;
+  border: 1.5px solid rgb(228, 228, 228);
+  border-radius: 30px;
+`;
+
+const SignUpWithOtherMethod = styled.div`
+  & p {
+    padding: 10px;
+    font-size: 13px;
+  }
+`;

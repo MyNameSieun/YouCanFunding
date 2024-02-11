@@ -10,6 +10,7 @@ import {
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from 'components/common/Navbar';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -131,50 +132,53 @@ function Login() {
   };
 
   return (
-    <div>
-      <h2>이메일로 로그인</h2>
-      <form onSubmit={handleLogin}>
+    <>
+      <Navbar />ㅋ
+      <div>
+        <h2>이메일로 로그인</h2>
+        <form onSubmit={handleLogin}>
+          <div>
+            <label>이메일 주소</label>
+            <br />
+            <input
+              type="email"
+              value={email}
+              placeholder="이메일 주소를 입력해주세요."
+              required
+              onChange={handleEmailChange}
+            />
+            <br />
+            <label>비밀번호</label>
+            <br />
+            <input
+              type="password"
+              value={password}
+              placeholder="비밀번호를 입력해주세요."
+              required
+              onChange={handlePasswordChange}
+            />
+          </div>
+          <button type="submit">로그인</button>
+          {/* 에러 메시지 표서 */}
+          {errorMessage && <p>{errorMessage}</p>}
+        </form>
         <div>
-          <label>이메일 주소</label>
-          <br />
-          <input
-            type="email"
-            value={email}
-            placeholder="이메일 주소를 입력해주세요."
-            required
-            onChange={handleEmailChange}
-          />
-          <br />
-          <label>비밀번호</label>
-          <br />
-          <input
-            type="password"
-            value={password}
-            placeholder="비밀번호를 입력해주세요."
-            required
-            onChange={handlePasswordChange}
-          />
+          <p>다른 방법으로 로그인</p>
+          <button onClick={handleGoogleLogin}>구글로 로그인</button>
+          <button>애플로 로그인</button>
         </div>
-        <button type="submit">로그인</button>
-        {/* 에러 메시지 표서 */}
-        {errorMessage && <p>{errorMessage}</p>}
-      </form>
-      <div>
-        <p>다른 방법으로 로그인</p>
-        <button onClick={handleGoogleLogin}>구글로 로그인</button>
-        <button>애플로 로그인</button>
+        <div>
+          <button onClick={handleForgotPassword} disabled={isLoading}>
+            비밀번호 재설정
+          </button>
+        </div>
+        <div>
+          <p>아직 계정이 없으신가요?</p>
+          <a href="/signup">회원가입</a>
+        </div>
+        <Logout />
       </div>
-      <div>
-        <button onClick={handleForgotPassword} disabled={isLoading}>
-          비밀번호 재설정
-        </button>
-      </div>
-      <div>
-        <p>아직 계정이 없으신가요?</p>
-        <a href="/signup">회원가입</a>
-      </div>
-      <Logout />
-    </div>
+    </>
   );
 }
 
