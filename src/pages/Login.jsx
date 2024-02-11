@@ -314,6 +314,13 @@ const LoginWithOtherMethod = styled.div`
 const LoginWithOtherMethodPTag = styled.div`
   display: flex;
 
+  & hr {
+    margin-top: 20px;
+    width: 97px;
+    height: 0px;
+    border-top: 0.5px solid rgba(0, 0, 0, 0.479);
+  }
+
   & p {
     padding: 10px;
     margin: 5px auto 10px auto;
