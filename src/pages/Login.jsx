@@ -252,8 +252,10 @@ const ResetPassword = styled.div`
 
   & button {
     border: transparent;
+    background-color: transparent;
     font-weight: 550;
     color: var(--main-color);
+    cursor: pointer;
   }
 `;
 
@@ -287,6 +289,7 @@ const LoginButton = styled.button`
   color: white;
   border: 1.5px solid rgb(228, 228, 228);
   border-radius: 30px;
+  cursor: pointer;
 `;
 
 const LoginErrorMessage = styled.p`
@@ -344,7 +347,7 @@ const LoginWithOtherMethodButtonSet = styled.div`
     border: 1.5px solid rgb(228, 228, 228);
     border-radius: 5px;
     font-size: 14px;
-    font-weight: 530;
+    font-weight: 550;
     cursor: pointer;
   }
 `;

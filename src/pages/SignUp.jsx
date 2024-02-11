@@ -455,6 +455,7 @@ const SignUpButton = styled.button`
   color: white;
   border: 1.5px solid rgb(228, 228, 228);
   border-radius: 30px;
+  cursor: pointer;
 `;
 
 const SignUpWithOtherMethod = styled.div`
