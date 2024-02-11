@@ -1,5 +1,3 @@
-// Main.js
-
 import React, { useState } from 'react';
 import Navbar from 'components/common/Navbar';
 import SearchInput from 'components/SearchInput';

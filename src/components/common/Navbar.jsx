@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-
 const NavContainer = styled.div`
   height: 90px;
   display: flex;
@@ -18,52 +17,45 @@ const NavBar = styled.ul`
   width: 100%;
   justify-content: space-between;
 `;
-
 const Logo = styled.span`
   font-size: 30px;
   font-weight: bold;
   margin-right: 34px;
 `;
-
 const Tab = styled.span`
   cursor: pointer;
   margin-right: 24px;
-  color: ${(props) => (props.activeNavTab ? 'black' : '#878f97')};
+  color: ${(props) => (props.activeNavTab ? 'black' : '#878F97')};
 `;
-
 const LeftNav = styled.li`
   font-size: 22px;
   font-weight: bold;
   text-decoration: none;
-
   & li {
     display: inline-block;
     margin-right: 30px;
   }
 `;
-
 const RightNav = styled.li`
   font-size: 17px;
 `;
 const AuthLink = styled(Link)`
   margin-right: 20px;
-  color: #8d8d8d;
+  color: #8D8D8D;
 `;
 const Addbtn = styled.span`
   color: white;
-  background-color: #3867d6;
+  background-color: #3867D6;
   padding: 15px 16px;
   border-radius: 9px;
   &:hover {
-    background-color: #0056b3;
+    background-color: #0056B3;
   }
 `;
-
 function Navbar({ activeNavTab, setActiveNavTab }) {
   const handleTabClick = (tab) => {
     setActiveNavTab(tab);
   };
-
   return (
     <NavContainer>
       <NavBar>
@@ -84,7 +76,7 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
           <AuthLink to={'/login'}>
             <span>로그인</span>
           </AuthLink>
-          <AuthLink to={'/singup'}>
+          <AuthLink to={'/signup'}>
             <span>회원가입</span>
           </AuthLink>
           <Link to={'/register'}>
@@ -95,5 +87,4 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
     </NavContainer>
   );
 }
-
 export default Navbar;
