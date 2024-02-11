@@ -1,10 +1,10 @@
 import React from 'react';
 import Navbar from 'components/common/Navbar';
 
-function Post() {
+function Post({ activeNavTab, setActiveNavTab }) {
   return (
     <>
-      <Navbar />
+      <Navbar activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} />
       Post
     </>
   );
