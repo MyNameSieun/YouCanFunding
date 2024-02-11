@@ -52,6 +52,22 @@ const ProjectFundingPeriodContainer = styled.div`
   gap: 10px;
 `;
 
+const AddProjectButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const AddProjectButton = styled.button`
+  width: 200px;
+  height: 40px;
+  background-color: var(--main-color);
+  border: 1px solid var(--main-color);
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+`;
+
 export {
   RegisterContainer,
   RegisterSectionTitle,
@@ -60,5 +76,7 @@ export {
   ProjectInfoTitle,
   ProjectInfoInput,
   ProjectInfoTextArea,
-  ProjectFundingPeriodContainer
+  ProjectFundingPeriodContainer,
+  AddProjectButtonContainer,
+  AddProjectButton
 };
