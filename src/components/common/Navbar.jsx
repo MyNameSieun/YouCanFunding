@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -25,8 +24,11 @@ const Logo = styled.span`
   font-weight: bold;
   margin-right: 34px;
 `;
-const Schedule = styled.span`
+
+const Tab = styled.span`
+  cursor: pointer;
   margin-right: 24px;
+  color: ${(props) => (props.activeNavTab ? 'black' : '#878f97')};
 `;
 
 const LeftNav = styled.li`
@@ -52,24 +54,31 @@ const Addbtn = styled.span`
   background-color: #3867d6;
   padding: 15px 16px;
   border-radius: 9px;
+  &:hover {
+    background-color: #0056b3;
+  }
 `;
 
-function Navbar() {
+function Navbar({ activeNavTab, setActiveNavTab }) {
+  const handleTabClick = (tab) => {
+    setActiveNavTab(tab);
+  };
+
   return (
     <NavContainer>
       <NavBar>
         <LeftNav>
           <Logo>
-            <Link to={'/'}>
+            <Tab activeNavTab={activeNavTab === 'inProgress'} onClick={() => handleTabClick('inProgress')}>
               유캔<ColorBlue>FUN</ColorBlue>딩
-            </Link>
+            </Tab>
           </Logo>
-          <Link to={'./scheduled'}>
-            <Schedule>펀딩 예정</Schedule>
-          </Link>
-          <Link to={'./completed'}>
-            <span>펀딩 종료</span>
-          </Link>
+          <Tab activeNavTab={activeNavTab === 'scheduled'} onClick={() => handleTabClick('scheduled')}>
+            펀딩 예정
+          </Tab>
+          <Tab activeNavTab={activeNavTab === 'completed'} onClick={() => handleTabClick('completed')}>
+            펀딩 종료
+          </Tab>
         </LeftNav>
         <RightNav>
           <AuthLink to={'/login'}>

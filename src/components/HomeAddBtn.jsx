@@ -20,13 +20,28 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-function HomeAddBtn() {
+function HomeAddBtn({ activeNavTab, setVisibleProducts }) {
   const MoreBtn = () => {
-    alert('더보기');
+    setVisibleProducts((visibleProducts) => visibleProducts + 12);
   };
+  let buttonText = '더 보기';
+
+  switch (activeNavTab) {
+    case 'scheduled':
+      buttonText = '예정 중인 펀딩 더 보기';
+      break;
+    case 'completed':
+      buttonText = '종료된 펀딩 더 보기';
+      break;
+    case 'inProgress':
+      buttonText = '진행 중인 펀딩 더 보기';
+      break;
+    default:
+      break;
+  }
   return (
     <BtnContainer>
-      <Button onClick={() => MoreBtn()}>진행중인 버튼 더 보기</Button>
+      <Button onClick={() => MoreBtn()}>{buttonText}</Button>
     </BtnContainer>
   );
 }

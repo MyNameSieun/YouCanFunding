@@ -1,28 +1,36 @@
+// Main.js
+
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import Navbar from 'components/common/Navbar';
-import Search from 'components/Search';
+import SearchInput from 'components/SearchInput';
 import CategoryTab from 'components/CategoryTab';
 import HomeVerticalCard from 'components/HomeVerticalCard';
 import HomeAddBtn from 'components/HomeAddBtn';
+import Banner from 'components/Banner';
 
 function Main() {
-  const [activeTab, setActiveTab] = useState(0);
-
-  const Banner = styled.div`
-    background-color: #ffcd6b;
-    height: 350px;
-    width: 100%;
-  `;
+  const [activeTab, setActiveTab] = useState('전체');
+  const [search, setSearch] = useState();
+  const [visibleProducts, setVisibleProducts] = useState(12);
+  const [activeNavTab, setActiveNavTab] = useState('inProgress');
 
   return (
     <>
-      <Navbar />
+      <Navbar activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} />
       <Banner />
-      <Search />
+      <SearchInput search={search} setSearch={setSearch} />
       <CategoryTab activeTab={activeTab} setActiveTab={setActiveTab} />
-      <HomeVerticalCard activeTab={activeTab} />
-      <HomeAddBtn />
+      <HomeVerticalCard
+        activeTab={activeTab}
+        search={search}
+        activeNavTab={activeNavTab}
+        visibleProducts={visibleProducts}
+      />
+      <HomeAddBtn
+        activeNavTab={activeNavTab}
+        visibleProducts={visibleProducts}
+        setVisibleProducts={setVisibleProducts}
+      />
     </>
   );
 }
