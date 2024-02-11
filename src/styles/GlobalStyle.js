@@ -2,14 +2,29 @@ import reset from 'styled-reset';
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
- ${reset}
+  ${reset}
   body {
     font-family: "Helvetica", "Arial", sans-serif;
     background-color:#F5F5F5;
     height:100vh;
+    max-width: 1400px;
+    margin: 0 auto;
   }
-  a{text-decoration:none;}
-  a:visited { color:black; }
+  :root{
+    --main-color: #4B7BEC;
+    --sub-color: #FF6348;
+  }
+  a:hover, a:visited, a:link, a:active
+  {
+    text-decoration: none;
+    color:black;
+  }
+  strong {
+    font-weight: bold;
+  }
+  em {
+    font-style: italic;
+  }
 `;
 
 export default GlobalStyle;

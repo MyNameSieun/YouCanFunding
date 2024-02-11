@@ -1,7 +1,14 @@
 import React from 'react';
+import Navbar from 'components/common/Navbar';
+import RegisterSection from 'components/register/RegisterSection';
 
 function Register() {
-  return <div>Register</div>;
+  return (
+    <>
+      <Navbar />
+      <RegisterSection />
+    </>
+  );
 }
 
 export default Register;

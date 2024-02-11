@@ -188,4 +188,5 @@ const NickNameIcon = styled.button`
   border: none;
 `;
 
+
 export default MyPage;
