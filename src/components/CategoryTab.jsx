@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { PiSquaresFour } from 'react-icons/pi';
-import { CiBowlNoodles } from 'react-icons/ci';
+import { PiBowlFood } from 'react-icons/pi';
 import { SlGameController } from 'react-icons/sl';
 import { PiFilmSlate } from 'react-icons/pi';
 import { PiGuitar } from 'react-icons/pi';
@@ -36,7 +36,7 @@ const IconWrapper = styled.div`
   font-size: 30px;
   margin: 0 auto;
   width: 50%;
-  margin-right: 23px;
+  margin-right: 28px;
 `;
 const IconInfo = styled.div`
   margin-right: 20px;
@@ -54,7 +54,7 @@ function CategoryTab({ activeTab, setActiveTab }) {
   const data = [
     { category: '전체', icon: <PiSquaresFour /> },
     { category: '기술·가전', icon: <PiTelevision /> },
-    { category: '푸드', icon: <CiBowlNoodles /> },
+    { category: '푸드', icon: <PiBowlFood /> },
     { category: '패션', icon: <PiTShirt /> },
     { category: '뷰티', icon: <PiHighlighterCircle /> },
     { category: '클래스', icon: <PiSubtract /> },
