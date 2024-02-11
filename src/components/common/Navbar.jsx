@@ -40,10 +40,11 @@ const LeftNav = styled.li`
 `;
 const RightNav = styled.li`
   font-size: 17px;
+  font-weight: 550;
 `;
 const AuthLink = styled(Link)`
   margin-right: 20px;
-  color: #8d8d8d;
+  color: #8d8d8d !important;
 `;
 const Addbtn = styled.span`
   color: white;
@@ -88,7 +89,6 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
             </>
           ) : (
             <>
-              {' '}
               <AuthLink to={'/login'}>
                 <span>로그인</span>
               </AuthLink>
