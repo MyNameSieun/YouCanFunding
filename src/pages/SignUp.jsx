@@ -217,7 +217,7 @@ function SignUp() {
           email: user.email
         });
 
-        console.log('user', userCredential.user);
+        console.log('user', user);
 
         alert('회원가입이 완료되었습니다.');
         navigate('/login');
@@ -231,6 +231,39 @@ function SignUp() {
       console.error('Error with Google signUp:', errorCode, errorMessage);
     }
   };
+
+  // // 애플로 회원가입
+  // const handleAppleSignUp = async () => {
+  //   try {
+  //     const provider = new OAuthProvider('apple.com');
+  //     const userCredential = await signInWithPopup(auth, provider);
+
+  //     const user = userCredential.user;
+  //     const existingUserQuery = query(collection(db, 'users'), where('email', '==', user.email));
+  //     const existingUserSnapshot = await getDocs(existingUserQuery);
+
+  //     if (existingUserSnapshot.empty) {
+  //       // 중복된 사용자가 없으면 사용자 정보 Firestore에 저장
+  //       await addDoc(collection(db, 'users'), {
+  //         uid: user.uid,
+  //         nickname: user.displayName,
+  //         email: user.email
+  //       });
+
+  //       console.log('user', user);
+
+  //       alert('회원가입이 완료되었습니다.');
+  //       navigate('/login');
+  //     } else {
+  //       alert('이미 등록된 애플 계정입니다.');
+  //       await signOut(auth);
+  //     }
+  //   } catch (error) {
+  //     const errorCode = error.code;
+  //     const errorMessage = error.message;
+  //     console.error('Error with Apple signUp:', errorCode, errorMessage);
+  //   }
+  // };
 
   return (
     <div>
@@ -312,7 +345,7 @@ function SignUp() {
       <div>
         <p>다른 방법으로 회원가입</p>
         <button onClick={handleGoogleSignUp}>구글로 회원가입</button>
-        <button>애플로 회원가입</button>
+        {/* <button onClick={handleAppleSignUp}>애플로 회원가입</button> */}
       </div>
       <div>
         <p>이미 계정이 있으신가요?</p>

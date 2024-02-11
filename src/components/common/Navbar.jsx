@@ -84,7 +84,7 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
           <AuthLink to={'/login'}>
             <span>로그인</span>
           </AuthLink>
-          <AuthLink to={'/singup'}>
+          <AuthLink to={'/signup'}>
             <span>회원가입</span>
           </AuthLink>
           <Link to={'/register'}>
