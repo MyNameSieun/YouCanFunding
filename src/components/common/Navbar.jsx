@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -29,7 +28,7 @@ const Logo = styled.span`
 const Tab = styled.span`
   cursor: pointer;
   margin-right: 24px;
-  color: ${(props) => (props.activeTab ? 'black' : '#878f97')};
+  color: ${(props) => (props.activeNavTab ? 'black' : '#878f97')};
 `;
 
 const LeftNav = styled.li`
@@ -60,11 +59,9 @@ const Addbtn = styled.span`
   }
 `;
 
-function Navbar() {
-  const [activeTab, setActiveTab] = useState('');
-
+function Navbar({ activeNavTab, setActiveNavTab }) {
   const handleTabClick = (tab) => {
-    setActiveTab(tab);
+    setActiveNavTab(tab);
   };
 
   return (
@@ -72,14 +69,14 @@ function Navbar() {
       <NavBar>
         <LeftNav>
           <Logo>
-            <Link to={'/'}>
+            <Tab activeNavTab={activeNavTab === 'inProgress'} onClick={() => handleTabClick('inProgress')}>
               유캔<ColorBlue>FUN</ColorBlue>딩
-            </Link>
+            </Tab>
           </Logo>
-          <Tab activeTab={activeTab === 'scheduled'} onClick={() => handleTabClick('scheduled')}>
+          <Tab activeNavTab={activeNavTab === 'scheduled'} onClick={() => handleTabClick('scheduled')}>
             펀딩 예정
           </Tab>
-          <Tab activeTab={activeTab === 'completed'} onClick={() => handleTabClick('completed')}>
+          <Tab activeNavTab={activeNavTab === 'completed'} onClick={() => handleTabClick('completed')}>
             펀딩 종료
           </Tab>
         </LeftNav>

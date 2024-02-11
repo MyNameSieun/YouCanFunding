@@ -34,7 +34,7 @@ const Title = styled.div`
 
 const AchievementRate = styled.div`
   position: absolute;
-  bottom: 10px;
+  bottom: 11px;
   left: 0px;
   font-size: 16px;
   margin-left: 10px;
@@ -46,14 +46,17 @@ const PointColor = styled.span`
   font-weight: bold;
 `;
 
-function HomeVerticalCard({ activeTab, search, visibleProducts }) {
+function HomeVerticalCard({ activeTab, search, visibleProducts, activeNavTab }) {
   return (
     <CardContainer>
       {ProductsList.productList
         .filter(
           (product) =>
             (activeTab === '전체' || activeTab === product.category) &&
-            (!search || product.name.toLowerCase().includes(search.toLowerCase()))
+            (!search || product.name.toLowerCase().includes(search.toLowerCase())) &&
+            ((activeNavTab === 'scheduled' && product.state === 'schedule') ||
+              (activeNavTab === 'inProgress' && product.state === 'inProgress') ||
+              (activeNavTab === 'completed' && product.state === 'completed'))
         )
         .slice(0, visibleProducts)
         .map((product) => (
@@ -68,4 +71,5 @@ function HomeVerticalCard({ activeTab, search, visibleProducts }) {
     </CardContainer>
   );
 }
+
 export default HomeVerticalCard;

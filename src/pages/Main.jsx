@@ -10,14 +10,15 @@ function Main() {
   const [activeTab, setActiveTab] = useState('전체');
   const [search, setSearch] = useState();
   const [visibleProducts, setVisibleProducts] = useState(12);
+  const [activeNavTab, setActiveNavTab] = useState('inProgress');
 
   return (
     <>
-      <Navbar />
+      <Navbar activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} />
       <Banner />
       <SearchInput search={search} setSearch={setSearch} />
       <CategoryTab activeTab={activeTab} setActiveTab={setActiveTab} />
-      <HomeVerticalCard activeTab={activeTab} search={search} setSearch={setSearch} />
+      <HomeVerticalCard activeTab={activeTab} search={search} setSearch={setSearch} activeNavTab={activeNavTab} />
       <HomeAddBtn visibleProducts={visibleProducts} setVisibleProducts={setVisibleProducts} />
     </>
   );
