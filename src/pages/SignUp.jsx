@@ -245,8 +245,8 @@ function SignUp() {
           <SignUpTitle>이메일로 회원가입</SignUpTitle>
 
           <SignUpToLogin>
-            <p>계정이 있으신가요? &nbsp;</p>
-            <a href="/login"> 기존 계정으로 로그인하기 &gt;</a>
+            <p>이미 계정이 있으신가요? &nbsp;</p>
+            <a href="/login"> 기존 계정으로 로그인 &gt;</a>
           </SignUpToLogin>
 
           <SignUpForm onSubmit={handleSignUp}>
@@ -333,7 +333,12 @@ function SignUp() {
           </SignUpForm>
 
           <SignUpWithOtherMethod>
-            <p>다른 방법으로 회원가입</p>
+            <SignUpWithOtherMethodPTag>
+              <hr />
+              <p>다른 방법으로 회원가입</p>
+              <hr />
+            </SignUpWithOtherMethodPTag>
+
             <SignUpWithOtherMethodButtonSet>
               <button onClick={handleGoogleSignUp}>구글로 회원가입</button>
               <button onClick={handleGithubSignUp}>깃허브로 회원가입</button>
@@ -367,22 +372,6 @@ const SignUpContainer = styled.div`
   width: 350px;
 `;
 
-const SignUpForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  font-size: 15px;
-  font-weight: 500;
-`;
-
-const NicknameInput = styled.div`
-  display: flex;
-`;
-
-const EmailInput = styled.div`
-  display: flex;
-`;
-
 const SignUpTitle = styled.h2`
   font-size: 24px;
   font-weight: 800;
@@ -397,6 +386,14 @@ const SignUpToLogin = styled.div`
     font-weight: 550;
     color: var(--main-color);
   }
+`;
+
+const SignUpForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 15px;
+  font-weight: 500;
 `;
 
 const SignUpInput = styled.div`
@@ -440,6 +437,14 @@ const SignUpInput = styled.div`
   }
 `;
 
+const NicknameInput = styled.div`
+  display: flex;
+`;
+
+const EmailInput = styled.div`
+  display: flex;
+`;
+
 const SignUpButton = styled.button`
   width: 350px;
   margin: 5px auto;
@@ -459,11 +464,16 @@ const SignUpWithOtherMethod = styled.div`
   align-items: center;
   gap: 10px;
   width: 100%;
+`;
+
+const SignUpWithOtherMethodPTag = styled.div`
+  display: flex;
 
   & p {
     padding: 10px;
     margin: 5px auto 10px auto;
     font-size: 13px;
+    color: #555;
   }
 `;
 
@@ -482,7 +492,7 @@ const SignUpWithOtherMethodButtonSet = styled.div`
     border: 1.5px solid rgb(228, 228, 228);
     border-radius: 5px;
     font-size: 14px;
-    font-weight: 530;
+    font-weight: 550;
     cursor: pointer;
   }
 `;
