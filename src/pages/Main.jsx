@@ -1,3 +1,5 @@
+// Main.js
+
 import React, { useState } from 'react';
 import Navbar from 'components/common/Navbar';
 import SearchInput from 'components/SearchInput';
@@ -18,7 +20,12 @@ function Main() {
       <Banner />
       <SearchInput search={search} setSearch={setSearch} />
       <CategoryTab activeTab={activeTab} setActiveTab={setActiveTab} />
-      <HomeVerticalCard activeTab={activeTab} search={search} setSearch={setSearch} activeNavTab={activeNavTab} />
+      <HomeVerticalCard
+        activeTab={activeTab}
+        search={search}
+        activeNavTab={activeNavTab}
+        visibleProducts={visibleProducts}
+      />
       <HomeAddBtn visibleProducts={visibleProducts} setVisibleProducts={setVisibleProducts} />
     </>
   );

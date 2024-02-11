@@ -303,6 +303,78 @@
       "achievementRate": "325%",
       "image": "/assets/images/image002.jpg",
       "state": "completed"
+    },
+    {
+      "id": 39,
+      "name": "아이브 스페셜 앨범 정규 1집 Ive IVE 아이엠 I AM 키치 Special",
+      "category": "음악",
+      "achievementRate": "89%",
+      "image": "/assets/images/image003.jpg",
+      "state": "inProgress"
+    },
+    {
+      "id": 40,
+      "name": "아이브 스페셜 앨범 정규 1집 Ive IVE 아이엠 I AM 키치 Special",
+      "category": "음악",
+      "achievementRate": "89%",
+      "image": "/assets/images/image003.jpg",
+      "state": "inProgress"
+    },
+    {
+      "id": 41,
+      "name": "아이브 스페셜 앨범 정규 1집 Ive IVE 아이엠 I AM 키치 Special",
+      "category": "음악",
+      "achievementRate": "89%",
+      "image": "/assets/images/image003.jpg",
+      "state": "inProgress"
+    },
+    {
+      "id": 42,
+      "name": "아이브 스페셜 앨범 정규 1집 Ive IVE 아이엠 I AM 키치 Special",
+      "category": "음악",
+      "achievementRate": "89%",
+      "image": "/assets/images/image003.jpg",
+      "state": "inProgress"
+    },
+    {
+      "id": 43,
+      "name": "아이브 스페셜 앨범 정규 1집 Ive IVE 아이엠 I AM 키치 Special",
+      "category": "음악",
+      "achievementRate": "89%",
+      "image": "/assets/images/image003.jpg",
+      "state": "inProgress"
+    },
+    {
+      "id": 44,
+      "name": "아이브 스페셜 앨범 정규 1집 Ive IVE 아이엠 I AM 키치 Special",
+      "category": "음악",
+      "achievementRate": "89%",
+      "image": "/assets/images/image003.jpg",
+      "state": "inProgress"
+    },
+    {
+      "id": 45,
+      "name": "아이브 스페셜 앨범 정규 1집 Ive IVE 아이엠 I AM 키치 Special",
+      "category": "음악",
+      "achievementRate": "89%",
+      "image": "/assets/images/image003.jpg",
+      "state": "inProgress"
+    },
+    {
+      "id": 46,
+      "name": "아이브 스페셜 앨범 정규 1집 Ive IVE 아이엠 I AM 키치 Special",
+      "category": "음악",
+      "achievementRate": "89%",
+      "image": "/assets/images/image003.jpg",
+      "state": "inProgress"
+    },
+    {
+      "id": 47,
+      "name": "아이브 스페셜 앨범 정규 1집 Ive IVE 아이엠 I AM 키치 Special",
+      "category": "음악",
+      "achievementRate": "89%",
+      "image": "/assets/images/image003.jpg",
+      "state": "inProgress"
     }
   ]
 }
