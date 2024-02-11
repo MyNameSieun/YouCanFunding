@@ -4,7 +4,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-function Logout() {
+function Logout({ onLogout }) {
   const navigate = useNavigate();
 
   const logOut = async (event) => {
@@ -18,6 +18,7 @@ function Logout() {
       try {
         await signOut(auth);
         alert('로그아웃 되었습니다.');
+        onLogout();
         navigate('/main');
       } catch (error) {
         console.log('Error with logout', error);

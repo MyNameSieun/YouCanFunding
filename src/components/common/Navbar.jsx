@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { auth } from '../../firebase';
 import Logout from './Logout';
+import { useState } from 'react';
 const NavContainer = styled.div`
   height: 90px;
   display: flex;
@@ -56,8 +57,14 @@ const Addbtn = styled.span`
   }
 `;
 function Navbar({ activeNavTab, setActiveNavTab }) {
+  const [isLoggedOut, setIsLoggedOut] = useState(false);
+
   const handleTabClick = (tab) => {
     setActiveNavTab(tab);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedOut(true);
   };
 
   // 현재 로그인된 사용자 정보 가져오기
@@ -82,10 +89,23 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
         <RightNav>
           {currentUser ? (
             <>
-              <Logout />
-              <AuthLink to={'/mypage'}>
-                <span>마이페이지</span>
-              </AuthLink>
+              {isLoggedOut ? (
+                <>
+                  <AuthLink to={'/login'}>
+                    <span>로그인</span>
+                  </AuthLink>
+                  <AuthLink to={'/signup'}>
+                    <span>회원가입</span>
+                  </AuthLink>
+                </>
+              ) : (
+                <>
+                  <Logout onLogout={handleLogout} />
+                  <AuthLink to={'/mypage'}>
+                    <span>마이페이지</span>
+                  </AuthLink>
+                </>
+              )}
             </>
           ) : (
             <>
