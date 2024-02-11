@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import {
+  AddProjectButton,
+  AddProjectButtonContainer,
   ProjectFundingPeriodContainer,
   ProjectInfoContainer,
   ProjectInfoInput,
@@ -28,18 +30,49 @@ function RegisterSection() {
     setTargetPrice(resultValue);
   };
 
+  // 펀딩 시작일
   const changeStartDate = (event) => {
     console.log(event.target);
     console.log(event.target.value);
     console.log(typeof event.target.value);
     setStartDate(event.target.value);
   };
+  // 펀딩 종료일
   const changeEndDate = (event) => {
     console.log(event.target);
     console.log(event.target.value);
     console.log(typeof event.target.value);
     setEndDate(event.target.value);
   };
+
+  /* quills Setting */
+
+  const modules = {
+    toolbar: [
+      [{ font: [] }, { size: [] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ color: [] }, { background: [] }],
+      [{ align: [] }, { list: 'ordered' }, { list: 'bullet' }],
+      ['blockquote', 'link', 'image']
+    ]
+  };
+
+  const formats = [
+    'size',
+    'font',
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    'color',
+    'background',
+    'align',
+    'list',
+    'bullet',
+    'blockquote',
+    'link',
+    'image'
+  ];
 
   return (
     <RegisterContainer>
@@ -78,9 +111,19 @@ function RegisterSection() {
         {/* 상세 설명 입력 메뉴 */}
         <ProjectInfoContainer>
           <ProjectInfoTitle>상세 설명</ProjectInfoTitle>
-          <ReactQuill />
+          <ReactQuill
+            id="id"
+            className="form-control text-editor"
+            style={{ backgroundColor: 'white' }}
+            placeholder="내용을 입력하세요."
+            modules={modules}
+            formats={formats}
+          />
         </ProjectInfoContainer>
       </ProjectInfoListContainer>
+      <AddProjectButtonContainer>
+        <AddProjectButton>프로젝트 등록</AddProjectButton>
+      </AddProjectButtonContainer>
     </RegisterContainer>
   );
 }
