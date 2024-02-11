@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { auth } from '../../firebase';
+import Logout from './Logout';
 const NavContainer = styled.div`
   height: 90px;
   display: flex;
@@ -41,21 +43,25 @@ const RightNav = styled.li`
 `;
 const AuthLink = styled(Link)`
   margin-right: 20px;
-  color: #8D8D8D;
+  color: #8d8d8d;
 `;
 const Addbtn = styled.span`
   color: white;
-  background-color: #3867D6;
+  background-color: #3867d6;
   padding: 15px 16px;
   border-radius: 9px;
   &:hover {
-    background-color: #0056B3;
+    background-color: #0056b3;
   }
 `;
 function Navbar({ activeNavTab, setActiveNavTab }) {
   const handleTabClick = (tab) => {
     setActiveNavTab(tab);
   };
+
+  // 현재 로그인된 사용자 정보 가져오기
+  const currentUser = auth.currentUser;
+
   return (
     <NavContainer>
       <NavBar>
@@ -73,12 +79,24 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
           </Tab>
         </LeftNav>
         <RightNav>
-          <AuthLink to={'/login'}>
-            <span>로그인</span>
-          </AuthLink>
-          <AuthLink to={'/signup'}>
-            <span>회원가입</span>
-          </AuthLink>
+          {currentUser ? (
+            <>
+              <Logout />
+              <AuthLink to={'/mypage'}>
+                <span>마이페이지</span>
+              </AuthLink>
+            </>
+          ) : (
+            <>
+              {' '}
+              <AuthLink to={'/login'}>
+                <span>로그인</span>
+              </AuthLink>
+              <AuthLink to={'/signup'}>
+                <span>회원가입</span>
+              </AuthLink>
+            </>
+          )}
           <Link to={'/register'}>
             <Addbtn>프로젝트 등록</Addbtn>
           </Link>
