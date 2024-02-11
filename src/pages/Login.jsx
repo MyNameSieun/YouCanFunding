@@ -133,7 +133,7 @@ function Login() {
 
   return (
     <>
-      <Navbar />ㅋ
+      <Navbar />
       <div>
         <h2>이메일로 로그인</h2>
         <form onSubmit={handleLogin}>
