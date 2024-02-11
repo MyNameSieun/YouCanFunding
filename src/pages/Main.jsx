@@ -24,7 +24,11 @@ function Main() {
         activeNavTab={activeNavTab}
         visibleProducts={visibleProducts}
       />
-      <HomeAddBtn visibleProducts={visibleProducts} setVisibleProducts={setVisibleProducts} />
+      <HomeAddBtn
+        activeNavTab={activeNavTab}
+        visibleProducts={visibleProducts}
+        setVisibleProducts={setVisibleProducts}
+      />
     </>
   );
 }
