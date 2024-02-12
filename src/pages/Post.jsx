@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Navbar from 'components/common/Navbar';
+import defaultUser from 'assets/defaultUser.png';
 
 const ProjectIntroduction = styled.div`
   display: flex;
@@ -98,10 +99,10 @@ const BottomBox = styled.div`
   margin: 0 auto;
   padding: 30px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
 `;
-const ProjectInfo = styled.div``;
-const Comments = styled.div``;
+const ProjectInfoContainer = styled.div``;
 
 const TabItem = styled.div`
   font-size: 24px;
@@ -110,12 +111,40 @@ const TabItem = styled.div`
   color: ${(props) => (props.activePostTab ? 'black' : '#878f97')};
   font-weight: ${(props) => (props.activePostTab ? 'bold' : 'normal')};
 `;
+const FontWeight = styled.span`
+  font-weight: bold;
+`;
+
+const CommentContainer = styled.div`
+  display: flex;
+  align-items: center;
+  border: 2px solid #dfdfdf;
+  width: 800px;
+  margin: 7px auto;
+  height: 70px;
+  border-radius: 30px;
+  background-color: white;
+`;
+
+const CommentImage = styled.img`
+  margin-left: 30px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 15px;
+`;
+
+const CommentText = styled.div`
+  font-size: 16px;
+`;
+
 function Post({ activeNavTab, setActiveNavTab }) {
   const [activePostTab, setActivePostTab] = useState('project');
 
   const handleTabClick = (tab) => {
     setActivePostTab(tab);
   };
+
   return (
     <>
       <Navbar activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} />
@@ -152,27 +181,40 @@ function Post({ activeNavTab, setActiveNavTab }) {
       </PostTab>
       <Hr />
       <BottomBox>
-        <ProjectInfo>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores laborum ullam reprehenderit repellendus eius
-          veritatis voluptatibus exercitationem mollitia inventore delectus culpa nulla ducimus enim, porro reiciendis!
-          Animi ratione et adipisci. Quod amet consequuntur voluptatibus aliquid cum alias molestias ratione fugit
-          soluta quis sit, minima praesentium. Quia sint iusto repellat maiores, a, blanditiis facere magni numquam
-          dolores necessitatibus, sequi ipsam aperiam. Neque optio pariatur deleniti facere aliquid odio soluta
-          reiciendis nesciunt necessitatibus ullam nisi in voluptatum animi earum voluptates voluptate, dolor laborum
-          repellat fuga officiis ad minima tempora rerum. Maxime, sunt! Autem molestias magnam sunt officia unde,
-          quaerat incidunt ullam deserunt minus tenetur maiores corrupti! Aspernatur, itaque doloribus labore esse
-          libero excepturi praesentium veritatis cumque omnis rem quod, distinctio ipsum iusto. Dolorum alias magnam
-          beatae placeat, nesciunt corporis veniam quas voluptatum sunt odit hic dolores quis vel distinctio sapiente.
-          At officiis, odio quasi optio dolor nisi eaque iusto ipsum porro quam. Dignissimos non alias nulla quod quo
-          aliquam officia laborum molestiae odit itaque. Harum, quas! Animi harum sunt blanditiis quia odit libero
-          facilis expedita dolore quasi at maxime iusto, quaerat dolorum. Aperiam repellat nostrum illo dolores
-          expedita, dolor aspernatur itaque omnis id! Sapiente architecto magnam fuga voluptatum molestias. Aliquam enim
-          natus vero provident qui? Reiciendis, ipsum cum! Labore nostrum adipisci recusandae. Quam asperiores debitis
-          corporis quaerat tenetur repellat velit totam, ut expedita nemo iste. Eligendi ab fugiat aspernatur nisi quos,
-          veritatis illum a labore. Ullam dolorem eius, culpa laboriosam quod amet? Earum, blanditiis? Exercitationem
-          placeat eum incidunt possimus officia ad nostrum, asperiores consequatur
-        </ProjectInfo>
-        <Comments></Comments>
+        {activePostTab === 'project' ? (
+          <ProjectInfoContainer>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores laborum ullam reprehenderit repellendus
+            eius veritatis voluptatibus exercitationem mollitia inventore delectus culpa nulla ducimus enim, porro
+            reiciendis! Animi ratione et adipisci. Quod amet consequuntur voluptatibus aliquid cum alias molestias
+            ratione fugit soluta quis sit, minima praesentium. Quia sint iusto repellat maiores, a, blanditiis facere
+            magni numquam dolores necessitatibus, sequi ipsam aperiam. Neque optio pariatur deleniti facere aliquid odio
+            soluta reiciendis nesciunt necessitatibus ullam nisi in voluptatum animi earum voluptates voluptate, dolor
+            laborum repellat fuga officiis ad minima tempora rerum. Maxime, sunt! Autem molestias magnam sunt officia
+            unde, quaerat incidunt ullam deserunt minus tenetur maiores corrupti! Aspernatur, itaque doloribus labore
+            esse
+          </ProjectInfoContainer>
+        ) : (
+          <>
+            <CommentContainer>
+              <CommentImage src={defaultUser} alt="User Profile" />
+              <CommentText>
+                박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
+              </CommentText>
+            </CommentContainer>
+            <CommentContainer>
+              <CommentImage src={defaultUser} alt="User Profile" />
+              <CommentText>
+                박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
+              </CommentText>
+            </CommentContainer>
+            <CommentContainer>
+              <CommentImage src={defaultUser} alt="User Profile" />
+              <CommentText>
+                박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
+              </CommentText>
+            </CommentContainer>
+          </>
+        )}
       </BottomBox>
     </>
   );
