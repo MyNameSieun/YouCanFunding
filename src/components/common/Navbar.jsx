@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+
 const NavContainer = styled.div`
   height: 90px;
   display: flex;
@@ -62,7 +63,6 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
   const location = useLocation();
 
   //  "/main" 경로에만 조건적으로 렌더링
-  const isMainPage = location.pathname === '/main';
 
   return (
     <NavContainer>
@@ -75,16 +75,18 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
               </Tab>
             </Link>
           </Logo>
-          {isMainPage && (
-            <>
+          <>
+            <Link to="/main">
               <Tab activeNavTab={activeNavTab === 'scheduled'} onClick={() => setActiveNavTab('scheduled')}>
                 펀딩 예정
               </Tab>
+            </Link>
+            <Link to="/main">
               <Tab activeNavTab={activeNavTab === 'completed'} onClick={() => setActiveNavTab('completed')}>
                 펀딩 종료
               </Tab>
-            </>
-          )}
+            </Link>
+          </>
         </LeftNav>
         <RightNav>
           <AuthLink to={'/login'}>
