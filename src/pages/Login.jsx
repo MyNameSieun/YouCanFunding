@@ -55,6 +55,43 @@ function Login() {
     }
   };
 
+  // 비밀번호 찾기
+  const handleForgotPassword = async () => {
+    try {
+      // 이메일이 비어있는지 확인
+      if (!email) {
+        setErrorMessage('이메일 주소를 입력해주세요.');
+        return;
+      }
+
+      // 해당 이메일로 가입된 사용자의 정보 가져오기
+      const signInMethod = await fetchSignInMethodsForEmail(auth, email);
+      // 가입된 정보가 없는 경우 에러 메시지 표시
+      if (signInMethod.length === 0) {
+        setErrorMessage('존재하지 않는 이메일 주소입니다. 다시 확인해주세요.');
+        return;
+      }
+
+      setIsLoading(true);
+
+      await sendPasswordResetEmail(auth, email);
+      alert('비밀번호 재설정 이메일이 전송되었습니다. 이메일을 확인해주세요.');
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error('Error with password reset', errorCode, errorMessage);
+
+      // 이메일이 올바르지 않는 경우 에러 메시지 표시
+      if (errorCode === 'auth/invalid-email') {
+        setErrorMessage('이메일 형식이 올바르지 않습니다 .다시 확인해주세요.');
+      } else {
+        setErrorMessage('비밀번호 재설정 이메일을 전송하는 중 오류가 발생했습니다. 나중에 다시 시도해주세요.');
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // 구글로 로그인
   const handleGoogleLogin = async () => {
     try {
@@ -94,42 +131,8 @@ function Login() {
     }
   };
 
-  // 비밀번호 찾기
-  const handleForgotPassword = async () => {
-    try {
-      // 이메일이 비어있는지 확인
-      if (!email) {
-        setErrorMessage('이메일 주소를 입력해주세요.');
-        return;
-      }
-
-      // 해당 이메일로 가입된 사용자의 정보 가져오기
-      const signInMethod = await fetchSignInMethodsForEmail(auth, email);
-      // 가입된 정보가 없는 경우 에러 메시지 표시
-      if (signInMethod.length === 0) {
-        setErrorMessage('존재하지 않는 이메일 주소입니다. 다시 확인해주세요.');
-        return;
-      }
-
-      setIsLoading(true);
-
-      await sendPasswordResetEmail(auth, email);
-      alert('비밀번호 재설정 이메일이 전송되었습니다. 이메일을 확인해주세요.');
-    } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.error('Error with password reset', errorCode, errorMessage);
-
-      // 이메일이 올바르지 않는 경우 에러 메시지 표시
-      if (errorCode === 'auth/invalid-email') {
-        setErrorMessage('이메일 형식이 올바르지 않습니다 .다시 확인해주세요.');
-      } else {
-        setErrorMessage('비밀번호 재설정 이메일을 전송하는 중 오류가 발생했습니다. 나중에 다시 시도해주세요.');
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // 깃허브로 로그인
+  const handleGithubLogin = () => {};
 
   return (
     <>
@@ -188,7 +191,7 @@ function Login() {
 
             <LoginWithOtherMethodButtonSet>
               <button onClick={handleGoogleLogin}>구글로 로그인</button>
-              <button>애플로 로그인</button>
+              <button onClick={handleGithubLogin}>깃허브로 로그인</button>
             </LoginWithOtherMethodButtonSet>
           </LoginWithOtherMethod>
         </LoginContainer>
