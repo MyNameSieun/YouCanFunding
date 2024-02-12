@@ -6,8 +6,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 // 추가할 코드
-import store from './redux/config/configStore';
 import { Provider } from 'react-redux';
+import store from 'shared/redux/config/configStore';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
