@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { auth } from '../../firebase';
+import { useState } from 'react';
+import Logout from './Logout';
 const NavContainer = styled.div`
   height: 90px;
   display: flex;
@@ -61,10 +64,6 @@ const Addbtn = styled.span`
 function Navbar({ activeNavTab, setActiveNavTab }) {
   const [isLoggedOut, setIsLoggedOut] = useState(false);
 
-  const handleTabClick = (tab) => {
-    setActiveNavTab(tab);
-  };
-
   const handleLogout = () => {
     setIsLoggedOut(true);
   };
@@ -78,21 +77,17 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
         <LeftNav>
           <Logo>
             <Link to="/main">
-              <Tab activeNavTab={activeNavTab === 'inProgress'} onClick={() => setActiveNavTab('inProgress')}>
+              <Tab>
                 유캔<ColorBlue>FUN</ColorBlue>딩
               </Tab>
             </Link>
           </Logo>
           <>
             <Link to="/main">
-              <Tab activeNavTab={activeNavTab === 'scheduled'} onClick={() => setActiveNavTab('scheduled')}>
-                펀딩 예정
-              </Tab>
+              <Tab>펀딩 예정</Tab>
             </Link>
             <Link to="/main">
-              <Tab activeNavTab={activeNavTab === 'completed'} onClick={() => setActiveNavTab('completed')}>
-                펀딩 종료
-              </Tab>
+              <Tab>펀딩 종료</Tab>
             </Link>
           </>
         </LeftNav>
