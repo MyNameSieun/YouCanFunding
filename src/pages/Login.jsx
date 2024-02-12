@@ -12,7 +12,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from 'components/common/Navbar';
 
-function Login() {
+function Login({ activeNavTab, setActiveNavTab }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   // 에러 메시지 상태 추가
@@ -133,7 +133,7 @@ function Login() {
 
   return (
     <>
-      <Navbar />ㅋ
+      <Navbar activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} />
       <div>
         <h2>이메일로 로그인</h2>
         <form onSubmit={handleLogin}>

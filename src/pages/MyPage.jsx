@@ -7,7 +7,7 @@ import defaultUser from 'assets/defaultUser.png';
 import { IoIosSettings } from 'react-icons/io';
 import { BsPencilSquare } from 'react-icons/bs';
 
-const MyPage = () => {
+const MyPage = ({ activeNavTab, setActiveNavTab }) => {
   const [userImgs, setUserImg] = useState(defaultUser);
   const fileInput = useRef(null);
   const [userNickName, setUserNickName] = useState('');
@@ -67,7 +67,7 @@ const MyPage = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} />
       <UserInfoWrapper>
         <div>
           <UserImg src={userImgs} alt="유저 프로필사진" />
@@ -187,6 +187,5 @@ const NickNameIcon = styled.button`
   overflow: hidden;
   border: none;
 `;
-
 
 export default MyPage;
