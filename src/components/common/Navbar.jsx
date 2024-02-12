@@ -1,8 +1,5 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { auth } from '../../firebase';
-import Logout from './Logout';
-import { useState } from 'react';
 const NavContainer = styled.div`
   height: 90px;
   display: flex;
@@ -20,25 +17,30 @@ const NavBar = styled.ul`
   width: 100%;
   justify-content: space-between;
 `;
+
 const Logo = styled.span`
   font-size: 30px;
   font-weight: bold;
   margin-right: 34px;
 `;
+
 const Tab = styled.span`
   cursor: pointer;
   margin-right: 24px;
-  color: ${(props) => (props.activeNavTab ? 'black' : '#878F97')};
+  color: ${(props) => (props.activeNavTab ? 'black' : '#878f97')};
 `;
+
 const LeftNav = styled.li`
   font-size: 22px;
   font-weight: bold;
   text-decoration: none;
+
   & li {
     display: inline-block;
     margin-right: 30px;
   }
 `;
+
 const RightNav = styled.li`
   font-size: 17px;
   font-weight: 550;
@@ -75,16 +77,24 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
       <NavBar>
         <LeftNav>
           <Logo>
-            <Tab activeNavTab={activeNavTab === 'inProgress'} onClick={() => handleTabClick('inProgress')}>
-              유캔<ColorBlue>FUN</ColorBlue>딩
-            </Tab>
+            <Link to="/main">
+              <Tab activeNavTab={activeNavTab === 'inProgress'} onClick={() => setActiveNavTab('inProgress')}>
+                유캔<ColorBlue>FUN</ColorBlue>딩
+              </Tab>
+            </Link>
           </Logo>
-          <Tab activeNavTab={activeNavTab === 'scheduled'} onClick={() => handleTabClick('scheduled')}>
-            펀딩 예정
-          </Tab>
-          <Tab activeNavTab={activeNavTab === 'completed'} onClick={() => handleTabClick('completed')}>
-            펀딩 종료
-          </Tab>
+          <>
+            <Link to="/main">
+              <Tab activeNavTab={activeNavTab === 'scheduled'} onClick={() => setActiveNavTab('scheduled')}>
+                펀딩 예정
+              </Tab>
+            </Link>
+            <Link to="/main">
+              <Tab activeNavTab={activeNavTab === 'completed'} onClick={() => setActiveNavTab('completed')}>
+                펀딩 종료
+              </Tab>
+            </Link>
+          </>
         </LeftNav>
         <RightNav>
           {currentUser ? (
@@ -125,4 +135,5 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
     </NavContainer>
   );
 }
+
 export default Navbar;
