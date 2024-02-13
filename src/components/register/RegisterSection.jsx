@@ -17,15 +17,20 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { data } from 'components/common/categories';
 import shortid from 'shortid';
-import { db } from '../../firebase';
+import { db, storage } from '../../firebase';
 import { addDoc, collection } from 'firebase/firestore';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 function RegisterSection() {
   // input 창 focus용 useRef
+  // 카테고리
+  const categoryRef = useRef('');
   // 제목
   const titleRef = useRef('');
   // 개요
   const summaryRef = useRef('');
+  // 메인 이미지
+  const mainImageRef = useRef('');
   // 목표 금액
   const targetPriceRef = useRef('');
   // 시작일
@@ -44,6 +49,8 @@ function RegisterSection() {
   const [title, setTitle] = useState('');
   // 개요
   const [summary, setSummary] = useState('');
+  // 메인 이미지
+  const [mainImage, setMainImage] = useState(null);
   // 목표 금액
   const [targetPrice, setTargetPrice] = useState(0);
   // 펀딩 시작일
@@ -70,6 +77,10 @@ function RegisterSection() {
   const changeSummary = (event) => {
     setSummary(event.target.value);
   };
+  // 메인 이미지
+  const changeMainImage = (event) => {
+    setMainImage(event.target.files[0]);
+  };
   // 목표 금액
   const changeTargetPrice = (event) => {
     const rawValue = event.target.value;
@@ -79,7 +90,6 @@ function RegisterSection() {
     const resultValue = Number(formattedValue.replace(/,/g, ''));
     setTargetPrice(resultValue);
   };
-
   // 펀딩 시작일
   const changeStartDate = (event) => {
     setStartDate(event.target.value);
@@ -117,37 +127,51 @@ function RegisterSection() {
     'image'
   ];
 
+  // 프로젝트 추가
   const addProject = async (event) => {
     event.preventDefault();
     // 유효성 검사
     if (!category) {
-      return alert('카테고리를 설정하지 않았습니다.');
+      alert('카테고리를 설정하세요.');
+      return categoryRef.current.focus();
     } else if (!title) {
-      alert('제목을 입력하지 않았습니다.');
+      alert('제목을 입력하세요.');
       return titleRef.current.focus();
     } else if (!summary) {
-      alert('개요를 입력하지 않았습니다.');
+      alert('개요를 입력하세요.');
       return summaryRef.current.focus();
+    } else if (!mainImage) {
+      alert('메인 이미지를 설정하세요.');
+      return mainImageRef.current.focus();
     } else if (!targetPrice) {
-      alert('목표 금액을 설정하지 않았습니다.');
+      alert('목표 금액을 입력하세요.');
       return targetPriceRef.current.focus();
     } else if (!startDate) {
-      alert('시작일을 설정하지 않았습니다.');
+      alert('시작일을 설정하세요.');
       return startDateRef.current.focus();
     } else if (!endDate) {
-      alert('종료일을 설정하지 않았습니다.');
+      alert('종료일을 설정하세요.');
       return endDateRef.current.focus();
-    } else if (!content) {
-      alert('내용이 입력되지 않았습니다.');
+    } else if (!content || content === '<p><br></p>') {
+      alert('내용을 입력하세요.');
       return contentRef.current.focus();
     }
-    // 유효성 검사 문제 없을 때 addDoc 수행
+    // 유효성 검사 문제 없을 때 DB 업로드 로직 수행
     else {
+      // 메인 이미지 storage 업로드
+      const imageRef = ref(storage, `mainImages/${mainImage.name}`);
+      await uploadBytes(imageRef, mainImage);
+
+      // get 메인 이미지 주소
+      const mainImageURL = await getDownloadURL(imageRef);
+
       // 새로운 항목 생성
       const newProject = {
         id: shortid.generate(),
+        category,
         title,
         summary,
+        mainImage: mainImageURL, // 이미지 주소 DB에 저장
         targetPrice,
         startDate,
         endDate,
@@ -156,16 +180,19 @@ function RegisterSection() {
 
       // projects에 새로운 프로젝트 추가
       setProject((prev) => {
-        return [...projects, newProject];
+        return [...prev, newProject];
       });
 
       const collectionRef = collection(db, 'projects');
+
       // firebase db에 새로운 프로젝트 추가
       await addDoc(collectionRef, newProject);
+
       // 기존 입력창 초기화
       setCategory('');
       setTitle('');
       setSummary('');
+      setMainImage(null);
       setTargetPrice(0);
       setStartDate('');
       setEndDate('');
@@ -181,7 +208,7 @@ function RegisterSection() {
         <ProjectInfoContainer>
           <ProjectInfoTitle>카테고리</ProjectInfoTitle>
           {/* 카테고리 */}
-          <ProjectCategoryContainer value={category} onClick={changeCategory}>
+          <ProjectCategoryContainer ref={categoryRef} value={category} onClick={changeCategory}>
             {data
               .filter((item) => item.category !== '전체')
               .map((item) => (
@@ -198,11 +225,17 @@ function RegisterSection() {
         <ProjectInfoContainer>
           <ProjectInfoTitle>프로젝트 개요</ProjectInfoTitle>
           <ProjectInfoTextArea
-            placeholder="개요를 입력하세요."
+            placeholder="개요를 입력하세요(100자 이하)"
+            maxLength={100}
             ref={summaryRef}
             value={summary}
             onChange={changeSummary}
           />
+        </ProjectInfoContainer>
+        {/* 상품 메인 이미지 입력 메뉴 */}
+        <ProjectInfoContainer>
+          <ProjectInfoTitle>메인 이미지</ProjectInfoTitle>
+          <input type="file" ref={mainImageRef} onChange={changeMainImage} />
         </ProjectInfoContainer>
         {/* 목표 금액 입력 메뉴 */}
         <ProjectInfoContainer>
