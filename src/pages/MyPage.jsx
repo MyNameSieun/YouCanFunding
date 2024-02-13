@@ -7,10 +7,10 @@ import defaultUser from 'assets/defaultUser.png';
 import { IoIosSettings } from 'react-icons/io';
 import { BsPencilSquare } from 'react-icons/bs';
 import ProductsList from 'data/products.json';
-import { collection, doc, getDocs } from 'firebase/firestore';
+import { addDoc, collection, doc, getDocs, updateDoc } from 'firebase/firestore';
 import { getAuth, updateProfile } from 'firebase/auth';
 
-const MyPage = () => {
+const MyPage = ({ activeNavTab, setActiveNavTab }) => {
   const [productLists, setProductLists] = useState(ProductsList);
   const [userImgs, setUserImg] = useState(defaultUser);
   const [upLoadImg, setUpLoadImg] = useState(null);
@@ -20,6 +20,7 @@ const MyPage = () => {
   const [isEditingName, setIsEditingName] = useState(false);
   const [activeTab, setActiveTab] = useState('내가 등록한 펀딩');
   const [pageScroll, setPageScroll] = useState(8);
+  const user = auth.currentUser;
 
   // --- 프로필사진 등록 ----//
   const userImgUploadHandler = (e) => {
@@ -48,9 +49,16 @@ const MyPage = () => {
   // 이미지 등록완료
 
   const onClickDoneBtn = async () => {
-    const userImgRef = ref(storage, `${auth.currentUser.uid}/${upLoadImg.name}`);
-    await uploadBytes(userImgRef, upLoadImg);
-    const downloadURL = await getDownloadURL(userImgRef);
+    if (!user) return;
+    if (upLoadImg && upLoadImg.length === 1) {
+      const userImgRef = ref(storage, `users/${user?.uid}/${upLoadImg.name}`);
+      await uploadBytes(userImgRef, upLoadImg);
+      const downloadURL = await getDownloadURL(userImgRef);
+      setUpLoadImg(downloadURL);
+      await updateProfile(user, {
+        photoURL: downloadURL
+      });
+    }
 
     setIsEditingImg(false);
   };
@@ -66,14 +74,12 @@ const MyPage = () => {
     setIsEditingName(false);
   };
 
-  // 닉네임 변경 유효성검사 후 완료
+  // 닉네임 변경 완료
   const onClickModifyDone = async () => {
     if (!userNickName) {
       return alert('수정사항이 없습니다.');
     }
-    const userNameRef = ref(storage, `${auth.currentUser.uid}/${userNickName}`);
-    await uploadString(userNameRef, userNickName);
-    const downloadURL = await getDownloadURL(userNameRef);
+
     setIsEditingName(false);
     setUserNickName(userNickName);
   };
@@ -118,7 +124,7 @@ const MyPage = () => {
   }
   return (
     <>
-      <Navbar />
+      <Navbar activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} />
       <UserInfoWrapper>
         <div>
           <UserImg src={userImgs} alt={defaultUser} />
