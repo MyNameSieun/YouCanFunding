@@ -1,55 +1,81 @@
 import React, { useRef, useState } from 'react';
-// import { auth, storage } from '../firebase';
-// import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { auth, db, storage } from '../firebase';
+import { getDownloadURL, ref, uploadBytes, uploadString } from 'firebase/storage';
 import styled from 'styled-components';
 import Navbar from 'components/common/Navbar';
 import defaultUser from 'assets/defaultUser.png';
 import { IoIosSettings } from 'react-icons/io';
 import { BsPencilSquare } from 'react-icons/bs';
+import ProductsList from 'data/products.json';
+import { collection, doc, getDocs } from 'firebase/firestore';
+import { getAuth, updateProfile } from 'firebase/auth';
 
 const MyPage = () => {
+  const [productLists, setProductLists] = useState(ProductsList);
   const [userImgs, setUserImg] = useState(defaultUser);
+  const [upLoadImg, setUpLoadImg] = useState(null);
   const fileInput = useRef(null);
+  const [isEditingImg, setIsEditingImg] = useState(false);
   const [userNickName, setUserNickName] = useState('');
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [activeTab, setActiveTab] = useState('내가 등록한 펀딩');
+  const [pageScroll, setPageScroll] = useState(8);
 
+  // --- 프로필사진 등록 ----//
   const userImgUploadHandler = (e) => {
-    if (e.target.files[0]) {
-      setUserImg(e.target.files[0]);
-    } else {
-      setUserImg(userImgs);
-      return;
-    }
+    setUpLoadImg(e.target.files[0]);
 
-    //화면에 프로필 사진 표시
-    const imgReader = new FileReader();
-    imgReader.onload = () => {
-      if (imgReader.readyState === 2) {
-        setUserImg(imgReader.result);
+    // 화면에 프로필 사진 표시
+    const Reader = new FileReader();
+    Reader.onload = () => {
+      if (Reader.readyState === 2) {
+        setUserImg(Reader.result);
       }
     };
-    imgReader.readAsDataURL(e.target.files[0]);
+    Reader.readAsDataURL(e.target.files[0]);
   };
 
-  const onClickFileBtn = (e) => {
+  // 이미지 등록 클릭
+  const onClickFileBtn = () => {
     fileInput.current.click();
+
+    if (!isEditingImg) {
+      setIsEditingImg(true);
+      return;
+    }
+    setIsEditingImg(false);
+  };
+  // 이미지 등록완료
+
+  const onClickDoneBtn = async () => {
+    const userImgRef = ref(storage, `${auth.currentUser.uid}/${upLoadImg.name}`);
+    await uploadBytes(userImgRef, upLoadImg);
+    const downloadURL = await getDownloadURL(userImgRef);
+
+    setIsEditingImg(false);
+  };
+  // 이미지 등록취소
+  const onClickCancelBtn = () => {
+    setIsEditingImg(false);
   };
 
-  // 닉네임
+  // ------  닉네임 ----------- //
 
+  // 닉네임 변경 취소
   const onClickCancel = () => {
-    setIsEditing(false);
+    setIsEditingName(false);
   };
 
-  const onClickModifyDone = () => {
+  // 닉네임 변경 유효성검사 후 완료
+  const onClickModifyDone = async () => {
     if (!userNickName) {
       return alert('수정사항이 없습니다.');
     }
-    // const imageRef = ref(storage, `${auth.currentUser.uid}/${userImgs.name}`);
-    // await uploadBytes(imageRef, userImgs);
-    // const downloadURL = getDownloadURL(imageRef);
-    setIsEditing(false);
-    setUserNickName('');
+    const userNameRef = ref(storage, `${auth.currentUser.uid}/${userNickName}`);
+    await uploadString(userNameRef, userNickName);
+    const downloadURL = await getDownloadURL(userNameRef);
+    setIsEditingName(false);
+    setUserNickName(userNickName);
   };
 
   const nicknameChangeUtil = (e) => {
@@ -57,44 +83,76 @@ const MyPage = () => {
   };
 
   const nickNameOnClickHandler = () => {
-    if (!isEditing) {
-      setIsEditing(true); // 연필 버튼을 클릭하면 edit모드를 true로
+    if (!isEditingName) {
+      setIsEditingName(true);
       return;
     }
-    setUserNickName(userNickName);
-    setIsEditing(false);
+    setIsEditingName(false);
   };
 
+  // 탭변경
+  const activeTabHandler = (e) => {
+    setActiveTab(e.target.textContent);
+  };
+
+  // 더보기 버튼
+  const MoreBtn = () => {
+    setPageScroll((pageScroll) => pageScroll + 4);
+  };
+  let buttonText = '더 보기';
+  switch (activeTab) {
+    case '내가 등록한 펀딩':
+      buttonText = ' 내가 등록한 펀딩 더 보기';
+      break;
+    case '스크랩한 펀딩':
+      buttonText = '스크랩한 펀딩 더 보기';
+      break;
+    case '알림신청한 펀딩':
+      buttonText = '알림신청한 펀딩 더 보기';
+      break;
+    case '내가 후원한 펀딩':
+      buttonText = '내가 후원한 펀딩 더 보기';
+      break;
+    default:
+      break;
+  }
   return (
     <>
       <Navbar />
       <UserInfoWrapper>
         <div>
-          <UserImg src={userImgs} alt="유저 프로필사진" />
+          <UserImg src={userImgs} alt={defaultUser} />
           <input
             type="file"
             style={{ display: 'none' }}
-            accept="image/jpg,impge/png,image/jpeg"
+            accept="image/jpg,image/png,image/jpeg"
             name="profileImg"
             onChange={userImgUploadHandler}
             ref={fileInput}
           />
-          <SetIcon onClick={onClickFileBtn}>
-            <IoIosSettings />
-          </SetIcon>
+          {isEditingImg ? (
+            <ImgBtnWrapper>
+              <CancelImgBtn onClick={onClickCancelBtn}>취소</CancelImgBtn>
+              <DoneImgBtn onClick={onClickDoneBtn}>등록 완료</DoneImgBtn>
+            </ImgBtnWrapper>
+          ) : (
+            <SetIcon onClick={onClickFileBtn}>
+              <IoIosSettings size={20} />
+            </SetIcon>
+          )}
         </div>
         <UserInfo>
-          {isEditing ? (
-            <>
+          {isEditingName ? (
+            <BtnWrapper>
               <input type="text" onChange={nicknameChangeUtil} value={userNickName} />
-              <button onClick={onClickModifyDone}>수정완료</button>
-              <button onClick={onClickCancel}>취소</button>
-            </>
+              <CancelBtn onClick={onClickCancel}>취소</CancelBtn>
+              <DoneBtn onClick={onClickModifyDone}>수정완료</DoneBtn>
+            </BtnWrapper>
           ) : (
             <>
-              <span>{userNickName || '닉네임'}</span>
+              <UserNickName>{userNickName || '닉네임'}</UserNickName>
               <NickNameIcon onClick={nickNameOnClickHandler}>
-                <BsPencilSquare />
+                <BsPencilSquare size={15} />
               </NickNameIcon>
             </>
           )}
@@ -103,50 +161,91 @@ const MyPage = () => {
       </UserInfoWrapper>
       <nav>
         <NavTep>
-          <NavTepLists>내가 등록한 펀딩</NavTepLists>
-          <NavTepLists>스크랩한 펀딩</NavTepLists>
-          <NavTepLists>알림신청한 펀딩</NavTepLists>
-          <NavTepLists>내가 펀딩한 목록</NavTepLists>
+          <NavTepLists onClick={activeTabHandler} $activeTab={activeTab}>
+            내가 등록한 펀딩
+          </NavTepLists>
+          <NavTepLists onClick={activeTabHandler} $activeTab={activeTab}>
+            스크랩한 펀딩
+          </NavTepLists>
+          <NavTepLists onClick={activeTabHandler} $activeTab={activeTab}>
+            알림신청한 펀딩
+          </NavTepLists>
+          <NavTepLists onClick={activeTabHandler} $activeTab={activeTab}>
+            내가 후원한 펀딩
+          </NavTepLists>
         </NavTep>
       </nav>
       <main>
-        <article>
-          <CardLists>
-            <img src="" alt="글이미지" />
-            <h2>제목</h2>
-            <p>내용</p>
-          </CardLists>
-        </article>
-
-        <div>내가 등록한 펀딩 더보기</div>
+        <CardContainer>
+          {productLists &&
+            productLists.productList
+              .filter(
+                (productLists) =>
+                  (activeTab === '내가 등록한 펀딩' && productLists.myPageState === 'register') ||
+                  (activeTab === '스크랩한 펀딩' && productLists.myPageState === 'clipping') ||
+                  (activeTab === '알림신청한 펀딩' && productLists.myPageState === 'notificationSettings') ||
+                  (activeTab === '내가 후원한 펀딩' && productLists.myPageState === 'support')
+              )
+              .slice(0, pageScroll)
+              .map((product) => (
+                <CardLists key={product.id}>
+                  <ProductImg src={product.image} alt="상품 이미지" />
+                  <ProductName>{product.name}</ProductName>
+                  <div>
+                    <ProductAchievementRate>{product.achievementRate}</ProductAchievementRate> 달성
+                  </div>
+                </CardLists>
+              ))}
+        </CardContainer>
+        <MoreMyBtnWrapper>
+          <MoreMyBtn onClick={() => MoreBtn()}>{buttonText}</MoreMyBtn>
+        </MoreMyBtnWrapper>
       </main>
     </>
   );
 };
 
+export default MyPage;
+
 const UserInfoWrapper = styled.div`
   width: 100%;
   height: 150px;
-  border: 1px solid red;
   display: flex;
   align-items: center;
 `;
 const NavTep = styled.ul`
   display: flex;
-  border-bottom: 1px solid #e6e6e6;
-  padding: 1rem;
+  border-bottom: 2px solid #e6e6e6;
+  margin-bottom: 35px;
   gap: 20px;
+  font-weight: bold;
+  font-size: 20px;
 `;
 
 const NavTepLists = styled.li`
   color: #878f97;
-  font-weight: bold;
+  padding: 1rem;
+  ${(props) => (props.$activeTab === props.children ? 'border-bottom: 2px solid var(--main-color);' : 'none')};
+  ${(props) => (props.$activeTab === props.children ? 'color:black' : 'none')};
+  cursor: pointer;
+`;
+
+const CardContainer = styled.div`
+  display: flex;
+  justify-content: start;
+  gap: 30px;
+  flex-wrap: wrap;
 `;
 
 const CardLists = styled.div`
-  border: 1px solid #dfdfdf;
-  width: 200px;
-  height: 100px;
+  border: 2px solid #dfdfdf;
+  border-radius: 9px;
+  width: 280px;
+  height: 200px;
+  padding: 1rem;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const UserImg = styled.img`
@@ -154,11 +253,6 @@ const UserImg = styled.img`
   height: 80px;
   border-radius: 50%;
   overflow: hidden;
-  &img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-  }
 `;
 
 const SetIcon = styled.button`
@@ -171,12 +265,14 @@ const SetIcon = styled.button`
   margin: 0 0 0 -20px;
 `;
 const UserInfo = styled.div`
-  display: flex;
-  flex-direction: column;
+  margin-left: 20px;
+  color: #818181;
 `;
-const InfoBtn = styled.div`
-  display: flex;
-  justify-content: flex-end;
+
+const UserNickName = styled.span`
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #464646;
 `;
 
 const NickNameIcon = styled.button`
@@ -188,5 +284,80 @@ const NickNameIcon = styled.button`
   border: none;
 `;
 
+const BtnWrapper = styled.div`
+  display: flex;
+  margin-bottom: 10px;
+  gap: 4px;
+`;
 
-export default MyPage;
+const DoneBtn = styled.button`
+  background-color: var(--main-color);
+  color: white;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+`;
+
+const CancelBtn = styled.button`
+  background-color: var(--sub-color);
+  color: white;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+`;
+
+const ProductImg = styled.img`
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+`;
+
+const ProductName = styled.h2`
+  font-size: 1rem;
+`;
+
+const ProductAchievementRate = styled.span`
+  font-size: 1rem;
+  color: var(--sub-color);
+  font-weight: bold;
+`;
+
+const ImgBtnWrapper = styled.div`
+  display: flex;
+  gap: 4px;
+`;
+
+const DoneImgBtn = styled.button`
+  background-color: var(--main-color);
+  color: white;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+`;
+
+const CancelImgBtn = styled.button`
+  background-color: var(--sub-color);
+  color: white;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+`;
+
+const MoreMyBtnWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 70px;
+`;
+
+const MoreMyBtn = styled.button`
+  width: 600px;
+  background-color: white;
+  color: #464646;
+  font-weight: bold;
+  font-size: 17px;
+  border-radius: 4px;
+  border: 2px solid #dfdfdf;
+  padding: 0.3rem 0.5rem;
+  cursor: pointer;
+`;
