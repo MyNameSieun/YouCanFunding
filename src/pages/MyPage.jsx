@@ -40,6 +40,9 @@ const MyPage = ({ activeNavTab, setActiveNavTab }) => {
 
   // 이미지 등록완료
   const onClickDoneBtn = async () => {
+    if (!upLoadImg) {
+      return alert('수정사항이 없습니다.');
+    }
     const userImgRef = ref(storage, `users/${user?.uid}`);
     const result = await uploadBytes(userImgRef, upLoadImg);
     const downloadURL = await getDownloadURL(result.ref);
@@ -158,7 +161,7 @@ const MyPage = ({ activeNavTab, setActiveNavTab }) => {
               </NickNameIcon>
             </>
           )}
-          <p>{user?.email ?? 'test-email'}</p>
+          <p>{user?.email ?? '소셜 계정으로 로그인 중입니다.'}</p>
         </UserInfo>
       </UserInfoWrapper>
       <nav>
