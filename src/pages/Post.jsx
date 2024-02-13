@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Navbar from 'components/common/Navbar';
-import defaultUser from 'assets/defaultUser.png';
 import ScheduledNotification from 'components/post/ScheduledNotification';
 import ScheduledComments from 'components/post/ScheduledComments';
+import CompletedComments from 'components/post/CompletedComments';
+import CompletedNotification from 'components/post/CompletedNotification';
 
 const ProjectIntroduction = styled.div`
   display: flex;
@@ -113,32 +114,6 @@ const TabItem = styled.div`
   color: ${(props) => (props.activePostTab ? 'black' : '#878f97')};
   font-weight: ${(props) => (props.activePostTab ? 'bold' : 'normal')};
 `;
-const FontWeight = styled.span`
-  font-weight: bold;
-`;
-
-const CommentContainer = styled.div`
-  display: flex;
-  align-items: center;
-  border: 2px solid #dfdfdf;
-  width: 800px;
-  margin: 7px auto;
-  height: 70px;
-  border-radius: 30px;
-  background-color: white;
-`;
-
-const CommentImage = styled.img`
-  margin-left: 30px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 15px;
-`;
-
-const CommentText = styled.div`
-  font-size: 16px;
-`;
 
 function Post({ activeNavTab, setActiveNavTab }) {
   const [activePostTab, setActivePostTab] = useState('project');
@@ -159,7 +134,20 @@ function Post({ activeNavTab, setActiveNavTab }) {
           <SubTitle>
             프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명 프로젝트 설명
           </SubTitle>
+          {/* <Achieve>
+            <div>
+              <PointText color="var(--main-color)">98%</PointText> 달성
+            </div>
+            <div>
+              <PointText color="var(--sub-color)">123123</PointText>원 모금
+            </div>
+          </Achieve>
+          <InProgress>
+            <input placeholder="후원 금액을 입력해주세요." />
+            <button>후원하기</button>
+          </InProgress> */}
           <ScheduledNotification />
+          {/* <CompletedNotification /> */}
         </TitleBox>
       </ProjectIntroduction>
       <PostTab>
@@ -185,7 +173,28 @@ function Post({ activeNavTab, setActiveNavTab }) {
             esse
           </ProjectInfoContainer>
         ) : (
+          //   <>
+          //   <CommentContainer>
+          //     <CommentImage src={defaultUser} alt="User Profile" />
+          //     <CommentText>
+          //       박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
+          //     </CommentText>
+          //   </CommentContainer>
+          //   <CommentContainer>
+          //     <CommentImage src={defaultUser} alt="User Profile" />
+          //     <CommentText>
+          //       박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
+          //     </CommentText>
+          //   </CommentContainer>
+          //   <CommentContainer>
+          //     <CommentImage src={defaultUser} alt="User Profile" />
+          //     <CommentText>
+          //       박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
+          //     </CommentText>
+          //   </CommentContainer>
+          // </>
           <ScheduledComments />
+          // <CompletedComments />
         )}
       </BottomBox>
     </>
