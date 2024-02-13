@@ -16,4 +16,5 @@ const CompletedContainer = styled.div`
   flex-direction: column;
   margin: 30px auto;
   line-height: 1.5;
+  color: var(--sub-color);
 `;

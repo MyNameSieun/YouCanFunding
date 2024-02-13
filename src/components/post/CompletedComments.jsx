@@ -4,26 +4,26 @@ import defaultUser from 'assets/defaultUser.png';
 
 function CompletedComments() {
   return (
-    <>
-      <CommentContainer>
+    <CommentContainer>
+      <CommentItem>
         <CommentImage src={defaultUser} alt="User Profile" />
         <CommentText>
           박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
         </CommentText>
-      </CommentContainer>
-      <CommentContainer>
+      </CommentItem>
+      <CommentItem>
         <CommentImage src={defaultUser} alt="User Profile" />
         <CommentText>
           박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
         </CommentText>
-      </CommentContainer>
-      <CommentContainer>
+      </CommentItem>
+      <CommentItem>
         <CommentImage src={defaultUser} alt="User Profile" />
         <CommentText>
           박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
         </CommentText>
-      </CommentContainer>
-    </>
+      </CommentItem>
+    </CommentContainer>
   );
 }
 
@@ -31,10 +31,18 @@ export default CompletedComments;
 
 const CommentContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  margin: 50px auto;
+`;
+
+const CommentItem = styled.div`
+  display: flex;
   align-items: center;
   border: 2px solid #dfdfdf;
   width: 800px;
-  margin: 7px auto;
   height: 70px;
   border-radius: 30px;
   background-color: white;

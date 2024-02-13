@@ -17,6 +17,7 @@ const CommentsContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 50px auto;
   line-height: 2;
-  font-size: 18px;
+  font-size: 16px;
 `;

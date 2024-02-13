@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
+import defaultUser from 'assets/defaultUser.png';
 import ScheduledNotification from 'components/post/ScheduledNotification';
 import ScheduledComments from 'components/post/ScheduledComments';
 import CompletedComments from 'components/post/CompletedComments';
@@ -18,7 +19,7 @@ const ImageBox = styled.div`
   border: 2px solid #dfdfdf;
   background-color: white;
   border-radius: 9px;
-  width: 534px;
+  width: 500px;
   height: 298px;
   position: relative;
 
@@ -29,28 +30,36 @@ const ImageBox = styled.div`
 `;
 const TitleBox = styled.div`
   margin-left: 60px;
-  width: 500px;
+  width: 504px;
 `;
 
 const Title = styled.div`
   font-weight: bold;
-  font-size: 28px;
+  font-size: 30px;
+  line-height: 1.7;
   margin-bottom: 8px;
 `;
 const SubTitle = styled.div`
   color: #818181;
-  font-size: 15px;
+  font-size: 16px;
+  line-height: 1.5;
   margin-top: 16px;
 `;
 const Achieve = styled.div`
+  display: flex;
+  justify-content: space-between;
   font-weight: bold;
   font-size: 18px;
   color: #464646;
-  margin-top: 30px;
+  margin: 30px auto;
   & > div {
     margin-bottom: 10px;
   }
 `;
+
+const Achievement = styled.div``;
+
+const Collection = styled.div``;
 
 const PointText = styled.span`
   color: ${(props) => props.color};
@@ -59,29 +68,30 @@ const PointText = styled.span`
 const InProgress = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 35px;
+  gap: 10px;
 
   input {
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    width: 200px;
-    font-size: 16px;
+    width: 100%;
+    font-size: 18px;
     margin-right: 10px;
   }
 
   button {
     padding: 10px 20px;
-    background-color: #4caf50;
+    background-color: var(--sub-color);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 7px;
+    width: 40%;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
     transition: background-color 0.3s ease;
 
     &:hover {
-      background-color: #45a049;
+      background-color: #ff3300f6;
     }
   }
 `;
@@ -105,7 +115,11 @@ const BottomBox = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
-const ProjectInfoContainer = styled.div``;
+const ProjectInfoContainer = styled.div`
+  font-size: 16px;
+  line-height: 1.8;
+  margin: 50px auto;
+`;
 
 const TabItem = styled.div`
   font-size: 24px;
@@ -113,6 +127,41 @@ const TabItem = styled.div`
   cursor: pointer;
   color: ${(props) => (props.activePostTab ? 'black' : '#878f97')};
   font-weight: ${(props) => (props.activePostTab ? 'bold' : 'normal')};
+`;
+
+const CommentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  margin: 50px auto;
+`;
+
+const CommentItem = styled.div`
+  display: flex;
+  align-items: center;
+  border: 2px solid #dfdfdf;
+  width: 800px;
+  height: 70px;
+  border-radius: 30px;
+  background-color: white;
+`;
+
+const CommentImage = styled.img`
+  margin-left: 30px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 15px;
+`;
+
+const CommentText = styled.div`
+  font-size: 16px;
+`;
+
+const FontWeight = styled.span`
+  font-weight: bold;
 `;
 
 function Post({ activeNavTab, setActiveNavTab }) {
@@ -134,19 +183,21 @@ function Post({ activeNavTab, setActiveNavTab }) {
           <SubTitle>
             프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명 프로젝트 설명
           </SubTitle>
-          {/* <Achieve>
-            <div>
+          {/* <ScheduledNotification /> */}
+
+          <Achieve>
+            <Achievement>
               <PointText color="var(--main-color)">98%</PointText> 달성
-            </div>
-            <div>
+            </Achievement>
+            <Collection>
               <PointText color="var(--sub-color)">123123</PointText>원 모금
-            </div>
+            </Collection>
           </Achieve>
           <InProgress>
             <input placeholder="후원 금액을 입력해주세요." />
             <button>후원하기</button>
-          </InProgress> */}
-          <ScheduledNotification />
+          </InProgress>
+
           {/* <CompletedNotification /> */}
         </TitleBox>
       </ProjectIntroduction>
@@ -173,27 +224,29 @@ function Post({ activeNavTab, setActiveNavTab }) {
             esse
           </ProjectInfoContainer>
         ) : (
-          //   <>
-          //   <CommentContainer>
-          //     <CommentImage src={defaultUser} alt="User Profile" />
-          //     <CommentText>
-          //       박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
-          //     </CommentText>
-          //   </CommentContainer>
-          //   <CommentContainer>
-          //     <CommentImage src={defaultUser} alt="User Profile" />
-          //     <CommentText>
-          //       박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
-          //     </CommentText>
-          //   </CommentContainer>
-          //   <CommentContainer>
-          //     <CommentImage src={defaultUser} alt="User Profile" />
-          //     <CommentText>
-          //       박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
-          //     </CommentText>
-          //   </CommentContainer>
-          // </>
-          <ScheduledComments />
+          // <ScheduledComments />
+
+          <CommentContainer>
+            <CommentItem>
+              <CommentImage src={defaultUser} alt="User Profile" />
+              <CommentText>
+                박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
+              </CommentText>
+            </CommentItem>
+            <CommentItem>
+              <CommentImage src={defaultUser} alt="User Profile" />
+              <CommentText>
+                박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
+              </CommentText>
+            </CommentItem>
+            <CommentItem>
+              <CommentImage src={defaultUser} alt="User Profile" />
+              <CommentText>
+                박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
+              </CommentText>
+            </CommentItem>
+          </CommentContainer>
+
           // <CompletedComments />
         )}
       </BottomBox>

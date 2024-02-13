@@ -174,7 +174,7 @@ const MyPage = ({ activeNavTab, setActiveNavTab }) => {
             스크랩한 펀딩
           </NavTepLists>
           <NavTepLists onClick={activeTabHandler} $activeTab={activeTab}>
-            알림신청한 펀딩
+            알림 신청한 펀딩
           </NavTepLists>
           <NavTepLists onClick={activeTabHandler} $activeTab={activeTab}>
             내가 후원한 펀딩

@@ -46,7 +46,7 @@ const OpeningContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
+  gap: 5px;
   margin-top: 30px;
 `;
 
@@ -56,8 +56,12 @@ const OpeningDate = styled.div`
   gap: 15px;
 
   & img {
-    width: 25px;
-    height: 25px;
+    width: 21px;
+    height: 21px;
+  }
+
+  & p {
+    font-size: 15px;
   }
 `;
 
@@ -67,8 +71,12 @@ const OpeningGift = styled.div`
   gap: 15px;
 
   & img {
-    width: 25px;
-    height: 25px;
+    width: 21px;
+    height: 21px;
+  }
+
+  & p {
+    font-size: 15px;
   }
 `;
 
