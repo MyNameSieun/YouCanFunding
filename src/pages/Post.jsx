@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Navbar from 'components/common/Navbar';
-import defaultUser from 'assets/defaultUser.png';
+import DefaultUser from 'assets/defaultUser.png';
+import HeartButton from 'components/HeartButton';
 
 const ProjectIntroduction = styled.div`
   display: flex;
@@ -38,6 +39,7 @@ const SubTitle = styled.div`
   color: #818181;
   font-size: 15px;
   margin-top: 16px;
+  line-height: 1.2;
 `;
 const Achieve = styled.div`
   font-weight: bold;
@@ -66,22 +68,24 @@ const InProgress = styled.div`
     font-size: 16px;
     margin-right: 10px;
   }
-
   button {
     padding: 10px 20px;
-    background-color: #4caf50;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: #45a049;
-    }
   }
 `;
+const SponsorBtn = styled.button`
+  background-color: #4caf50;
+
+  &:hover {
+    background-color: #45a049;
+  }
+`;
+
 const PostTab = styled.div`
   display: flex;
   justify-content: space-between;
@@ -94,6 +98,7 @@ const Hr = styled.div`
   border: 2px solid #e6e6e6;
   margin-top: -40px;
 `;
+
 const BottomBox = styled.div`
   width: 80%;
   margin: 0 auto;
@@ -155,7 +160,8 @@ function Post({ activeNavTab, setActiveNavTab }) {
         <TitleBox>
           <Title>[캣닢 장난감] 고양이를 사랑한 오렌지</Title>
           <SubTitle>
-            프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명 프로젝트 설명
+            프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명 프로젝트 설명 프로젝트
+            설명프로젝트 설명프로젝트 설명프로설명프로젝트 설명프로설명프로젝트 설명프로명프로명프로명프로명프로
           </SubTitle>
           <Achieve>
             <div>
@@ -167,7 +173,8 @@ function Post({ activeNavTab, setActiveNavTab }) {
           </Achieve>
           <InProgress>
             <input placeholder="후원 금액을 입력해주세요." />
-            <button>후원하기</button>
+            <SponsorBtn>후원하기</SponsorBtn>
+            <HeartButton />
           </InProgress>
         </TitleBox>
       </ProjectIntroduction>
@@ -180,6 +187,7 @@ function Post({ activeNavTab, setActiveNavTab }) {
         </TabItem>
       </PostTab>
       <Hr />
+
       <BottomBox>
         {activePostTab === 'project' ? (
           <ProjectInfoContainer>
@@ -196,19 +204,19 @@ function Post({ activeNavTab, setActiveNavTab }) {
         ) : (
           <>
             <CommentContainer>
-              <CommentImage src={defaultUser} alt="User Profile" />
+              <CommentImage src={DefaultUser} alt="User Profile" />
               <CommentText>
                 박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
               </CommentText>
             </CommentContainer>
             <CommentContainer>
-              <CommentImage src={defaultUser} alt="User Profile" />
+              <CommentImage src={DefaultUser} alt="User Profile" />
               <CommentText>
                 박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
               </CommentText>
             </CommentContainer>
             <CommentContainer>
-              <CommentImage src={defaultUser} alt="User Profile" />
+              <CommentImage src={DefaultUser} alt="User Profile" />
               <CommentText>
                 박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
               </CommentText>
