@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { auth } from '../../firebase';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Logout from '../Logout';
 const NavContainer = styled.div`
   height: 90px;
@@ -62,14 +62,30 @@ const Addbtn = styled.span`
   }
 `;
 function Navbar({ activeNavTab, setActiveNavTab }) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoggedOut, setIsLoggedOut] = useState(false);
+
+  useEffect(() => {
+    // 컴포넌트가 마운트 될 때 로그인 상태를 확인하고 업데이트
+    const checkLoginStatus = () => {
+      // 현재 로그인된 사용자 정보 가져오기
+      const currentUser = auth.currentUser;
+      setIsLoggedIn(!!currentUser); // 객체의 존재 여부를 부울 값으로 취급하고자 함
+    };
+
+    checkLoginStatus();
+
+    // 로그인 상태를 주기적으로 확인하고 업데이트
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setIsLoggedIn(!!user);
+    });
+
+    return () => unsubscribe(); // cleanup 함수
+  }, []); // 의존 배열을 빈 배열로 설정해 마운트 될 때 한 번만 실행되도록
 
   const handleLogout = () => {
     setIsLoggedOut(true);
   };
-
-  // 현재 로그인된 사용자 정보 가져오기
-  const currentUser = auth.currentUser;
 
   return (
     <NavContainer>
@@ -92,7 +108,7 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
           </>
         </LeftNav>
         <RightNav>
-          {currentUser ? (
+          {isLoggedIn ? (
             <>
               {isLoggedOut ? (
                 <>
