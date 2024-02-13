@@ -438,7 +438,7 @@ const SignUpToLogin = styled.div`
 
   & a {
     font-weight: 550;
-    color: var(--main-color);
+    color: var(--main-color) !important;
   }
 `;
 
@@ -482,6 +482,11 @@ const SignUpInput = styled.div`
     width: 110px;
     height: 40px;
     cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover {
+      background-color: rgba(228, 228, 228, 0.514);
+    }
   }
 
   & p {
@@ -510,6 +515,12 @@ const SignUpButton = styled.button`
   border: 1.5px solid rgb(228, 228, 228);
   border-radius: 30px;
   cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+
+  &:hover {
+    background-color: #274eff;
+    color: white;
+  }
 `;
 
 const SignUpWithOtherMethod = styled.div`
@@ -556,5 +567,10 @@ const SignUpWithOtherMethodButtonSet = styled.div`
     font-size: 14px;
     font-weight: 550;
     cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover {
+      background-color: rgb(228, 228, 228);
+    }
   }
 `;

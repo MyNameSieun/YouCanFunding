@@ -280,7 +280,7 @@ const LoginToSignUp = styled.div`
 
   & a {
     font-weight: 550;
-    color: var(--main-color);
+    color: var(--main-color) !important;
   }
 `;
 
@@ -330,6 +330,12 @@ const LoginButton = styled.button`
   border: 1.5px solid rgb(228, 228, 228);
   border-radius: 30px;
   cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+
+  &:hover {
+    background-color: #274eff;
+    color: white;
+  }
 `;
 
 const LoginErrorMessage = styled.p`
@@ -389,5 +395,10 @@ const LoginWithOtherMethodButtonSet = styled.div`
     font-size: 14px;
     font-weight: 550;
     cursor: pointer;
+
+    &:hover {
+      transition: background-color 0.3s, color 0.3s;
+      background-color: rgb(228, 228, 228);
+    }
   }
 `;
