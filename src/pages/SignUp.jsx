@@ -1,5 +1,11 @@
 import { auth, db } from '../firebase';
-import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
+import {
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  signOut
+} from 'firebase/auth';
 import React, { useState } from 'react';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
@@ -19,7 +25,7 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
   const [emailConfirmation, setEmailConfirmation] = useState('');
   const [isEmailMatching, setIsEmailMatching] = useState('true');
   const [isEmailAvailable, setIsEmailAvailable] = useState(true);
-  const [isEmailCheckButtonClicked, setISEmailCheckButtonClicked] = useState(false);
+  const [isEmailCheckButtonClicked, setIsEmailCheckButtonClicked] = useState(false);
   const [isEmailValidCondition, setIsEmailValidCondition] = useState(true);
 
   // 비밀번호
@@ -83,7 +89,7 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
 
       // 중복된 이메일 존재 시 상태 업데이트
       setIsEmailAvailable(emailSnapshot.empty);
-      setISEmailCheckButtonClicked(true);
+      setIsEmailCheckButtonClicked(true);
     } catch (error) {
       console.error('error checking email availability', error);
     }
@@ -206,6 +212,7 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
     try {
       const provider = new GoogleAuthProvider(); // provider를 구글로 설정
       const userCredential = await signInWithPopup(auth, provider);
+      console.log(userCredential);
 
       const user = userCredential.user;
       const existingUserQuery = query(collection(db, 'users'), where('email', '==', user.email));
@@ -230,12 +237,55 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.error('Error with Google signUp:', errorCode, errorMessage);
+
+      if (errorMessage.includes('already in use by an existing account')) {
+        // 이미 가입된 이메일인 경우
+        alert('이미 깃허브 계정으로 가입된 이메일 주소입니다.');
+      } else {
+        console.error('Error with Google signUp:', errorCode, errorMessage);
+      }
     }
   };
 
   // 깃허브로 회원가입
-  const handleGithubSignUp = () => {};
+  const handleGithubSignUp = async () => {
+    try {
+      const provider = new GithubAuthProvider(); // provider를 깃허브로 설정
+      const userCredential = await signInWithPopup(auth, provider);
+      console.log(userCredential);
+
+      const user = userCredential.user;
+      const existingUserQuery = query(collection(db, 'users'), where('email', '==', user.email));
+      const existingUserSnapshot = await getDocs(existingUserQuery);
+
+      if (existingUserSnapshot.empty) {
+        // 중복된 사용자가 없으면 사용자 정보 Firestore에 저장
+        await addDoc(collection(db, 'users'), {
+          uid: user.uid,
+          nickname: user.displayName,
+          email: user.email
+        });
+
+        console.log('user', user);
+
+        alert('회원가입이 완료되었습니다.');
+        navigate('/login');
+      } else {
+        alert('이미 등록된 깃허브 계정입니다.');
+        await signOut(auth);
+      }
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+
+      if (errorMessage.includes('already in use by an existing account')) {
+        // 이미 가입된 이메일인 경우
+        alert('이미 구글 계정으로 가입된 이메일 주소입니다.');
+      } else {
+        console.error('Error with Github signUp:', errorCode, errorMessage);
+      }
+    }
+  };
 
   return (
     <>
