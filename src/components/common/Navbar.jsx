@@ -76,8 +76,9 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
     checkLoginStatus();
 
     // 로그인 상태를 주기적으로 확인하고 업데이트
+    // auth.onAuthStateChanged : 사용자의 인증 상태가 변경될 때마다 콜백 함수를 호출
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      setIsLoggedIn(!!user);
+      setIsLoggedIn(!!user); // isLoggedIn 상태를 업데이트
     });
 
     return () => unsubscribe(); // cleanup 함수
