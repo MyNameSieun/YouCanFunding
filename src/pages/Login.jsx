@@ -1,5 +1,6 @@
 import { auth, db } from '../firebase';
 import {
+  GithubAuthProvider,
   GoogleAuthProvider,
   fetchSignInMethodsForEmail,
   sendPasswordResetEmail,
@@ -132,7 +133,43 @@ function Login({ activeNavTab, setActiveNavTab }) {
   };
 
   // 깃허브로 로그인
-  const handleGithubLogin = () => {};
+  const handleGithubLogin = async () => {
+    try {
+      // 현재 로그인된 사용자 정보 가져오기
+      const currentUser = auth.currentUser;
+
+      // 로그아웃 상태인 경우에만
+      if (currentUser) {
+        alert('이미 로그인되어 있습니다.');
+        return;
+      }
+
+      const provider = new GithubAuthProvider(); // provider를 구글로 설정
+      const userCredential = await signInWithPopup(auth, provider);
+
+      const user = userCredential.user;
+      const existingUserQuery = query(collection(db, 'users'), where('email', '==', user.email));
+      const existingUserSnapshot = await getDocs(existingUserQuery);
+
+      if (existingUserSnapshot.empty) {
+        // 중복된 사용자가 없으면 사용자 정보 Firestore에 저장
+        await addDoc(collection(db, 'users'), {
+          uid: user.uid,
+          nickname: user.displayName,
+          email: user.email
+        });
+      }
+
+      console.log('user', userCredential.user);
+
+      alert('로그인 되었습니다.');
+      navigate('/main');
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error('Error with Github signUp:', errorCode, errorMessage);
+    }
+  };
 
   return (
     <>
