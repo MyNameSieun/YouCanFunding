@@ -94,10 +94,6 @@ const PostTab = styled.div`
   font-size: 24px;
   font-weight: bold;
 `;
-const Hr = styled.div`
-  border: 2px solid #e6e6e6;
-  margin-top: -40px;
-`;
 
 const BottomBox = styled.div`
   width: 80%;
@@ -109,13 +105,24 @@ const BottomBox = styled.div`
 `;
 const ProjectInfoContainer = styled.div``;
 
+const Hr = styled.div`
+  border: 2px solid #e6e6e6;
+  margin-top: -40px;
+`;
+
 const TabItem = styled.div`
   font-size: 24px;
   font-weight: bold;
   cursor: pointer;
   color: ${(props) => (props.activePostTab ? 'black' : '#878f97')};
   font-weight: ${(props) => (props.activePostTab ? 'bold' : 'normal')};
+
+  /* ${(props) => (props.$activePostTab === props.children ? 'border-bottom: 1px solid var(--main-color)' : 'none')} */
+  border-bottom: ${(props) => (props.activePostTab ? '4px solid var(--main-color)' : 'none')};
+  margin-bottom: ${(props) => (props.activePostTab ? '-23px' : '0')};
+  padding: ${(props) => (props.activePostTab ? '0 30px' : 'none')};
 `;
+
 const FontWeight = styled.span`
   font-weight: bold;
 `;
