@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { useState } from 'react';
-import Logout from './Logout';
+import Logout from '../Logout';
 const NavContainer = styled.div`
   height: 90px;
   display: flex;
