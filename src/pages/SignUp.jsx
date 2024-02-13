@@ -1,5 +1,11 @@
 import { auth, db } from '../firebase';
-import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
+import {
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  signOut
+} from 'firebase/auth';
 import React, { useState } from 'react';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
@@ -19,7 +25,7 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
   const [emailConfirmation, setEmailConfirmation] = useState('');
   const [isEmailMatching, setIsEmailMatching] = useState('true');
   const [isEmailAvailable, setIsEmailAvailable] = useState(true);
-  const [isEmailCheckButtonClicked, setISEmailCheckButtonClicked] = useState(false);
+  const [isEmailCheckButtonClicked, setIsEmailCheckButtonClicked] = useState(false);
   const [isEmailValidCondition, setIsEmailValidCondition] = useState(true);
 
   // 비밀번호
@@ -83,7 +89,7 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
 
       // 중복된 이메일 존재 시 상태 업데이트
       setIsEmailAvailable(emailSnapshot.empty);
-      setISEmailCheckButtonClicked(true);
+      setIsEmailCheckButtonClicked(true);
     } catch (error) {
       console.error('error checking email availability', error);
     }
@@ -206,6 +212,7 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
     try {
       const provider = new GoogleAuthProvider(); // provider를 구글로 설정
       const userCredential = await signInWithPopup(auth, provider);
+      console.log(userCredential);
 
       const user = userCredential.user;
       const existingUserQuery = query(collection(db, 'users'), where('email', '==', user.email));
@@ -230,69 +237,88 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.error('Error with Google signUp:', errorCode, errorMessage);
+
+      if (errorMessage.includes('already in use by an existing account')) {
+        // 이미 가입된 이메일인 경우
+        alert('이미 깃허브 계정으로 가입된 이메일 주소입니다.');
+      } else {
+        console.error('Error with Google signUp:', errorCode, errorMessage);
+      }
     }
   };
 
-  // // 애플로 회원가입
-  // const handleAppleSignUp = async () => {
-  //   try {
-  //     const provider = new OAuthProvider('apple.com');
-  //     const userCredential = await signInWithPopup(auth, provider);
+  // 깃허브로 회원가입
+  const handleGithubSignUp = async () => {
+    try {
+      const provider = new GithubAuthProvider(); // provider를 깃허브로 설정
+      const userCredential = await signInWithPopup(auth, provider);
+      console.log(userCredential);
 
-  //     const user = userCredential.user;
-  //     const existingUserQuery = query(collection(db, 'users'), where('email', '==', user.email));
-  //     const existingUserSnapshot = await getDocs(existingUserQuery);
+      const user = userCredential.user;
+      const existingUserQuery = query(collection(db, 'users'), where('email', '==', user.email));
+      const existingUserSnapshot = await getDocs(existingUserQuery);
 
-  //     if (existingUserSnapshot.empty) {
-  //       // 중복된 사용자가 없으면 사용자 정보 Firestore에 저장
-  //       await addDoc(collection(db, 'users'), {
-  //         uid: user.uid,
-  //         nickname: user.displayName,
-  //         email: user.email
-  //       });
+      if (existingUserSnapshot.empty) {
+        // 중복된 사용자가 없으면 사용자 정보 Firestore에 저장
+        await addDoc(collection(db, 'users'), {
+          uid: user.uid,
+          nickname: user.displayName,
+          email: user.email
+        });
 
-  //       console.log('user', user);
+        console.log('user', user);
 
-  //       alert('회원가입이 완료되었습니다.');
-  //       navigate('/login');
-  //     } else {
-  //       alert('이미 등록된 애플 계정입니다.');
-  //       await signOut(auth);
-  //     }
-  //   } catch (error) {
-  //     const errorCode = error.code;
-  //     const errorMessage = error.message;
-  //     console.error('Error with Apple signUp:', errorCode, errorMessage);
-  //   }
-  // };
+        alert('회원가입이 완료되었습니다.');
+        navigate('/login');
+      } else {
+        alert('이미 등록된 깃허브 계정입니다.');
+        await signOut(auth);
+      }
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+
+      if (errorMessage.includes('already in use by an existing account')) {
+        // 이미 가입된 이메일인 경우
+        alert('이미 구글 계정으로 가입된 이메일 주소입니다.');
+      } else {
+        console.error('Error with Github signUp:', errorCode, errorMessage);
+      }
+    }
+  };
 
   return (
     <>
       <Navbar activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} />
       <Body>
         <SignUpContainer>
-          <SignUpTitle>이메일로 가입하기</SignUpTitle>
+          <SignUpTitle>이메일로 회원가입</SignUpTitle>
 
           <SignUpToLogin>
-            <p>계정이 있으신가요? &nbsp;</p>
-            <a href="/login"> 기존 계정으로 로그인하기 &gt;</a>
+            <p>이미 계정이 있으신가요? &nbsp;</p>
+            <a href="/login"> 기존 계정으로 로그인 &gt;</a>
           </SignUpToLogin>
 
           <SignUpForm onSubmit={handleSignUp}>
             <SignUpInput>
               <label>닉네임</label>
               <br />
-              <input
-                type="text"
-                value={nickname}
-                placeholder="닉네임을 입력해주세요."
-                required
-                onChange={handleNicknameChange}
-              />
-              <button type="button" onClick={handleNicknameCheckAvailability} disabled={!isNicknameCheckButtonEnabled}>
-                중복 확인
-              </button>
+              <NicknameInput>
+                <input
+                  type="text"
+                  value={nickname}
+                  placeholder="닉네임을 입력해주세요."
+                  required
+                  onChange={handleNicknameChange}
+                />
+                <button
+                  type="button"
+                  onClick={handleNicknameCheckAvailability}
+                  disabled={!isNicknameCheckButtonEnabled}
+                >
+                  중복 확인
+                </button>
+              </NicknameInput>
               {!isNicknameLengthValid && <p>닉네임은 2자 이상, 10자 이하로 입력해 주세요.</p>}
               {isNicknameLengthValid && !isNicknameValidCondition && (
                 <p>한글, 영문 대소문자, 숫자로만 작성해 주세요.</p>
@@ -300,27 +326,27 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
               {isNicknameCheckButtonClicked && (
                 <>{isNicknameAvailable ? <p>사용 가능한 닉네임입니다.</p> : <p>이미 사용 중인 닉네임입니다.</p>}</>
               )}
-
               <br />
               <label>이메일 주소</label>
               <br />
-              <input
-                type="email"
-                value={email}
-                placeholder="이메일 주소를 입력해주세요."
-                required
-                onChange={handleEmailChange}
-              />
-              <button type="button" onClick={handleEmailCheckAvailability}>
-                중복 확인
-              </button>
+              <EmailInput>
+                <input
+                  type="email"
+                  value={email}
+                  placeholder="이메일 주소를 입력해주세요."
+                  required
+                  onChange={handleEmailChange}
+                />
+                <button type="button" onClick={handleEmailCheckAvailability}>
+                  중복 확인
+                </button>
+              </EmailInput>
               {!isEmailValidCondition && <p>유효하지 않은 이메일 형식입니다.</p>}
               {isEmailCheckButtonClicked && (
                 <>
                   {isEmailAvailable ? <p>사용 가능한 이메일 주소입니다.</p> : <p>이미 사용 중인 이메일 주소입니다.</p>}
                 </>
               )}
-              <br />
               <input
                 type="email"
                 value={emailConfirmation}
@@ -339,7 +365,6 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
                 required
                 onChange={handlePasswordChange}
               />
-              <br />
               {!isPasswordLengthValid && <p>비밀번호는 8자 이상, 20자 이하로 입력해 주세요.</p>}
               {isPasswordLengthValid && !isPasswordValidCondition && (
                 <p>숫자, 영문 대소문자, 특수문자 중 2가지 이상을 조합해 주세요.</p>
@@ -354,13 +379,20 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
               {!isPasswordMatching && <p>비밀번호가 일치하지 않습니다.</p>}
             </SignUpInput>
 
-            <SignUpButton type="submit">가입하기</SignUpButton>
+            <SignUpButton type="submit">회원가입</SignUpButton>
           </SignUpForm>
 
           <SignUpWithOtherMethod>
-            <p>다른 방법으로 회원가입</p>
-            <button onClick={handleGoogleSignUp}>구글로 가입하기</button>
-            {/* <button onClick={handleAppleSignUp}>애플로 회원가입</button> */}
+            <SignUpWithOtherMethodPTag>
+              <hr />
+              <p>다른 방법으로 회원가입</p>
+              <hr />
+            </SignUpWithOtherMethodPTag>
+
+            <SignUpWithOtherMethodButtonSet>
+              <button onClick={handleGoogleSignUp}>구글로 회원가입</button>
+              <button onClick={handleGithubSignUp}>깃허브로 회원가입</button>
+            </SignUpWithOtherMethodButtonSet>
           </SignUpWithOtherMethod>
         </SignUpContainer>
       </Body>
@@ -383,18 +415,11 @@ const SignUpContainer = styled.div`
   justify-content: center;
   align-items: flex-start;
   gap: 20px;
-  padding: 32px;
+  margin: 50px auto 70px auto;
+  padding: 50px 35px;
   border: 1.5px solid rgb(228, 228, 228);
   border-radius: 5px;
   width: 350px;
-`;
-
-const SignUpForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  font-size: 15px;
-  font-weight: 500;
 `;
 
 const SignUpTitle = styled.h2`
@@ -405,6 +430,7 @@ const SignUpTitle = styled.h2`
 const SignUpToLogin = styled.div`
   display: flex;
   font-size: 13px;
+  margin: 10px auto 10px 0px;
 
   & a {
     font-weight: 550;
@@ -412,28 +438,119 @@ const SignUpToLogin = styled.div`
   }
 `;
 
+const SignUpForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 15px;
+  font-weight: 500;
+`;
+
 const SignUpInput = styled.div`
-  gap: 15px;
+  display: flex;
+  flex-direction: column;
+
+  & label {
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 10px;
+  }
 
   & input {
-    padding: 7px;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid rgb(228, 228, 228);
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
   }
+
+  & button {
+    padding: 10px;
+    margin-left: 10px;
+    font-size: 14px;
+    font-weight: 550;
+    background-color: rgb(228, 228, 228);
+    color: black;
+    border: 1.5px solid rgb(228, 228, 228);
+    border-radius: 5px;
+    width: 110px;
+    height: 40px;
+    cursor: pointer;
+  }
+
+  & p {
+    color: red;
+    font-size: 12px;
+    margin-bottom: 15px;
+  }
+`;
+
+const NicknameInput = styled.div`
+  display: flex;
+`;
+
+const EmailInput = styled.div`
+  display: flex;
 `;
 
 const SignUpButton = styled.button`
   width: 350px;
-  padding: 8px;
+  margin: 5px auto;
+  padding: 13px;
   font-size: 18px;
   font-weight: 700;
   background-color: var(--main-color);
   color: white;
   border: 1.5px solid rgb(228, 228, 228);
   border-radius: 30px;
+  cursor: pointer;
 `;
 
 const SignUpWithOtherMethod = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+`;
+
+const SignUpWithOtherMethodPTag = styled.div`
+  display: flex;
+
+  & hr {
+    margin-top: 20px;
+    width: 90px;
+    height: 0px;
+    border-top: 0.5px solid rgba(0, 0, 0, 0.479);
+  }
+
   & p {
     padding: 10px;
+    margin: 5px auto 10px auto;
     font-size: 13px;
+    color: #555;
+  }
+`;
+
+const SignUpWithOtherMethodButtonSet = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 350px;
+
+  & button {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 12px;
+    border: 1.5px solid rgb(228, 228, 228);
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 550;
+    cursor: pointer;
   }
 `;
