@@ -120,7 +120,6 @@ const TabItem = styled.div`
   /* ${(props) => (props.$activePostTab === props.children ? 'border-bottom: 1px solid var(--main-color)' : 'none')} */
   border-bottom: ${(props) => (props.activePostTab ? '4px solid var(--main-color)' : 'none')};
   margin-bottom: ${(props) => (props.activePostTab ? '-23px' : '0')};
-  padding: ${(props) => (props.activePostTab ? '0 30px' : 'none')};
 `;
 
 const FontWeight = styled.span`
