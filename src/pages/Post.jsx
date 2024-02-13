@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Navbar from 'components/common/Navbar';
 import defaultUser from 'assets/defaultUser.png';
-import ScheduledNotification from 'components/ScheduledNotification';
-import ScheduledComments from 'components/ScheduledComments';
+import ScheduledNotification from 'components/post/ScheduledNotification';
+import ScheduledComments from 'components/post/ScheduledComments';
 
 const ProjectIntroduction = styled.div`
   display: flex;
