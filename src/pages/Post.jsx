@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import Navbar from 'components/common/Navbar';
+import styled from 'styled-components';
 import ScheduledNotification from 'components/post/ScheduledNotification';
 import ScheduledComments from 'components/post/ScheduledComments';
 import CompletedComments from 'components/post/CompletedComments';

@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from 'components/common/Navbar';
 
-function Home({ activeNavTab, setActiveNavTab }) {
+function Home() {
   return (
     <>
-      <Navbar activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} />
+      <Navbar />
       <Link to="/main">
         <button>메인 페이지</button>
       </Link>

@@ -2,10 +2,10 @@ import React from 'react';
 import Navbar from 'components/common/Navbar';
 import RegisterSection from 'components/register/RegisterSection';
 
-function Register({ activeNavTab, setActiveNavTab }) {
+function Register() {
   return (
     <>
-      <Navbar activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} />
+      <Navbar />
       <RegisterSection />
     </>
   );

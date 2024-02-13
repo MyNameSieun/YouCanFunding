@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
 
-function Login({ activeNavTab, setActiveNavTab }) {
+function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   // 에러 메시지 상태 추가

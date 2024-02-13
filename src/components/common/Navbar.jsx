@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+<<<<<<< HEAD
 import { auth } from '../../firebase';
 import { useEffect, useState } from 'react';
 import Logout from '../Logout';
+=======
+>>>>>>> db1b8251939c917a9d7b2f8494449ecefd482d28
 const NavContainer = styled.div`
   height: 90px;
   display: flex;
@@ -20,30 +23,25 @@ const NavBar = styled.ul`
   width: 100%;
   justify-content: space-between;
 `;
-
 const Logo = styled.span`
   font-size: 30px;
   font-weight: bold;
   margin-right: 34px;
 `;
-
 const Tab = styled.span`
   cursor: pointer;
   margin-right: 24px;
-  color: ${(props) => (props.activeNavTab ? 'black' : '#878f97')};
+  color: ${(props) => (props.activeNavTab ? 'black' : '#878F97')};
 `;
-
 const LeftNav = styled.li`
   font-size: 22px;
   font-weight: bold;
   text-decoration: none;
-
   & li {
     display: inline-block;
     margin-right: 30px;
   }
 `;
-
 const RightNav = styled.li`
   font-size: 17px;
   font-weight: 550;
@@ -54,11 +52,11 @@ const AuthLink = styled(Link)`
 `;
 const Addbtn = styled.span`
   color: white;
-  background-color: #3867d6;
+  background-color: #3867D6;
   padding: 15px 16px;
   border-radius: 9px;
   &:hover {
-    background-color: #0056b3;
+    background-color: #0056B3;
   }
 `;
 function Navbar({ activeNavTab, setActiveNavTab }) {
@@ -147,5 +145,4 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
     </NavContainer>
   );
 }
-
 export default Navbar;

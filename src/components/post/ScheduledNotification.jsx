@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import calendar from 'assets/calendar.png';
 import gift from 'assets/gift.png';
+import { PiBellBold } from 'react-icons/pi';
 
 function ScheduledNotification() {
   const [notificationRequested, setNotificationRequested] = useState(false);
@@ -22,7 +23,7 @@ function ScheduledNotification() {
     <OpeningContainer>
       <OpeningDate>
         <img src={calendar} alt="캘린더"></img>
-        <p>?월 ?일 ?요일 ?시 오픈예정</p>
+        <p>?월 ?일 ?요일 ?시 오픈 예정</p>
       </OpeningDate>
       <OpeningGift>
         <img src={gift} alt="선물"></img>
@@ -31,6 +32,7 @@ function ScheduledNotification() {
 
       <OpeningButton completed={notificationRequested}>
         <button onClick={notificationRequested ? cancelOpenNotification : applyOpenNotification}>
+          <PiBellBold />
           {notificationRequested ? '알림 신청 완료' : '오픈 알림 신청'}
         </button>
       </OpeningButton>
@@ -72,6 +74,11 @@ const OpeningGift = styled.div`
 
 const OpeningButton = styled.div`
   & button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
     width: 100%;
     margin-top: 20px;
     padding: 15px;
