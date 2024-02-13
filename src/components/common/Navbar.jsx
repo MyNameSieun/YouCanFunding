@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-<<<<<<< HEAD
 import { auth } from '../../firebase';
 import { useEffect, useState } from 'react';
 import Logout from '../Logout';
-=======
->>>>>>> db1b8251939c917a9d7b2f8494449ecefd482d28
+
 const NavContainer = styled.div`
   height: 90px;
   display: flex;
@@ -52,11 +50,11 @@ const AuthLink = styled(Link)`
 `;
 const Addbtn = styled.span`
   color: white;
-  background-color: #3867D6;
+  background-color: #3867d6;
   padding: 15px 16px;
   border-radius: 9px;
   &:hover {
-    background-color: #0056B3;
+    background-color: #0056b3;
   }
 `;
 function Navbar({ activeNavTab, setActiveNavTab }) {
