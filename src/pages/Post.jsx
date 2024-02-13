@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Navbar from 'components/common/Navbar';
 import defaultUser from 'assets/defaultUser.png';
-import ScheduledNotification from 'components/SheduledNoticifation';
+import ScheduledNotification from 'components/ScheduledNotification';
+import ScheduledComments from 'components/ScheduledComments';
 
 const ProjectIntroduction = styled.div`
   display: flex;
@@ -166,7 +167,7 @@ function Post({ activeNavTab, setActiveNavTab }) {
           프로젝트 설명
         </TabItem>
         <TabItem activePostTab={activePostTab === 'comments'} onClick={() => handleTabClick('comments')}>
-          댓글
+          서포터
         </TabItem>
       </PostTab>
       <Hr />
@@ -184,26 +185,7 @@ function Post({ activeNavTab, setActiveNavTab }) {
             esse
           </ProjectInfoContainer>
         ) : (
-          <>
-            <CommentContainer>
-              <CommentImage src={defaultUser} alt="User Profile" />
-              <CommentText>
-                박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
-              </CommentText>
-            </CommentContainer>
-            <CommentContainer>
-              <CommentImage src={defaultUser} alt="User Profile" />
-              <CommentText>
-                박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
-              </CommentText>
-            </CommentContainer>
-            <CommentContainer>
-              <CommentImage src={defaultUser} alt="User Profile" />
-              <CommentText>
-                박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
-              </CommentText>
-            </CommentContainer>
-          </>
+          <ScheduledComments />
         )}
       </BottomBox>
     </>
