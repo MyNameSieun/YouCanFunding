@@ -211,10 +211,12 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
   const handleGoogleSignUp = async () => {
     try {
       const provider = new GoogleAuthProvider(); // provider를 구글로 설정
+      provider.addScope('email');
       const userCredential = await signInWithPopup(auth, provider);
-      console.log(userCredential);
+      console.log('userCredential', userCredential);
 
       const user = userCredential.user;
+      console.log('user', user);
       const existingUserQuery = query(collection(db, 'users'), where('email', '==', user.email));
       const existingUserSnapshot = await getDocs(existingUserQuery);
 
@@ -228,10 +230,10 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
 
         console.log('user', user);
 
-        alert('회원가입이 완료되었습니다.');
-        navigate('/login');
+        alert('회원가입 및 로그인이 완료되었습니다.');
+        navigate('/main');
       } else {
-        alert('이미 등록된 구글 계정입니다.');
+        alert('이미 사용 중인 이메일 주소입니다.');
         await signOut(auth);
       }
     } catch (error) {
@@ -251,10 +253,12 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
   const handleGithubSignUp = async () => {
     try {
       const provider = new GithubAuthProvider(); // provider를 깃허브로 설정
+      provider.addScope('user');
       const userCredential = await signInWithPopup(auth, provider);
       console.log(userCredential);
 
       const user = userCredential.user;
+      console.log(user);
       const existingUserQuery = query(collection(db, 'users'), where('email', '==', user.email));
       const existingUserSnapshot = await getDocs(existingUserQuery);
 
@@ -268,10 +272,10 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
 
         console.log('user', user);
 
-        alert('회원가입이 완료되었습니다.');
-        navigate('/login');
+        alert('회원가입 및 로그인이 완료되었습니다.');
+        navigate('/main');
       } else {
-        alert('이미 등록된 깃허브 계정입니다.');
+        alert('이미 사용 중인 이메일 주소입니다.');
         await signOut(auth);
       }
     } catch (error) {

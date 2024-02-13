@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Navbar from 'components/common/Navbar';
 import defaultUser from 'assets/defaultUser.png';
+import ScheduledNotification from 'components/SheduledNoticifation';
 
 const ProjectIntroduction = styled.div`
   display: flex;
@@ -157,18 +158,7 @@ function Post({ activeNavTab, setActiveNavTab }) {
           <SubTitle>
             프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명 프로젝트 설명
           </SubTitle>
-          <Achieve>
-            <div>
-              <PointText color="var(--main-color)">98%</PointText> 달성
-            </div>
-            <div>
-              <PointText color="var(--sub-color)">123123</PointText>원 모금
-            </div>
-          </Achieve>
-          <InProgress>
-            <input placeholder="후원 금액을 입력해주세요." />
-            <button>후원하기</button>
-          </InProgress>
+          <ScheduledNotification />
         </TitleBox>
       </ProjectIntroduction>
       <PostTab>
