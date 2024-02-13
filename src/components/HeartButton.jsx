@@ -7,8 +7,12 @@ import { addDoc, collection, getDocs, query, deleteDoc } from 'firebase/firestor
 import { auth, db } from '../firebase';
 
 const Heart = styled.img`
-  margin-left: 10px;
-  width: 30px;
+  margin-left: 15px;
+  width: 40px;
+`;
+
+const StyledHeartButton = styled.div`
+  background-color: #f5f5f5;
 `;
 
 function HeartButton() {
@@ -58,9 +62,9 @@ function HeartButton() {
 
   return (
     <>
-      <button onClick={handleLikeBtn}>
+      <StyledHeartButton onClick={handleLikeBtn}>
         <Heart src={like ? HeartImg : EmptyHeartImg} />
-      </button>
+      </StyledHeartButton>
     </>
   );
 }

@@ -193,7 +193,6 @@ function Post({ activeNavTab, setActiveNavTab }) {
         </TabItem>
       </PostTab>
       <Hr />
-
       <BottomBox>
         {activePostTab === 'project' ? (
           <ProjectInfoContainer>
