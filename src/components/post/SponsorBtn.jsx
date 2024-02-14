@@ -57,11 +57,8 @@ const SponsorBtn = ({ foundProject, receiptPrice, setReceiptPrice }) => {
       <Achieve>
         <div>
           <SponsorPercent foundProject={foundProject} totalPrice={totalPrice} />
-          {/* <PointText color="var(--sub-color)">{totalPrice}</PointText>원 모금 */}
-          {/* <PointText color="var(--main-color)">98%&nbsp;</PointText>달성 */}
         </div>
         <div>
-          {/* <PointText color="var(--sub-color)">{totalPrice}&nbsp;</PointText>원 달성 */}
           <SponsorTimeLine totalPrice={totalPrice} setTotalPrice={setTotalPrice} />
         </div>
       </Achieve>

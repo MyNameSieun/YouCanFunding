@@ -3,6 +3,7 @@ import { collection, getDocs, query } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db } from '../firebase';
 import { useNavigate } from 'react-router';
+import SponsorPercent from './SponsorPercent';
 
 const CardContainer = styled.div`
   display: flex;
@@ -60,7 +61,6 @@ function HomeVerticalCard({ activeTab, activeNavTab, search }) {
   return (
     <CardContainer>
       {projects
-
         .filter((product) => activeTab === '전체' || activeTab === product.category)
         .filter((item) => {
           if (activeNavTab === 'inProgress') {
@@ -83,6 +83,7 @@ function HomeVerticalCard({ activeTab, activeNavTab, search }) {
           <CardItems key={item.id} onClick={() => navigate(`/post/${item.id}`)}>
             <Image src={item.mainImage} alt={item.title} />
             <Title>{item.title}</Title>
+            {/* <SponsorPercent  /> */}
           </CardItems>
         ))}
     </CardContainer>

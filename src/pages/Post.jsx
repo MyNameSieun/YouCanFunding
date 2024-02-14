@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
 import SponsorBtn from 'components/post/SponsorBtn';
-import SponsorItem from 'components/post/SponsorItem';
 import ScheduledNotification from 'components/post/ScheduledNotification';
 import ScheduledComments from 'components/post/ScheduledComments';
 import CompletedNotification from 'components/post/CompletedNotification';
