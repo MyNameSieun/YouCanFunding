@@ -243,9 +243,10 @@ const UserInfoWrapper = styled.div`
 
 const NavTep = styled.ul`
   display: flex;
+  justify-content: space-evenly;
+  gap: 10px;
   border-bottom: 2px solid #e6e6e6;
   margin-bottom: 35px;
-  gap: 20px;
   font-weight: bold;
   font-size: 20px;
 `;
@@ -253,7 +254,7 @@ const NavTep = styled.ul`
 const NavTepLists = styled.li`
   color: #878f97;
   padding: 1rem;
-  ${(props) => (props.$activeTab === props.children ? 'border-bottom: 2px solid var(--main-color);' : 'none')};
+  ${(props) => (props.$activeTab === props.children ? 'border-bottom: 3px solid var(--main-color);' : 'none')};
   ${(props) => (props.$activeTab === props.children ? 'color:black' : 'none')};
   cursor: pointer;
 `;
@@ -266,14 +267,15 @@ const CardContainer = styled.div`
 `;
 
 const CardLists = styled.div`
-  border: 2px solid #dfdfdf;
-  border-radius: 9px;
-  width: 280px;
-  height: 200px;
-  padding: 1rem;
-  gap: 10px;
   display: flex;
   flex-direction: column;
+  gap: 30px;
+  padding: 20px;
+  border: 2px solid #dfdfdf;
+  border-radius: 9px;
+  width: 270px;
+  height: 270px;
+  background-color: #ffffff84;
   cursor: pointer;
 
   &:hover {
@@ -352,18 +354,14 @@ const CancelBtn = styled.button`
 
 const ProductImg = styled.img`
   width: 100%;
-  height: 200px;
+  height: 100%;
   overflow: hidden;
 `;
 
 const ProductName = styled.h2`
-  font-size: 1rem;
-`;
-
-const ProductAchievementRate = styled.span`
-  font-size: 1rem;
-  color: var(--sub-color);
-  font-weight: bold;
+  font-size: 20px;
+  font-weight: 600;
+  margin-left: 10px;
 `;
 
 const ImgBtnWrapper = styled.div`

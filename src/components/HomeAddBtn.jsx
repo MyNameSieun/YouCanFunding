@@ -11,7 +11,7 @@ const BtnContainer = styled.div`
 const Button = styled.button`
   border: 2px solid #dfdfdf;
   border-radius: 7px;
-  margin: 100px 30px;
+  margin: 80px auto;
   width: 424px;
   height: 46px;
   font-weight: bold;
