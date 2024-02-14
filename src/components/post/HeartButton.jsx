@@ -24,11 +24,7 @@ function HeartButton() {
       const q = query(collection(db, 'like'));
       const querySnapshot = await getDocs(q);
 
-      const initialLike = querySnapshot.size > 0;
-
-      querySnapshot.forEach((doc) => {
-        initialLike.push({ id: doc.id, ...doc.data() });
-      });
+      const initialLike = querySnapshot.size > 0 ? true : false;
 
       setLike(initialLike);
     };

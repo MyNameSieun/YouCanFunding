@@ -60,7 +60,7 @@ const SponsorBtn = ({ receiptPrice, setReceiptPrice }) => {
           placeholder="후원 금액을 입력해주세요."
         />
         <button type="submit">후원하기</button>
-        {/* <HeartButton /> */}
+        <HeartButton />
       </PriceForm>
     </>
   );
