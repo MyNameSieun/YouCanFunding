@@ -1,7 +1,6 @@
 // Router.js
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from 'pages/Home';
 import Login from 'pages/Login';
 import Main from 'pages/Main';
 import MyPage from 'pages/MyPage';
