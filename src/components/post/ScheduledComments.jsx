@@ -20,4 +20,5 @@ const CommentsContainer = styled.div`
   margin: 50px auto;
   line-height: 2;
   font-size: 16px;
+  font-weight: 600;
 `;
