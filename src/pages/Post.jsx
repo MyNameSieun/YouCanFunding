@@ -180,18 +180,20 @@ function Post({ activeNavTab, setActiveNavTab }) {
           <SubTitle>{foundProject.summary}</SubTitle>
 
           {activeNavTab === 'inProgress' && (
-            <ScheduledNotification
-              productIdToDisplay={67}
-              onApplyOpenNotification={handleApplyOpenNotification}
-              onCancelOpenNotification={handleCancelOpenNotification}
-            />
+            <>
+              <SponsorBtn />
+              <SponsorItem />
+            </>
           )}
 
           {/* <SponsorBtn /> */}
           {activeNavTab === 'scheduled' && (
             <>
-              <SponsorBtn />
-              <SponsorItem />
+              <ScheduledNotification
+                productIdToDisplay={67}
+                onApplyOpenNotification={handleApplyOpenNotification}
+                onCancelOpenNotification={handleCancelOpenNotification}
+              />
             </>
           )}
 
