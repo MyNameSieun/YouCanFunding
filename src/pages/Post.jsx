@@ -242,7 +242,7 @@ function Post({ activeNavTab, setActiveNavTab }) {
             <button>후원하기</button>
             <HeartButton />
           </InProgress> */}
-          {/*<SponsorBtn />*/}
+          <SponsorBtn />
 
           {/* <CompletedNotification /> */}
         </TitleBox>
@@ -270,7 +270,7 @@ function Post({ activeNavTab, setActiveNavTab }) {
             esse
           </ProjectInfoContainer>
         ) : (
-          <ScheduledComments />
+          // <ScheduledComments />
 
           // <CommentContainer>
           //   <CommentItem>
@@ -292,7 +292,7 @@ function Post({ activeNavTab, setActiveNavTab }) {
           //     </CommentText>
           //   </CommentItem>
           // </CommentContainer>
-          //   <SponsorItem />
+          <SponsorItem />
           // <CompletedComments />
         )}
       </BottomBox>

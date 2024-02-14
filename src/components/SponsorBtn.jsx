@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { auth, db } from '../firebase';
 import styled from 'styled-components';
 import { addDoc, collection } from 'firebase/firestore';
+import SponsorTimeLine from 'components/SponsorTimeLine';
 const SponsorBtn = () => {
   const user = auth.currentUser;
 
@@ -36,14 +37,22 @@ const SponsorBtn = () => {
     setReceiptPrice('');
   };
 
+  const getTotalPrice = (receiptPrice) => {
+    const sum = 0;
+    for (let i = 0; i < receiptPrice.length; i++) {
+      sum += parseInt(receiptPrice[i] + 1);
+    }
+    return sum;
+    console.log(receiptPrice);
+  };
+
   return (
     <>
       <Achieve>
         <div>
           <PointText color="var(--main-color)">98%</PointText> 달성
-        </div>
-        <div>
-          <PointText color="var(--sub-color)">123123</PointText>원 모금
+          <PointText color="var(--sub-color)">3,000</PointText>원 모금
+          {/* <SponsorTimeLine /> */}
         </div>
       </Achieve>
       <PriceForm onSubmit={handleOnSubmit}>

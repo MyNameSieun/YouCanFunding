@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { db } from '../firebase';
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import SponsorList from './SponsorList';
+import styled from 'styled-components';
 
 const SponsorItem = () => {
   const [userComment, setUserComment] = useState([]);
@@ -25,6 +26,12 @@ const SponsorItem = () => {
   }, [userComment]);
   return (
     <>
+      {userComment.length === 0 ? (
+        <Text>
+          <p>아직 참여 중인 서포터가 없습니다.</p>
+          <p>첫 번째 서포터가 되어보세요!</p>
+        </Text>
+      ) : null}
       {userComment.map((item) => (
         <SponsorList key={item.id} {...item} />
       ))}
@@ -33,3 +40,14 @@ const SponsorItem = () => {
 };
 
 export default SponsorItem;
+
+const Text = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 50px auto;
+  font-weight: bold;
+  line-height: 2;
+  font-size: 16px;
+`;
