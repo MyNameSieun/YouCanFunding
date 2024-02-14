@@ -246,7 +246,13 @@ function Post({ activeNavTab, setActiveNavTab }) {
       <Navbar activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} />
       <ProjectIntroduction>
         <ImageBox>
-          <img src={foundProject.mainImage} width="500px" height="298px" alt={foundProject.title} />
+          <img
+            src={foundProject.mainImage}
+            width="500px"
+            height="298px"
+            style={{ objectFit: 'cover', borderRadius: '7px' }}
+            alt={foundProject.title}
+          />
         </ImageBox>
         <TitleBox>
           <Title>{foundProject.title}</Title>
