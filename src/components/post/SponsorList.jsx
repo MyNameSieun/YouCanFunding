@@ -34,7 +34,7 @@ const SponsorList = () => {
             <UserImg src={item.profile ?? defaultUser} alt="User Profile" />
             <CommentText>
               {item.username ?? '유저 닉네임'} 님이 &nbsp;{' '}
-              <FontWeight>{item.donatedPrice.toLocaleString('ko-KR')} 원을</FontWeight> &nbsp; 펀딩해주셨어요.
+              <FontWeight>{item.donatedPrice.toLocaleString('ko-KR')} 원을</FontWeight> &nbsp; 펀딩했어요.
             </CommentText>
           </CommentWrapper>
         ))}
