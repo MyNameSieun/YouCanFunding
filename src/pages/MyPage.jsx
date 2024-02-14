@@ -172,7 +172,7 @@ const MyPage = ({ activeNavTab, setActiveNavTab }) => {
           <NavTepLists onClick={activeTabHandler} $activeTab={activeMyTab}>
             스크랩한 펀딩
           </NavTepLists>
-          <NavTepLists onClick={activeTabHandler} $activeTab={activeTab}>
+          <NavTepLists onClick={activeTabHandler} $activeTab={activeMyTab}>
             알림 신청한 펀딩
           </NavTepLists>
           <NavTepLists onClick={activeTabHandler} $activeTab={activeMyTab}>
@@ -186,10 +186,10 @@ const MyPage = ({ activeNavTab, setActiveNavTab }) => {
             productLists.productList
               .filter(
                 (productLists) =>
-                  (activeTab === '내가 등록한 펀딩' && productLists.myPageState === 'register') ||
-                  (activeTab === '스크랩한 펀딩' && productLists.myPageState === 'clipping') ||
-                  (activeTab === '알림 신청한 펀딩' && productLists.myPageState === 'notificationSettings') ||
-                  (activeTab === '내가 후원한 펀딩' && productLists.myPageState === 'support')
+                  (activeMyTab === '내가 등록한 펀딩' && productLists.myPageState === 'register') ||
+                  (activeMyTab === '스크랩한 펀딩' && productLists.myPageState === 'clipping') ||
+                  (activeMyTab === '알림 신청한 펀딩' && productLists.myPageState === 'notificationSettings') ||
+                  (activeMyTab === '내가 후원한 펀딩' && productLists.myPageState === 'support')
               )
               .slice(0, pageScroll)
               .map((product) => (
