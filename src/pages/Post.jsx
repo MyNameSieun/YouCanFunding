@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
-import ProductsList from 'data/products.json';
 import SponsorBtn from 'components/post/SponsorBtn';
 import SponsorItem from 'components/post/SponsorItem';
 import ScheduledNotification from 'components/post/ScheduledNotification';
@@ -11,6 +10,7 @@ import CompletedComments from 'components/post/CompletedComments';
 import { useParams } from 'react-router';
 import { collection, getDocs, query, updateDoc, doc } from '@firebase/firestore';
 import { db } from '../firebase';
+import SponsorList from 'components/post/SponsorList';
 
 const ProjectIntroduction = styled.div`
   display: flex;
@@ -101,6 +101,8 @@ function Post({ activeNavTab, setActiveNavTab }) {
   const [activePostTab, setActivePostTab] = useState('project');
   const [projects, setProject] = useState([]);
   const id = useParams().id;
+  const [receiptPrice, setReceiptPrice] = useState(0);
+  const [userComment, setUserComment] = useState([]);
 
   // DB에서 데이터 가져오기
   useEffect(() => {
@@ -170,19 +172,25 @@ function Post({ activeNavTab, setActiveNavTab }) {
         <ImageBox>
           <img src={foundProject.mainImage} width="500px" height="298px" alt={foundProject.title} />
         </ImageBox>
+
         <TitleBox>
           <Title>{foundProject.title}</Title>
           <SubTitle>{foundProject.summary}</SubTitle>
-          {/* <ScheduledNotification
-            projects={projects}
-            projectIdToDisplay={foundProject.id}
-            onApplyOpenNotification={handleApplyOpenNotification}
-            onCancelOpenNotification={handleCancelOpenNotification}
-          /> */}
 
-          {/* <SponsorBtn projects={projects} /> */}
-
-          <CompletedNotification />
+          {activeNavTab === 'inProgress' && (
+            <SponsorBtn projects={projects} receiptPrice={receiptPrice} setReceiptPrice={setReceiptPrice} />
+          )}
+          {activeNavTab === 'scheduled' && (
+            <>
+              <ScheduledNotification
+                projects={projects}
+                projectIdToDisplay={foundProject.id}
+                onApplyOpenNotification={handleApplyOpenNotification}
+                onCancelOpenNotification={handleCancelOpenNotification}
+              />
+            </>
+          )}
+          {activeNavTab === 'completed' && <CompletedNotification />}
         </TitleBox>
       </ProjectIntroduction>
       <PostTab>
@@ -200,9 +208,9 @@ function Post({ activeNavTab, setActiveNavTab }) {
         ) : (
           // <ScheduledComments />
 
-          // <SponsorItem />
+          <SponsorList userComment={userComment} setUserComment={setUserComment} />
 
-          <CompletedComments />
+          // <CompletedComments />
         )}
       </BottomBox>
     </>

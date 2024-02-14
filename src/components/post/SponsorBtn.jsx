@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { auth, db } from '../../firebase';
 import styled from 'styled-components';
-import { addDoc, collection } from 'firebase/firestore';
-import { useParams } from 'react-router-dom';
-// import HeartButton from './HeartButton';
+import { addDoc, collection, getDocs, query } from 'firebase/firestore';
+import SponsorTimeLine from 'components/SponsorTimeLine';
+import SponsorPercent from 'components/SponsorPercent';
+import HeartButton from './HeartButton';
 
-const SponsorBtn = ({ projects }) => {
+const SponsorBtn = ({ projects, receiptPrice, setReceiptPrice }) => {
   const user = auth.currentUser;
   const [isAdd, setIsAdd] = useState(false);
-  const [receiptPrice, setReceiptPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+
   const id = useParams().id;
 
   // projects 배열에서 현재 페이지의 프로젝트 가져오기
@@ -65,20 +68,23 @@ const SponsorBtn = ({ projects }) => {
       </FundingPeriod>
       <Achieve>
         <div>
+          <SponsorPercent />
+          {/* <PointText color="var(--sub-color)">{totalPrice}</PointText>원 모금 */}
           <PointText color="var(--main-color)">98%&nbsp;</PointText>달성
         </div>
         <div>
-          <PointText color="var(--sub-color)">123123&nbsp;</PointText>원 달성
+          {/* <PointText color="var(--sub-color)">123123&nbsp;</PointText>원 달성 */}
+          <SponsorTimeLine totalPrice={totalPrice} setTotalPrice={setTotalPrice} />
         </div>
       </Achieve>
       <PriceForm onSubmit={handleOnSubmit}>
-        <Input
+        <input
           onChange={onChangeReceipt}
           value={receiptPrice.toLocaleString('ko-KR')}
           placeholder="후원 금액을 입력해주세요."
         />
         <button type="submit">후원하기</button>
-        {/* <HeartButton /> */}
+        <HeartButton />
       </PriceForm>
     </SponsorContainer>
   );

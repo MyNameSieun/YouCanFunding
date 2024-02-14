@@ -126,6 +126,7 @@ function Login({ activeNavTab, setActiveNavTab }) {
       console.log('user', userCredential.user);
 
       alert('로그인 되었습니다.');
+      setActiveNavTab('inProgress');
       navigate('/');
     } catch (error) {
       const errorCode = error.code;

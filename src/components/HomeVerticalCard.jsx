@@ -41,7 +41,7 @@ const Title = styled.div`
   margin-left: 10px;
 `;
 
-function HomeVerticalCard({ activeTab, activeNavTab }) {
+const HomeVerticalCard = ({ activeTab, activeNavTab, search, visibleProducts }) => {
   const [projects, setProject] = useState([]);
   const navigate = useNavigate();
 
@@ -63,10 +63,8 @@ function HomeVerticalCard({ activeTab, activeNavTab }) {
 
   return (
     <CardContainer>
-      {/* activeNavTab에 따라 날짜 비교 로직 */}
       {projects
         .filter((product) => activeTab === '전체' || activeTab === product.category)
-
         .filter((item) => {
           if (activeNavTab === 'inProgress') {
             return currentDate >= new Date(item.startDate) && currentDate <= new Date(item.endDate);
@@ -78,6 +76,13 @@ function HomeVerticalCard({ activeTab, activeNavTab }) {
             return currentDate > new Date(item.endDate);
           }
         })
+        .filter((item) => {
+          if (!search) {
+            return true;
+          }
+          return item.title.includes(search);
+        })
+        .slice(0, visibleProducts)
         .map((item) => (
           <CardItems key={item.id} onClick={() => navigate(`/post/${item.id}`)}>
             <Image src={item.mainImage} alt={item.title} />
@@ -86,6 +91,6 @@ function HomeVerticalCard({ activeTab, activeNavTab }) {
         ))}
     </CardContainer>
   );
-}
+};
 
 export default HomeVerticalCard;

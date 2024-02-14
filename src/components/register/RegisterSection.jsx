@@ -19,7 +19,7 @@ import 'react-quill/dist/quill.snow.css';
 import { data } from 'components/common/categories';
 import shortid from 'shortid';
 import { db, storage } from '../../firebase';
-import { collection, doc, getDocs, query, setDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 function RegisterSection() {
@@ -44,8 +44,6 @@ function RegisterSection() {
   const contentRef = useRef('');
 
   /* 상태(state) 리스트 */
-  // 프로젝트 목록
-  const [projects, setProject] = useState([]);
   // 카테고리
   const [category, setCategory] = useState('');
   // 제목
@@ -203,17 +201,6 @@ function RegisterSection() {
       setContent('');
       navigate('/');
     }
-  };
-
-  // firebase DB의 데이터를 가져오는 함수
-  const getProjects = async () => {
-    const projectQuery = query(collection(db, 'projects'));
-    const querySnapshot = await getDocs(projectQuery);
-
-    const projectList = querySnapshot.docs.map((doc) => {
-      return doc.data();
-    });
-    setProject(projectList);
   };
 
   return (
