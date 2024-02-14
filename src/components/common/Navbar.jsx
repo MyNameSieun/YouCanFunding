@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { useEffect, useState } from 'react';
 import Logout from '../Logout';
@@ -32,7 +32,6 @@ const Tab = styled.span`
   margin-right: 24px;
   color: ${(props) => (props.activeNavTab ? 'black' : '#878f97')};
 `;
-
 const LeftNav = styled.li`
   font-size: 22px;
   font-weight: bold;
@@ -88,23 +87,31 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
     setIsLoggedOut(true);
   };
 
+  const handleTabActivation = () => {
+    setActiveNavTab('inProgress');
+  };
+
   return (
     <NavContainer>
       <NavBar>
         <LeftNav>
           <Logo>
             <Link to="/main">
-              <Tab>
+              <Tab activeNavTab={activeNavTab === 'inProgress'} onClick={() => setActiveNavTab('inProgress')}>
                 유캔<ColorBlue>FUN</ColorBlue>딩
               </Tab>
             </Link>
           </Logo>
           <>
+            <NavLink to="/main">
+              <Tab activeNavTab={activeNavTab === 'scheduled'} onClick={() => setActiveNavTab('scheduled')}>
+                펀딩 예정
+              </Tab>
+            </NavLink>
             <Link to="/main">
-              <Tab>펀딩 예정</Tab>
-            </Link>
-            <Link to="/main">
-              <Tab>펀딩 종료</Tab>
+              <Tab activeNavTab={activeNavTab === 'completed'} onClick={() => setActiveNavTab('completed')}>
+                펀딩 종료
+              </Tab>
             </Link>
           </>
         </LeftNav>
@@ -113,18 +120,19 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
             <>
               {isLoggedOut ? (
                 <>
+                  {/* navlink 사용 */}
                   <AuthLink to={'/login'}>
-                    <span>로그인</span>
+                    <Tab>로그인</Tab>
                   </AuthLink>
                   <AuthLink to={'/signup'}>
-                    <span>회원가입</span>
+                    <Tab>회원가입</Tab>
                   </AuthLink>
                 </>
               ) : (
                 <>
                   <Logout onLogout={handleLogout} />
                   <AuthLink to={'/mypage'}>
-                    <span>마이페이지</span>
+                    <Tab>마이페이지</Tab>
                   </AuthLink>
                 </>
               )}
@@ -132,15 +140,19 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
           ) : (
             <>
               <AuthLink to={'/login'}>
-                <span>로그인</span>
+                <Tab activeNavTab={activeNavTab === 'login'} onClick={() => setActiveNavTab('login')}>
+                  로그인
+                </Tab>
               </AuthLink>
               <AuthLink to={'/signup'}>
-                <span>회원가입</span>
+                <Tab activeNavTab={activeNavTab === 'signup'} onClick={() => setActiveNavTab('signup')}>
+                  회원가입
+                </Tab>
               </AuthLink>
             </>
           )}
           <Link to={'/register'}>
-            <Addbtn>프로젝트 등록</Addbtn>
+            <Addbtn onClick={handleTabActivation}>프로젝트 등록</Addbtn>
           </Link>
         </RightNav>
       </NavBar>
