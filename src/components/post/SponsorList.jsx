@@ -4,7 +4,7 @@ import SponsorItem from './SponsorItem';
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '../../firebase';
 
-const SponsorList = ({ userComment, setUserComment }) => {
+const SponsorList = ({ receiptPrice, userComment, setUserComment }) => {
   useEffect(() => {
     const fetchUserComment = async () => {
       const userCommentQuery = query(collection(db, 'sponsorUser'), orderBy('createdAt', 'desc'));
@@ -25,14 +25,14 @@ const SponsorList = ({ userComment, setUserComment }) => {
   return (
     <>
       {userComment.length === 0 ? (
-        <div>
+        <CommentsNotYetContainer>
           <p>아직 참여 중인 서포터가 없습니다.</p>
           <p>첫 번째 서포터가 되어보세요!</p>
-        </div>
+        </CommentsNotYetContainer>
       ) : null}
       <CommentContainer>
         {userComment.map((item) => (
-          <SponsorItem key={item.id} {...item} />
+          <SponsorItem key={item.id} {...item} receiptPrice={receiptPrice} />
         ))}
       </CommentContainer>
     </>
@@ -40,6 +40,17 @@ const SponsorList = ({ userComment, setUserComment }) => {
 };
 
 export default SponsorList;
+
+const CommentsNotYetContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 50px auto;
+  line-height: 2;
+  font-size: 16px;
+  font-weight: 600;
+`;
 
 const CommentContainer = styled.div`
   display: flex;

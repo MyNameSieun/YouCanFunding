@@ -2,7 +2,7 @@ import React from 'react';
 import defaultUser from 'assets/defaultUser.png';
 import styled from 'styled-components';
 
-const SponsorItem = ({ username, receiptPrice, profile }) => {
+const SponsorItem = ({ profile, username, receiptPrice }) => {
   return (
     <>
       <CommentWrapper>

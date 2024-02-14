@@ -176,7 +176,6 @@ function RegisterSection() {
         startDate,
         endDate,
         content,
-        myPageState: 'none',
         isRegistered: true,
         isSponsored: false,
         isScrapped: false,

@@ -7,34 +7,38 @@ import { useNavigate } from 'react-router';
 const CardContainer = styled.div`
   display: flex;
   justify-content: start;
-  gap: 30px;
   flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 50px;
 `;
 
 const CardItems = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 20px;
   border: 2px solid #dfdfdf;
-  background-color: white;
   border-radius: 9px;
-  margin-top: 20px;
-  width: 323px;
-  height: 286px;
-  position: relative;
+  width: 270px;
+  height: 270px;
+  background-color: #ffffff84;
   cursor: pointer;
+
+  &:hover {
+    box-shadow: 5px 5px 5px lightgray;
+  }
 `;
 
 const Image = styled.img`
-  object-fit: cover;
   width: 100%;
-  height: 200px;
-  border-radius: 7px 7px 0 0;
+  height: 100%;
+  overflow: hidden;
 `;
 
 const Title = styled.div`
-  margin-top: 15px;
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 20px;
+  font-weight: 600;
   margin-left: 10px;
-  margin-right: 10px;
 `;
 
 const HomeVerticalCard = ({ activeTab, activeNavTab, search, visibleProducts }) => {
