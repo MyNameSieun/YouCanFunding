@@ -5,7 +5,6 @@ import SponsorBtn from 'components/post/SponsorBtn';
 import ScheduledNotification from 'components/post/ScheduledNotification';
 import ScheduledComments from 'components/post/ScheduledComments';
 import CompletedNotification from 'components/post/CompletedNotification';
-import CompletedComments from 'components/post/CompletedComments';
 import { useParams } from 'react-router';
 import { collection, getDocs, query, updateDoc, doc } from '@firebase/firestore';
 import { db } from '../firebase';
@@ -18,7 +17,6 @@ const ProjectIntroduction = styled.div`
   margin-top: 100px;
   position: relative;
 `;
-
 const ImageBox = styled.div`
   border: 2px solid #dfdfdf;
   background-color: white;
@@ -26,7 +24,6 @@ const ImageBox = styled.div`
   width: 500px;
   height: 375px;
   position: relative;
-
   & img {
     width: 100%;
     height: 100%;
@@ -38,21 +35,18 @@ const TitleBox = styled.div`
   margin-left: 60px;
   width: 504px;
 `;
-
 const Title = styled.div`
   font-weight: bold;
   font-size: 30px;
   line-height: 1.7;
   margin-bottom: 8px;
 `;
-
 const SubTitle = styled.div`
   color: #818181;
   font-size: 16px;
   line-height: 1.5;
   margin-top: 16px;
 `;
-
 const PostTab = styled.div`
   display: flex;
   justify-content: space-between;
@@ -61,25 +55,21 @@ const PostTab = styled.div`
   font-size: 24px;
   font-weight: bold;
 `;
-
 const TabItem = styled.div`
   font-size: 24px;
   font-weight: bold;
   margin-top: 20px;
   padding-bottom: 5px;
   cursor: pointer;
-  color: ${(props) => (props.activePostTab ? 'black' : '#878f97')};
+  color: ${(props) => (props.activePostTab ? 'black' : '#878F97')};
   font-weight: ${(props) => (props.activePostTab ? 'bold' : 'bolder')};
-
   border-bottom: ${(props) => (props.activePostTab ? '3px solid var(--main-color)' : 'none')};
   margin-bottom: ${(props) => (props.activePostTab ? '-23px' : '0')};
 `;
-
 const Hr = styled.div`
   border: 2px solid #e6e6e6;
   margin-top: -60px;
 `;
-
 const BottomBox = styled.div`
   width: 80%;
   margin: 0 auto;
@@ -88,13 +78,11 @@ const BottomBox = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
-
 const ProjectInfoContainer = styled.div`
   font-size: 16px;
   line-height: 1.8;
   margin: 50px auto;
 `;
-
 function Post({ activeNavTab, setActiveNavTab }) {
   const [activePostTab, setActivePostTab] = useState('project');
   const [projects, setProject] = useState([]);
@@ -106,13 +94,11 @@ function Post({ activeNavTab, setActiveNavTab }) {
     const getProjects = async () => {
       const projectQuery = query(collection(db, 'projects'));
       const querySnapshot = await getDocs(projectQuery);
-
       const projectList = querySnapshot.docs.map((doc) => {
         return doc.data();
       });
       setProject(projectList);
     };
-
     getProjects();
   }, []);
 
@@ -129,39 +115,32 @@ function Post({ activeNavTab, setActiveNavTab }) {
 
   // 오픈 알림 신청
   const handleApplyOpenNotification = async (projectIdToDisplay) => {
-    await updateDoc(doc(db, 'projects', projectIdToDisplay), { myPageState: 'notificationSettings' });
-
+    await updateDoc(doc(db, 'projects', projectIdToDisplay), { isNotificated: true });
     const updatedProjects = projects.map((project) => {
       if (project.id === projectIdToDisplay) {
-        return { ...project, myPageState: 'notificationSettings' };
+        return { ...project, isNotificated: true };
       }
       return project;
     });
-
     setProject(updatedProjects);
-
     console.log(`프로젝트 ID ${projectIdToDisplay}에 대한 오픈 알림 신청`);
   };
 
   // 오픈 알림 취소
   const handleCancelOpenNotification = async (projectIdToDisplay) => {
-    await updateDoc(doc(db, 'projects', projectIdToDisplay), { myPageState: 'none' });
+    await updateDoc(doc(db, 'projects', projectIdToDisplay), { isNotificated: false });
     const updatedProjects = projects.map((project) => {
       if (project.id === projectIdToDisplay) {
-        return { ...project, myPageState: 'none' };
+        return { ...project, isNotificated: false };
       }
       return project;
     });
-
     setProject(updatedProjects);
-
     console.log(`프로젝트 ID ${projectIdToDisplay}에 대한 오픈 알림 취소`);
   };
-
   const handleTabClick = (tab) => {
     setActivePostTab(tab);
   };
-
   return (
     <>
       <Navbar activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} />
@@ -169,18 +148,20 @@ function Post({ activeNavTab, setActiveNavTab }) {
         <ImageBox>
           <img src={foundProject.mainImage} width="500px" height="298px" alt={foundProject.title} />
         </ImageBox>
-
         <TitleBox>
           <Title>{foundProject.title}</Title>
           <SubTitle>{foundProject.summary}</SubTitle>
-
           {activeNavTab === 'inProgress' && (
+<<<<<<< HEAD
             <SponsorBtn foundProject={foundProject} receiptPrice={receiptPrice} setReceiptPrice={setReceiptPrice} />
+=======
+            <SponsorBtn projects={projects} receiptPrice={receiptPrice} setReceiptPrice={setReceiptPrice} />
+>>>>>>> 233c56a9fb02d6709a0f987adadb393990787779
           )}
           {activeNavTab === 'scheduled' && (
             <>
               <ScheduledNotification
-                productIdToDisplay={67}
+                projects={projects}
                 onApplyOpenNotification={handleApplyOpenNotification}
                 onCancelOpenNotification={handleCancelOpenNotification}
               />
@@ -202,15 +183,26 @@ function Post({ activeNavTab, setActiveNavTab }) {
         {activePostTab === 'project' ? (
           <ProjectInfoContainer dangerouslySetInnerHTML={dangerousHTML} />
         ) : (
+<<<<<<< HEAD
           // <ScheduledComments />
 
           <SponsorList />
 
           // <CompletedComments />
+=======
+          <>
+            {activeNavTab === 'scheduled' && <ScheduledComments />}
+            {activeNavTab === 'inProgress' && (
+              <>
+                <SponsorList userComment={userComment} setUserComment={setUserComment} />
+              </>
+            )}
+            {activeNavTab === 'completed' && <SponsorList userComment={userComment} setUserComment={setUserComment} />}
+          </>
+>>>>>>> 233c56a9fb02d6709a0f987adadb393990787779
         )}
       </BottomBox>
     </>
   );
 }
-
 export default Post;

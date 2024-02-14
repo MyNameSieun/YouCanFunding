@@ -8,6 +8,7 @@ import { IoIosSettings } from 'react-icons/io';
 import { BsPencilSquare } from 'react-icons/bs';
 import { collection, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { updateProfile } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 const MyPage = ({ activeNavTab, setActiveNavTab }) => {
   const user = auth.currentUser;
@@ -21,6 +22,7 @@ const MyPage = ({ activeNavTab, setActiveNavTab }) => {
   const [isEditingName, setIsEditingName] = useState(false);
   const [activeMyTab, setActiveMyTab] = useState('내가 등록한 펀딩');
   const [pageScroll, setPageScroll] = useState(8);
+  const navigate = useNavigate();
 
   // DB에서 데이터 가져오기
   useEffect(() => {
@@ -207,19 +209,16 @@ const MyPage = ({ activeNavTab, setActiveNavTab }) => {
           {projects
             .filter(
               (project) =>
-                (activeMyTab === '내가 등록한 펀딩' && project.myPageState === 'register') ||
-                (activeMyTab === '스크랩한 펀딩' && project.myPageState === 'clipping') ||
-                (activeMyTab === '알림 신청한 펀딩' && project.myPageState === 'notificationSettings') ||
-                (activeMyTab === '내가 후원한 펀딩' && project.myPageState === 'support')
+                (activeMyTab === '내가 등록한 펀딩' && project.isRegistered === true) ||
+                (activeMyTab === '스크랩한 펀딩' && project.isScrapped === true) ||
+                (activeMyTab === '알림 신청한 펀딩' && project.isNotificated === true) ||
+                (activeMyTab === '내가 후원한 펀딩' && project.isSponsored === true)
             )
             .slice(0, pageScroll)
             .map((project) => (
-              <CardLists key={project.id}>
+              <CardLists key={project.id} onClick={() => navigate(`/post/${project.id}`)}>
                 <ProductImg src={project.mainImage} alt="상품 이미지" />
                 <ProductName>{project.title}</ProductName>
-                <div>
-                  <ProductAchievementRate>{project.achievementRate}</ProductAchievementRate>
-                </div>
               </CardLists>
             ))}
         </CardContainer>
@@ -246,9 +245,10 @@ const UserInfoWrapper = styled.div`
 
 const NavTep = styled.ul`
   display: flex;
+  justify-content: space-evenly;
+  gap: 10px;
   border-bottom: 2px solid #e6e6e6;
   margin-bottom: 35px;
-  gap: 20px;
   font-weight: bold;
   font-size: 20px;
 `;
@@ -256,7 +256,7 @@ const NavTep = styled.ul`
 const NavTepLists = styled.li`
   color: #878f97;
   padding: 1rem;
-  ${(props) => (props.$activeTab === props.children ? 'border-bottom: 2px solid var(--main-color);' : 'none')};
+  ${(props) => (props.$activeTab === props.children ? 'border-bottom: 3px solid var(--main-color);' : 'none')};
   ${(props) => (props.$activeTab === props.children ? 'color:black' : 'none')};
   cursor: pointer;
 `;
@@ -269,14 +269,20 @@ const CardContainer = styled.div`
 `;
 
 const CardLists = styled.div`
-  border: 2px solid #dfdfdf;
-  border-radius: 9px;
-  width: 280px;
-  height: 200px;
-  padding: 1rem;
-  gap: 10px;
   display: flex;
   flex-direction: column;
+  gap: 30px;
+  padding: 20px;
+  border: 2px solid #dfdfdf;
+  border-radius: 9px;
+  width: 270px;
+  height: 270px;
+  background-color: #ffffff84;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 5px 5px 5px lightgray;
+  }
 `;
 
 const UserImg = styled.img`
@@ -350,18 +356,14 @@ const CancelBtn = styled.button`
 
 const ProductImg = styled.img`
   width: 100%;
-  height: 200px;
+  height: 100%;
   overflow: hidden;
 `;
 
 const ProductName = styled.h2`
-  font-size: 1rem;
-`;
-
-const ProductAchievementRate = styled.span`
-  font-size: 1rem;
-  color: var(--sub-color);
-  font-weight: bold;
+  font-size: 20px;
+  font-weight: 600;
+  margin-left: 10px;
 `;
 
 const ImgBtnWrapper = styled.div`

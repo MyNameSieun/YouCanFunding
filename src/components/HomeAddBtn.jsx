@@ -11,7 +11,7 @@ const BtnContainer = styled.div`
 const Button = styled.button`
   border: 2px solid #dfdfdf;
   border-radius: 7px;
-  margin: 100px 30px;
+  margin: 80px auto;
   width: 424px;
   height: 46px;
   font-weight: bold;
@@ -22,7 +22,7 @@ const Button = styled.button`
 
 function HomeAddBtn({ activeNavTab, setVisibleProducts }) {
   const MoreBtn = () => {
-    setVisibleProducts((visibleProducts) => visibleProducts + 12);
+    setVisibleProducts((visibleProducts) => visibleProducts + 8);
   };
   let buttonText = '더 보기';
 
