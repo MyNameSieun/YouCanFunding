@@ -64,8 +64,6 @@ const Addbtn = styled.span`
   }
 `;
 function Navbar({ activeNavTab, setActiveNavTab }) {
-  const location = useLocation();
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoggedOut, setIsLoggedOut] = useState(false);
 
@@ -138,7 +136,9 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
                 <>
                   <Logout onLogout={handleLogout} />
                   <AuthLink to={'/mypage'}>
-                    <Tab>마이페이지</Tab>
+                    <Tab activeNavTab={activeNavTab === 'mypage'} onClick={() => setActiveNavTab('mypage')}>
+                      마이페이지
+                    </Tab>
                   </AuthLink>
                 </>
               )}

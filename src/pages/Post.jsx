@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
 import defaultUser from 'assets/defaultUser.png';
@@ -10,6 +10,9 @@ import ProductsList from 'data/products.json';
 import HeartButton from 'components/HeartButton';
 import SponsorBtn from 'components/SponsorBtn';
 import SponsorItem from 'components/SponsorItem';
+import { useParams } from 'react-router';
+import { collection, getDocs, query } from '@firebase/firestore';
+import { db } from '../firebase';
 
 const ProjectIntroduction = styled.div`
   display: flex;
@@ -174,6 +177,34 @@ const FontWeight = styled.span`
 function Post({ activeNavTab, setActiveNavTab }) {
   const [activePostTab, setActivePostTab] = useState('project');
   const [productLists, setProductLists] = useState(ProductsList);
+  const [projects, setProject] = useState([]);
+  const id = useParams().id;
+
+  // DB에서 데이터 가져오기
+  useEffect(() => {
+    const getProjects = async () => {
+      const projectQuery = query(collection(db, 'projects'));
+      const querySnapshot = await getDocs(projectQuery);
+
+      const projectList = querySnapshot.docs.map((doc) => {
+        return doc.data();
+      });
+      setProject(projectList);
+    };
+
+    getProjects();
+  }, []);
+
+  // 데이터를 로딩중일 때
+  if (projects.length <= 0) {
+    return <div>로딩중입니다..!</div>;
+  }
+
+  // id에 해당하는 데이터 추출출
+  const foundProject = projects.find((project) => project.id === id);
+
+  // quill.js 결과 HTML 파싱
+  const dangerousHTML = { __html: foundProject.content };
 
   const productIdToDisplay = 67;
   const productToDisplay = productLists.productList.find((product) => product.id === productIdToDisplay);
@@ -215,14 +246,11 @@ function Post({ activeNavTab, setActiveNavTab }) {
       <Navbar activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} />
       <ProjectIntroduction>
         <ImageBox>
-          <img src="assets" alt="" />
+          <img src={foundProject.mainImage} width="500px" height="298px" alt={foundProject.title} />
         </ImageBox>
         <TitleBox>
-          <Title>{productToDisplay.name}</Title>
-          <SubTitle>
-            프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명 프로젝트 설명 프로젝트
-            설명프로젝트 설명프로젝트 설명프로설명프로젝트 설명프로설명프로젝트 설명프로명프로명프로명프로명프로
-          </SubTitle>
+          <Title>{foundProject.title}</Title>
+          <SubTitle>{foundProject.summary}</SubTitle>
           <ScheduledNotification
             productIdToDisplay={67}
             onApplyOpenNotification={handleApplyOpenNotification}
@@ -258,17 +286,7 @@ function Post({ activeNavTab, setActiveNavTab }) {
       <Hr />
       <BottomBox>
         {activePostTab === 'project' ? (
-          <ProjectInfoContainer>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores laborum ullam reprehenderit repellendus
-            eius veritatis voluptatibus exercitationem mollitia inventore delectus culpa nulla ducimus enim, porro
-            reiciendis! Animi ratione et adipisci. Quod amet consequuntur voluptatibus aliquid cum alias molestias
-            ratione fugit soluta quis sit, minima praesentium. Quia sint iusto repellat maiores, a, blanditiis facere
-            magni numquam dolores necessitatibus, sequi ipsam aperiam. Neque optio pariatur deleniti facere aliquid odio
-            soluta reiciendis nesciunt necessitatibus ullam nisi in voluptatum animi earum voluptates voluptate, dolor
-            laborum repellat fuga officiis ad minima tempora rerum. Maxime, sunt! Autem molestias magnam sunt officia
-            unde, quaerat incidunt ullam deserunt minus tenetur maiores corrupti! Aspernatur, itaque doloribus labore
-            esse
-          </ProjectInfoContainer>
+          <ProjectInfoContainer dangerouslySetInnerHTML={dangerousHTML} />
         ) : (
           // <ScheduledComments />
 
