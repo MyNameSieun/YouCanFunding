@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { auth, db } from '../../firebase';
 import styled from 'styled-components';
-import { addDoc, collection, getDocs, query } from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 import SponsorTimeLine from 'components/SponsorTimeLine';
 import SponsorPercent from 'components/SponsorPercent';
 import HeartButton from './HeartButton';

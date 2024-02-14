@@ -25,10 +25,10 @@ const SponsorList = ({ receiptPrice, userComment, setUserComment }) => {
   return (
     <>
       {userComment.length === 0 ? (
-        <div>
+        <CommentsNotYetContainer>
           <p>아직 참여 중인 서포터가 없습니다.</p>
           <p>첫 번째 서포터가 되어보세요!</p>
-        </div>
+        </CommentsNotYetContainer>
       ) : null}
       <CommentContainer>
         {userComment.map((item) => (
@@ -40,6 +40,17 @@ const SponsorList = ({ receiptPrice, userComment, setUserComment }) => {
 };
 
 export default SponsorList;
+
+const CommentsNotYetContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 50px auto;
+  line-height: 2;
+  font-size: 16px;
+  font-weight: 600;
+`;
 
 const CommentContainer = styled.div`
   display: flex;
