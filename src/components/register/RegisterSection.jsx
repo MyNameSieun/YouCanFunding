@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   AddProjectButton,
@@ -181,13 +181,14 @@ function RegisterSection() {
       };
 
       // firebase db에 새로운 프로젝트 추가
-
       await setDoc(doc(db, 'projects', newProject.id), {
         ...newProject
       });
 
-      // 기존 입력창 초기화
+      // 완료 메시지 출력
+      alert('등록 완료되었습니다.');
 
+      // 기존 입력창 초기화
       setCategory('');
       setTitle('');
       setSummary('');
@@ -304,33 +305,6 @@ function RegisterSection() {
           프로젝트 등록
         </AddProjectButton>
       </AddProjectButtonContainer>
-      {/* 임시 출력 공간 */}
-      {/* <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '50px' }}>
-        <button onClick={getProjects}>출력 버튼</button>
-        <p>
-          <strong>임시 출력 공간</strong>
-        </p>
-        {projects.map((item) => {
-          const dangerousHTML = { __html: item.content };
-          return (
-            <>
-              <p>카테고리 : {item.category}</p>
-              <p>제목 : {item.title}</p>
-              <p>개요 : {item.summary}</p>
-              <p>
-                메인 이미지 : <img src={item.mainImage} alt="프로젝트이미지" />
-              </p>
-              <p>목표 금액 : {item.targetPrice}</p>
-              <p>
-                <strong>펀딩 기간</strong>
-              </p>
-              <p>시작일 : {item.startDate}</p>
-              <p>종료일 : {item.endDate}</p>
-              <p dangerouslySetInnerHTML={dangerousHTML} />
-            </>
-          );
-        })}
-      </div> */}
     </RegisterContainer>
   );
 }

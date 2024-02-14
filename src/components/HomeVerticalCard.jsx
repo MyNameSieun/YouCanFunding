@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { collection, getDocs, query } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { db } from '../firebase';
+import { useNavigate } from 'react-router';
 
 const CardContainer = styled.div`
   display: flex;
@@ -17,6 +18,7 @@ const CardItems = styled.div`
   width: 323px;
   height: 286px;
   position: relative;
+  cursor: pointer;
 `;
 
 const Image = styled.img`
@@ -36,6 +38,7 @@ const Title = styled.div`
 
 function HomeVerticalCard({ activeTab }) {
   const [projects, setProject] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getProjects = async () => {
@@ -56,7 +59,7 @@ function HomeVerticalCard({ activeTab }) {
       {projects
         .filter((product) => activeTab === '전체' || activeTab === product.category)
         .map((item) => (
-          <CardItems key={item.id}>
+          <CardItems key={item.id} onClick={() => navigate(`/post/${item.id}`)}>
             <Image src={item.mainImage} alt={item.title} />
             <Title>{item.title}</Title>{' '}
           </CardItems>
