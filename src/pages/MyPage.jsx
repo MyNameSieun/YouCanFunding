@@ -149,17 +149,23 @@ const MyPage = ({ activeNavTab, setActiveNavTab }) => {
         <UserInfo>
           {isEditingName ? (
             <BtnWrapper>
-              <input type="text" onChange={nicknameChangeUtil} value={userNickName} />
+              <input
+                type="text"
+                onChange={nicknameChangeUtil}
+                value={userNickName}
+                defaultValue={user?.displayName}
+                autoFocus
+              />
               <CancelBtn onClick={onClickCancel}>취소</CancelBtn>
               <DoneBtn onClick={onClickModifyDone}>수정완료</DoneBtn>
             </BtnWrapper>
           ) : (
-            <>
+            <UserText>
               <UserNickName>{user?.displayName ?? '닉네임'}</UserNickName>
               <NickNameIcon onClick={nickNameOnClickHandler}>
                 <BsPencilSquare size={15} />
               </NickNameIcon>
-            </>
+            </UserText>
           )}
           <p>{user?.email ?? '소셜 계정으로 로그인 중입니다.'}</p>
         </UserInfo>
@@ -217,8 +223,12 @@ const UserInfoWrapper = styled.div`
   height: 150px;
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  gap: 10px;
+  margin-top: 30px;
+  margin-left: 40px;
+  margin-bottom: 30px;
 `;
+
 const NavTep = styled.ul`
   display: flex;
   border-bottom: 2px solid #e6e6e6;
@@ -271,9 +281,19 @@ const SetIcon = styled.button`
   display: flex;
   align-items: center;
 `;
+
 const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
   margin-left: 20px;
   color: #818181;
+`;
+
+const UserText = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;
 
 const UserNickName = styled.span`
@@ -332,7 +352,7 @@ const ProductAchievementRate = styled.span`
 const ImgBtnWrapper = styled.div`
   display: flex;
   gap: 4px;
-  margin: 120px 0 0 -90px;
+  margin: 140px 0 0 -98px;
 `;
 
 const DoneImgBtn = styled.button`
@@ -359,13 +379,13 @@ const MoreMyBtnWrapper = styled.div`
 `;
 
 const MoreMyBtn = styled.button`
-  width: 600px;
-  background-color: white;
+  width: 550px;
   color: #464646;
   font-weight: bold;
-  font-size: 17px;
-  border-radius: 4px;
+  font-size: 18px;
+  border-radius: 7px;
   border: 2px solid #dfdfdf;
-  padding: 0.3rem 0.5rem;
+  padding: 10px;
+  margin: 30px auto 80px auto;
   cursor: pointer;
 `;
