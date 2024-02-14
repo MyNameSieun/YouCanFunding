@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import ProductsList from 'data/products.json';
+import { collection, getDocs, query } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
+import { db } from '../firebase';
 
 const CardContainer = styled.div`
   display: flex;
@@ -32,40 +34,31 @@ const Title = styled.div`
   margin-right: 10px;
 `;
 
-const AchievementRate = styled.div`
-  position: absolute;
-  bottom: 11px;
-  left: 0px;
-  font-size: 16px;
-  margin-left: 10px;
-  margin-right: 10px;
-`;
+function HomeVerticalCard({ activeTab }) {
+  const [projects, setProject] = useState([]);
 
-const PointColor = styled.span`
-  color: var(--sub-color);
-  font-weight: bold;
-`;
+  useEffect(() => {
+    const getProjects = async () => {
+      const projectQuery = query(collection(db, 'projects'));
+      const querySnapshot = await getDocs(projectQuery);
 
-function HomeVerticalCard({ activeTab, search, visibleProducts, activeNavTab }) {
+      const projectList = querySnapshot.docs.map((doc) => {
+        return doc.data();
+      });
+      setProject(projectList);
+    };
+
+    getProjects();
+  }, []);
+
   return (
     <CardContainer>
-      {ProductsList.productList
-        .filter(
-          (product) =>
-            (activeTab === '전체' || activeTab === product.category) &&
-            (!search || product.name.toLowerCase().includes(search.toLowerCase())) &&
-            ((activeNavTab === 'scheduled' && product.state === 'schedule') ||
-              (activeNavTab === 'inProgress' && product.state === 'inProgress') ||
-              (activeNavTab === 'completed' && product.state === 'completed'))
-        )
-        .slice(0, visibleProducts)
-        .map((product) => (
-          <CardItems key={product.id}>
-            <Image src={product.image} alt={product.name} />
-            <Title>{product.name}</Title>
-            <AchievementRate>
-              <PointColor>{product.achievementRate}</PointColor> 달성
-            </AchievementRate>
+      {projects
+        .filter((product) => activeTab === '전체' || activeTab === product.category)
+        .map((item) => (
+          <CardItems key={item.id}>
+            <Image src={item.mainImage} alt={item.title} />
+            <Title>{item.title}</Title>{' '}
           </CardItems>
         ))}
     </CardContainer>

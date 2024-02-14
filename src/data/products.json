@@ -555,6 +555,15 @@
       "image": "/assets/images/image003.jpg",
       "state": "inProgress",
       "myPageState": "register"
+    },
+    {
+      "id": 68,
+      "name": "아이브 스페셜 앨범 정규 1집 Ive IVE 아이엠 I AM 키치 Special",
+      "category": "음악",
+      "achievementRate": "89%",
+      "image": "/assets/images/image003.jpg",
+      "state": "inProgress",
+      "myPageState": "notificationSettings"
     }
   ]
 }

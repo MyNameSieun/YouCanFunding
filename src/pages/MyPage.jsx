@@ -112,8 +112,8 @@ const MyPage = ({ activeNavTab, setActiveNavTab }) => {
     case '스크랩한 펀딩':
       buttonText = '스크랩한 펀딩 더 보기';
       break;
-    case '알림신청한 펀딩':
-      buttonText = '알림신청한 펀딩 더 보기';
+    case '알림 신청한 펀딩':
+      buttonText = '알림 신청한 펀딩 더 보기';
       break;
     case '내가 후원한 펀딩':
       buttonText = '내가 후원한 펀딩 더 보기';
@@ -172,8 +172,8 @@ const MyPage = ({ activeNavTab, setActiveNavTab }) => {
           <NavTepLists onClick={activeTabHandler} $activeTab={activeMyTab}>
             스크랩한 펀딩
           </NavTepLists>
-          <NavTepLists onClick={activeTabHandler} $activeTab={activeMyTab}>
-            알림신청한 펀딩
+          <NavTepLists onClick={activeTabHandler} $activeTab={activeTab}>
+            알림 신청한 펀딩
           </NavTepLists>
           <NavTepLists onClick={activeTabHandler} $activeTab={activeMyTab}>
             내가 후원한 펀딩
@@ -186,10 +186,10 @@ const MyPage = ({ activeNavTab, setActiveNavTab }) => {
             productLists.productList
               .filter(
                 (productLists) =>
-                  (activeMyTab === '내가 등록한 펀딩' && productLists.myPageState === 'register') ||
-                  (activeMyTab === '스크랩한 펀딩' && productLists.myPageState === 'clipping') ||
-                  (activeMyTab === '알림신청한 펀딩' && productLists.myPageState === 'notificationSettings') ||
-                  (activeMyTab === '내가 후원한 펀딩' && productLists.myPageState === 'support')
+                  (activeTab === '내가 등록한 펀딩' && productLists.myPageState === 'register') ||
+                  (activeTab === '스크랩한 펀딩' && productLists.myPageState === 'clipping') ||
+                  (activeTab === '알림 신청한 펀딩' && productLists.myPageState === 'notificationSettings') ||
+                  (activeTab === '내가 후원한 펀딩' && productLists.myPageState === 'support')
               )
               .slice(0, pageScroll)
               .map((product) => (
