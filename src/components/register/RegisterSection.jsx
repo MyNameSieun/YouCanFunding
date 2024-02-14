@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   AddProjectButton,
   AddProjectButtonContainer,
@@ -22,6 +23,8 @@ import { collection, doc, getDocs, query, setDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 function RegisterSection() {
+  const navigate = useNavigate();
+
   // input 창 focus용 useRef
   // 카테고리
   const categoryRef = useRef('');
@@ -184,6 +187,7 @@ function RegisterSection() {
       });
 
       // 기존 입력창 초기화
+
       setCategory('');
       setTitle('');
       setSummary('');
@@ -192,6 +196,7 @@ function RegisterSection() {
       setStartDate('');
       setEndDate('');
       setContent('');
+      navigate('/');
     }
   };
 
