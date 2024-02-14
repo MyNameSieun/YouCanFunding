@@ -12,6 +12,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
+import google from 'assets/google.png';
+import github from 'assets/github.png';
 
 function Login({ activeNavTab, setActiveNavTab }) {
   const [email, setEmail] = useState('');
@@ -227,8 +229,14 @@ function Login({ activeNavTab, setActiveNavTab }) {
             </LoginWithOtherMethodPTag>
 
             <LoginWithOtherMethodButtonSet>
-              <button onClick={handleGoogleLogin}>구글로 로그인</button>
-              <button onClick={handleGithubLogin}>깃허브로 로그인</button>
+              <button onClick={handleGoogleLogin}>
+                <img src={google} alt="구글로고" />
+                구글로 로그인
+              </button>
+              <button onClick={handleGithubLogin}>
+                <img src={github} alt="깃허브로고" />
+                깃허브로 로그인
+              </button>
             </LoginWithOtherMethodButtonSet>
           </LoginWithOtherMethod>
         </LoginContainer>
@@ -387,7 +395,7 @@ const LoginWithOtherMethodButtonSet = styled.div`
 
   & button {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-evenly;
     width: 100%;
     padding: 12px;
     border: 1.5px solid rgb(228, 228, 228);
@@ -399,6 +407,11 @@ const LoginWithOtherMethodButtonSet = styled.div`
     &:hover {
       transition: background-color 0.3s, color 0.3s;
       background-color: rgb(228, 228, 228);
+    }
+
+    & img {
+      width: 20px;
+      height: 20px;
     }
   }
 `;
