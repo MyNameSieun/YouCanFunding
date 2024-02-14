@@ -1,11 +1,12 @@
 import React from 'react';
-import Navbar from 'componentes/common/Navbar';
+import Navbar from 'components/common/Navbar';
+import RegisterSection from 'components/register/RegisterSection';
 
-function Register() {
+function Register({ activeNavTab, setActiveNavTab }) {
   return (
     <>
-      <Navbar />
-      Register
+      <Navbar activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} />
+      <RegisterSection />
     </>
   );
 }

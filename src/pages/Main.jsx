@@ -1,20 +1,29 @@
-import React from 'react';
-import styled from 'styled-components';
-import Navbar from 'componentes/common/Navbar';
+import React, { useState } from 'react';
+import Navbar from 'components/common/Navbar';
+import SearchInput from 'components/SearchInput';
+import CategoryTab from 'components/CategoryTab';
+import HomeVerticalCard from 'components/HomeVerticalCard';
+import HomeAddBtn from 'components/HomeAddBtn';
+import Banner from 'components/Banner';
 
-const Container = styled.div`
-  height: 100vh;
-  max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
-`;
+function Main({ activeNavTab, setActiveNavTab, activeTab, setActiveTab }) {
+  const [search, setSearch] = useState();
+  const [visibleProducts, setVisibleProducts] = useState(8);
 
-function Main() {
   return (
-    <Container>
-      <Navbar />
-      <div>안녕</div>
-    </Container>
+    <>
+      <Navbar activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} />
+      <Banner />
+      <SearchInput search={search} setSearch={setSearch} />
+      <CategoryTab activeTab={activeTab} setActiveTab={setActiveTab} />
+      <HomeVerticalCard
+        activeTab={activeTab}
+        search={search}
+        activeNavTab={activeNavTab}
+        visibleProducts={visibleProducts}
+      />
+      <HomeAddBtn activeNavTab={activeNavTab} setVisibleProducts={setVisibleProducts} />
+    </>
   );
 }
 
