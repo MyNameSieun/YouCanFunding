@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { useEffect, useState } from 'react';
 import Logout from '../Logout';
