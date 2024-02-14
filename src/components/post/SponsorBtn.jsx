@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { auth, db } from '../firebase';
+import { auth, db } from '../../firebase';
 import styled from 'styled-components';
 import { addDoc, collection } from 'firebase/firestore';
+import HeartButton from './HeartButton';
+
 const SponsorBtn = () => {
   const user = auth.currentUser;
 
@@ -53,6 +55,7 @@ const SponsorBtn = () => {
           placeholder="후원 금액을 입력해주세요."
         />
         <button type="submit">후원하기</button>
+        {/* <HeartButton /> */}
       </PriceForm>
     </>
   );
@@ -63,10 +66,12 @@ export default SponsorBtn;
 const Input = styled.input``;
 
 const Achieve = styled.div`
+  display: flex;
+  justify-content: space-between;
   font-weight: bold;
   font-size: 18px;
   color: #464646;
-  margin-top: 30px;
+  margin: 30px auto;
   & > div {
     margin-bottom: 10px;
   }
@@ -76,32 +81,34 @@ const PointText = styled.span`
   color: ${(props) => props.color};
   font-size: 24px;
 `;
+
 const PriceForm = styled.form`
   display: flex;
   align-items: center;
-  margin-top: 35px;
+  gap: 10px;
 
-  input {
-    padding: 10px;
+  & input {
+    padding: 12px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    width: 200px;
-    font-size: 16px;
+    width: 100%;
+    font-size: 18px;
     margin-right: 10px;
   }
 
-  button {
+  & button {
     padding: 10px 20px;
-    background-color: #4caf50;
+    background-color: var(--sub-color);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 7px;
+    width: 40%;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
     transition: background-color 0.3s ease;
 
     &:hover {
-      background-color: #45a049;
+      background-color: #ff3300f6;
     }
   }
 `;

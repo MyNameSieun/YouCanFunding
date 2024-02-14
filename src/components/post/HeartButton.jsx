@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import HeartImg from '../assets/heart.png';
-import EmptyHeartImg from '../assets/empty-heart.png';
+import HeartImg from '../../assets/heart.png';
+import EmptyHeartImg from '../../assets/empty-heart.png';
 import { useNavigate } from 'react-router-dom';
 import { addDoc, collection, getDocs, query, deleteDoc } from 'firebase/firestore';
-import { auth, db } from '../firebase';
+import { auth, db } from '../../firebase';
 
 const Heart = styled.img`
   margin-left: 15px;

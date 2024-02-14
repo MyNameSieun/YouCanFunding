@@ -45,8 +45,3 @@ const CommentText = styled.p`
 const FontWeight = styled.p`
   font-weight: bold;
 `;
-
-// const TimeText = styled.time`
-//   margin: 0 0 0 90px;
-//   color: #646464;
-// `;
