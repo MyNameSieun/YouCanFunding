@@ -12,11 +12,9 @@ const NavContainer = styled.div`
   justify-content: space-between;
   margin-bottom: 19px;
 `;
-
 const ColorBlue = styled.span`
   color: var(--main-color);
 `;
-
 const NavBar = styled.ul`
   display: flex;
   align-items: center;
@@ -52,11 +50,10 @@ const RightNav = styled.li`
   font-size: 17px;
   font-weight: 550;
 `;
-
 const AuthLink = styled(Link)`
   margin-right: 20px;
+  color: #8d8d8d !important;
 `;
-
 const Addbtn = styled.span`
   color: white;
   background-color: #3867d6;
@@ -66,7 +63,6 @@ const Addbtn = styled.span`
     background-color: #0056b3;
   }
 `;
-
 function Navbar({ activeNavTab, setActiveNavTab }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoggedOut, setIsLoggedOut] = useState(false);
@@ -115,7 +111,6 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
                 펀딩 예정
               </Tab>
             </NavLink>
-
             <Link to="/">
               <Tab activeNavTab={activeNavTab === 'completed'} onClick={() => setActiveNavTab('completed')}>
                 펀딩 종료
