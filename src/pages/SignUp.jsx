@@ -198,8 +198,8 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
 
       console.log('user', userCredential.user);
 
-      alert('회원가입이 완료되었습니다.');
-      navigate('/login');
+      alert('회원가입 및 로그인이 완료되었습니다.');
+      navigate('/main');
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
