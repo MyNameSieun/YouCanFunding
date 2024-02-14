@@ -11,7 +11,6 @@ import HeartButton from 'components/HeartButton';
 import SponsorBtn from 'components/SponsorBtn';
 import SponsorItem from 'components/SponsorItem';
 
-
 const ProjectIntroduction = styled.div`
   display: flex;
   justify-content: center;
@@ -33,6 +32,7 @@ const ImageBox = styled.div`
     background-repeat: no-repeat;
   }
 `;
+
 const TitleBox = styled.div`
   margin-left: 60px;
   width: 504px;
@@ -44,6 +44,7 @@ const Title = styled.div`
   line-height: 1.7;
   margin-bottom: 8px;
 `;
+
 const SubTitle = styled.div`
   color: #818181;
   font-size: 16px;
@@ -51,6 +52,7 @@ const SubTitle = styled.div`
   margin-top: 16px;
   line-height: 1.2;
 `;
+
 const Achieve = styled.div`
   display: flex;
   justify-content: space-between;
@@ -67,6 +69,7 @@ const PointText = styled.span`
   color: ${(props) => props.color};
   font-size: 24px;
 `;
+
 const InProgress = styled.div`
   display: flex;
   align-items: center;
@@ -90,10 +93,10 @@ const InProgress = styled.div`
     font-size: 18px;
     transition: background-color 0.3s ease;
   }
-  
-      &:hover {
-      background-color: #ff3300f6;
-    }
+
+  &:hover {
+    background-color: #ff3300f6;
+  }
 `;
 
 const PostTab = styled.div`
@@ -111,8 +114,8 @@ const TabItem = styled.div`
   cursor: pointer;
   color: ${(props) => (props.activePostTab ? 'black' : '#878f97')};
   font-weight: ${(props) => (props.activePostTab ? 'bold' : 'normal')};
-  
-    /* ${(props) => (props.$activePostTab === props.children ? 'border-bottom: 1px solid var(--main-color)' : 'none')} */
+
+  /* ${(props) => (props.$activePostTab === props.children ? 'border-bottom: 1px solid var(--main-color)' : 'none')} */
   border-bottom: ${(props) => (props.activePostTab ? '4px solid var(--main-color)' : 'none')};
   margin-bottom: ${(props) => (props.activePostTab ? '-23px' : '0')};
 `;
@@ -135,6 +138,7 @@ const ProjectInfoContainer = styled.div`
   font-size: 16px;
   line-height: 1.8;
   margin: 50px auto;
+`;
 
 const CommentContainer = styled.div`
   display: flex;
@@ -169,7 +173,6 @@ const CommentText = styled.div`
 
 const FontWeight = styled.span`
   font-weight: bold;
-
 `;
 
 function Post({ activeNavTab, setActiveNavTab }) {
@@ -207,7 +210,6 @@ function Post({ activeNavTab, setActiveNavTab }) {
     console.log(`Cancel Open Notification for Project ID: ${productIdToDisplay}`);
   };
 
-
   const handleTabClick = (tab) => {
     setActivePostTab(tab);
   };
@@ -220,17 +222,17 @@ function Post({ activeNavTab, setActiveNavTab }) {
           <img src="assets" alt="" />
         </ImageBox>
         <TitleBox>
-
           <Title>{productToDisplay.name}</Title>
           <SubTitle>
             프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명 프로젝트 설명 프로젝트
             설명프로젝트 설명프로젝트 설명프로설명프로젝트 설명프로설명프로젝트 설명프로명프로명프로명프로명프로
           </SubTitle>
-          <ScheduledNotification
+
+          {/* <ScheduledNotification
             productIdToDisplay={67}
             onApplyOpenNotification={handleApplyOpenNotification}
             onCancelOpenNotification={handleCancelOpenNotification}
-          />
+          /> */}
 
           {/* <Achieve>
             <div>
@@ -245,11 +247,9 @@ function Post({ activeNavTab, setActiveNavTab }) {
             <button>후원하기</button>
             <HeartButton />
           </InProgress> */}
-         {/*<SponsorBtn />*/}
+          <SponsorBtn />
 
           {/* <CompletedNotification /> */}
-
-
         </TitleBox>
       </ProjectIntroduction>
       <PostTab>
@@ -275,8 +275,7 @@ function Post({ activeNavTab, setActiveNavTab }) {
             esse
           </ProjectInfoContainer>
         ) : (
-
-          <ScheduledComments />
+          // <ScheduledComments />
 
           // <CommentContainer>
           //   <CommentItem>
@@ -298,7 +297,9 @@ function Post({ activeNavTab, setActiveNavTab }) {
           //     </CommentText>
           //   </CommentItem>
           // </CommentContainer>
-         //   <SponsorItem />
+
+          <SponsorItem />
+
           // <CompletedComments />
         )}
       </BottomBox>
