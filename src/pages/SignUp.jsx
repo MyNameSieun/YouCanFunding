@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
 
-function SignUp({ activeNavTab, setActiveNavTab }) {
+function SignUp() {
   // 닉네임
   const [nickname, setNickname] = useState('');
   const [isNicknameAvailable, setIsNicknameAvailable] = useState(true);
@@ -211,10 +211,12 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
   const handleGoogleSignUp = async () => {
     try {
       const provider = new GoogleAuthProvider(); // provider를 구글로 설정
+      provider.addScope('email');
       const userCredential = await signInWithPopup(auth, provider);
-      console.log(userCredential);
+      console.log('userCredential', userCredential);
 
       const user = userCredential.user;
+      console.log('user', user);
       const existingUserQuery = query(collection(db, 'users'), where('email', '==', user.email));
       const existingUserSnapshot = await getDocs(existingUserQuery);
 
@@ -228,10 +230,10 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
 
         console.log('user', user);
 
-        alert('회원가입이 완료되었습니다.');
-        navigate('/login');
+        alert('회원가입 및 로그인이 완료되었습니다.');
+        navigate('/main');
       } else {
-        alert('이미 등록된 구글 계정입니다.');
+        alert('이미 사용 중인 이메일 주소입니다.');
         await signOut(auth);
       }
     } catch (error) {
@@ -251,10 +253,12 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
   const handleGithubSignUp = async () => {
     try {
       const provider = new GithubAuthProvider(); // provider를 깃허브로 설정
+      provider.addScope('user');
       const userCredential = await signInWithPopup(auth, provider);
       console.log(userCredential);
 
       const user = userCredential.user;
+      console.log(user);
       const existingUserQuery = query(collection(db, 'users'), where('email', '==', user.email));
       const existingUserSnapshot = await getDocs(existingUserQuery);
 
@@ -268,10 +272,10 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
 
         console.log('user', user);
 
-        alert('회원가입이 완료되었습니다.');
-        navigate('/login');
+        alert('회원가입 및 로그인이 완료되었습니다.');
+        navigate('/main');
       } else {
-        alert('이미 등록된 깃허브 계정입니다.');
+        alert('이미 사용 중인 이메일 주소입니다.');
         await signOut(auth);
       }
     } catch (error) {
@@ -289,7 +293,7 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
 
   return (
     <>
-      <Navbar activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} />
+      <Navbar />
       <Body>
         <SignUpContainer>
           <SignUpTitle>이메일로 회원가입</SignUpTitle>
@@ -434,7 +438,7 @@ const SignUpToLogin = styled.div`
 
   & a {
     font-weight: 550;
-    color: var(--main-color);
+    color: var(--main-color) !important;
   }
 `;
 
@@ -478,6 +482,11 @@ const SignUpInput = styled.div`
     width: 110px;
     height: 40px;
     cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover {
+      background-color: rgba(228, 228, 228, 0.514);
+    }
   }
 
   & p {
@@ -506,6 +515,12 @@ const SignUpButton = styled.button`
   border: 1.5px solid rgb(228, 228, 228);
   border-radius: 30px;
   cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+
+  &:hover {
+    background-color: #274eff;
+    color: white;
+  }
 `;
 
 const SignUpWithOtherMethod = styled.div`
@@ -552,5 +567,10 @@ const SignUpWithOtherMethodButtonSet = styled.div`
     font-size: 14px;
     font-weight: 550;
     cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover {
+      background-color: rgb(228, 228, 228);
+    }
   }
 `;

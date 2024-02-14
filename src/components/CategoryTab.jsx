@@ -23,7 +23,6 @@ const IconWrapper = styled.div`
 `;
 const IconInfo = styled.div`
   margin-right: 20px;
-  margin-top: 0.5rem;
 `;
 const Hr = styled.div`
   border: 1px solid #dfdfdf;
