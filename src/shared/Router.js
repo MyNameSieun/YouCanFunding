@@ -18,10 +18,6 @@ const Router = () => {
       <Routes>
         <Route
           path="/"
-          element={<Home activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} isMainPage={false} />}
-        />
-        <Route
-          path="/main"
           element={
             <Main
               activeNavTab={activeNavTab}
