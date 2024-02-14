@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
 import SponsorBtn from 'components/post/SponsorBtn';
-import SponsorItem from 'components/post/SponsorItem';
 import ScheduledNotification from 'components/post/ScheduledNotification';
 import ScheduledComments from 'components/post/ScheduledComments';
 import CompletedNotification from 'components/post/CompletedNotification';
@@ -101,7 +100,6 @@ function Post({ activeNavTab, setActiveNavTab }) {
   const [projects, setProject] = useState([]);
   const id = useParams().id;
   const [receiptPrice, setReceiptPrice] = useState(0);
-  const [userComment, setUserComment] = useState([]);
 
   // DB에서 데이터 가져오기
   useEffect(() => {
@@ -180,7 +178,7 @@ function Post({ activeNavTab, setActiveNavTab }) {
           <SubTitle>{foundProject.summary}</SubTitle>
 
           {activeNavTab === 'inProgress' && (
-            <SponsorBtn receiptPrice={receiptPrice} setReceiptPrice={setReceiptPrice} />
+            <SponsorBtn foundProject={foundProject} receiptPrice={receiptPrice} setReceiptPrice={setReceiptPrice} />
           )}
           {activeNavTab === 'scheduled' && (
             <>
@@ -211,10 +209,10 @@ function Post({ activeNavTab, setActiveNavTab }) {
             {activeNavTab === 'scheduled' && <ScheduledComments />}
             {activeNavTab === 'inProgress' && (
               <>
-                <SponsorList userComment={userComment} setUserComment={setUserComment} />
+                <SponsorList />
               </>
             )}
-            {activeNavTab === 'completed' && <SponsorList userComment={userComment} setUserComment={setUserComment} />}
+            {activeNavTab === 'completed' && <SponsorList />}
           </>
         )}
       </BottomBox>
