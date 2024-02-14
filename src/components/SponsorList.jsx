@@ -5,20 +5,20 @@ import styled from 'styled-components';
 const SponsorList = ({ username, receiptPrice, profile }) => {
   return (
     <>
-      <CommntWrapper>
+      <CommentWrapper>
         <UserImg src={profile ?? defaultUser} alt="User Profile" />
         <CommentText>
           {username ?? '유저 닉네임'}님이 <FontWeight>{receiptPrice.toLocaleString('ko-KR')}원 펀딩</FontWeight>해
           주셨어요.
         </CommentText>
-      </CommntWrapper>
+      </CommentWrapper>
     </>
   );
 };
 
 export default SponsorList;
 
-const CommntWrapper = styled.div`
+const CommentWrapper = styled.div`
   display: flex;
   align-items: center;
   border: 2px solid #dfdfdf;
