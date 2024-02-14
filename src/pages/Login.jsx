@@ -173,7 +173,7 @@ function Login() {
 
   return (
     <>
-      <Navbar />
+      <Navbar activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} />
       <Body>
         <LoginContainer>
           <LoginTitle>이메일로 로그인</LoginTitle>

@@ -7,6 +7,7 @@ import ScheduledComments from 'components/post/ScheduledComments';
 import CompletedComments from 'components/post/CompletedComments';
 import CompletedNotification from 'components/post/CompletedNotification';
 import ProductsList from 'data/products.json';
+import HeartButton from 'components/HeartButton';
 
 const ProjectIntroduction = styled.div`
   display: flex;
@@ -45,6 +46,7 @@ const SubTitle = styled.div`
   font-size: 16px;
   line-height: 1.5;
   margin-top: 16px;
+  line-height: 1.2;
 `;
 const Achieve = styled.div`
   display: flex;
@@ -75,7 +77,6 @@ const InProgress = styled.div`
     font-size: 18px;
     margin-right: 10px;
   }
-
   button {
     padding: 10px 20px;
     background-color: var(--sub-color);
@@ -86,12 +87,13 @@ const InProgress = styled.div`
     cursor: pointer;
     font-size: 18px;
     transition: background-color 0.3s ease;
-
-    &:hover {
+  }
+  
+      &:hover {
       background-color: #ff3300f6;
     }
-  }
 `;
+
 const PostTab = styled.div`
   display: flex;
   justify-content: space-between;
@@ -100,18 +102,24 @@ const PostTab = styled.div`
   font-size: 24px;
   font-weight: bold;
 `;
+
 const TabItem = styled.div`
   font-size: 24px;
   font-weight: bold;
   cursor: pointer;
   color: ${(props) => (props.activePostTab ? 'black' : '#878f97')};
   font-weight: ${(props) => (props.activePostTab ? 'bold' : 'normal')};
+  
+    /* ${(props) => (props.$activePostTab === props.children ? 'border-bottom: 1px solid var(--main-color)' : 'none')} */
+  border-bottom: ${(props) => (props.activePostTab ? '4px solid var(--main-color)' : 'none')};
+  margin-bottom: ${(props) => (props.activePostTab ? '-23px' : '0')};
 `;
 
 const Hr = styled.div`
   border: 2px solid #e6e6e6;
   margin-top: -40px;
 `;
+
 const BottomBox = styled.div`
   width: 80%;
   margin: 0 auto;
@@ -120,11 +128,11 @@ const BottomBox = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
+
 const ProjectInfoContainer = styled.div`
   font-size: 16px;
   line-height: 1.8;
   margin: 50px auto;
-`;
 
 const CommentContainer = styled.div`
   display: flex;
@@ -210,7 +218,8 @@ function Post({ activeNavTab, setActiveNavTab }) {
         <TitleBox>
           <Title>{productToDisplay.name}</Title>
           <SubTitle>
-            프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명 프로젝트 설명
+            프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명 프로젝트 설명 프로젝트
+            설명프로젝트 설명프로젝트 설명프로설명프로젝트 설명프로설명프로젝트 설명프로명프로명프로명프로명프로
           </SubTitle>
           <ScheduledNotification
             productIdToDisplay={67}
@@ -229,9 +238,11 @@ function Post({ activeNavTab, setActiveNavTab }) {
           <InProgress>
             <input placeholder="후원 금액을 입력해주세요." />
             <button>후원하기</button>
+            <HeartButton />
           </InProgress> */}
 
           {/* <CompletedNotification /> */}
+
         </TitleBox>
       </ProjectIntroduction>
       <PostTab>
@@ -257,6 +268,7 @@ function Post({ activeNavTab, setActiveNavTab }) {
             esse
           </ProjectInfoContainer>
         ) : (
+
           <ScheduledComments />
 
           // <CommentContainer>
