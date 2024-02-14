@@ -47,7 +47,7 @@ function Login({ activeNavTab, setActiveNavTab }) {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log(userCredential);
       alert('로그인 되었습니다.');
-      navigate('/main');
+      navigate('/');
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -126,7 +126,7 @@ function Login({ activeNavTab, setActiveNavTab }) {
       console.log('user', userCredential.user);
 
       alert('로그인 되었습니다.');
-      navigate('/main');
+      navigate('/');
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -165,7 +165,7 @@ function Login({ activeNavTab, setActiveNavTab }) {
       console.log('user', userCredential.user);
 
       alert('로그인 되었습니다.');
-      navigate('/main');
+      navigate('/');
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;

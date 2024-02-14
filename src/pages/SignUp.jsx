@@ -245,7 +245,7 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
         console.log('user', user);
 
         alert('회원가입 및 로그인이 완료되었습니다.');
-        navigate('/main');
+        navigate('/');
       } else {
         alert('이미 사용 중인 이메일 주소입니다.');
         await signOut(auth);
@@ -287,7 +287,7 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
         console.log('user', user);
 
         alert('회원가입 및 로그인이 완료되었습니다.');
-        navigate('/main');
+        navigate('/');
       } else {
         alert('이미 사용 중인 이메일 주소입니다.');
         await signOut(auth);

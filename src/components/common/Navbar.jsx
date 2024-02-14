@@ -105,20 +105,20 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
       <NavBar>
         <LeftNav>
           <Logo>
-            <Link to="/main">
+            <Link to="/">
               <Tab activeNavTab={activeNavTab === 'inProgress'} onClick={() => setActiveNavTab('inProgress')}>
                 유캔<ColorBlue>FUN</ColorBlue>딩
               </Tab>
             </Link>
           </Logo>
           <>
-            <NavLink to="/main">
+            <NavLink to="/">
               <Tab activeNavTab={activeNavTab === 'scheduled'} onClick={() => setActiveNavTab('scheduled')}>
                 펀딩 예정
               </Tab>
             </NavLink>
 
-            <Link to="/main">
+            <Link to="/">
               <Tab activeNavTab={activeNavTab === 'completed'} onClick={() => setActiveNavTab('completed')}>
                 펀딩 종료
               </Tab>
