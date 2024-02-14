@@ -3,11 +3,13 @@ import styled from 'styled-components';
 import calendar from 'assets/calendar.png';
 import gift from 'assets/gift.png';
 import { PiBellBold } from 'react-icons/pi';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { auth } from '../../firebase';
 
 function ScheduledNotification({ projects, projectIdToDisplay, onApplyOpenNotification, onCancelOpenNotification }) {
   const [notificationRequested, setNotificationRequested] = useState(false);
   const id = useParams().id;
+  const navigate = useNavigate();
 
   // projects 배열에서 현재 페이지의 프로젝트 가져오기
   const foundProject = projects.find((project) => project.id === id);
@@ -21,6 +23,11 @@ function ScheduledNotification({ projects, projectIdToDisplay, onApplyOpenNotifi
 
   // 오픈 알림 신청
   const applyOpenNotification = async () => {
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+      alert('로그인이 필요합니다.');
+      return navigate('/login');
+    }
     await onApplyOpenNotification(projectIdToDisplay);
 
     window.alert('오픈 알림 신청이 완료되었습니다.');

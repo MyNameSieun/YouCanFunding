@@ -36,7 +36,7 @@ function HeartButton() {
     const currentUser = auth.currentUser;
     if (!currentUser) {
       alert('로그인이 필요합니다.');
-      return navigate('/signup');
+      return navigate('/login');
     }
 
     const collectionRef = collection(db, 'like');

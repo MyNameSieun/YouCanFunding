@@ -89,6 +89,7 @@ function Post({ activeNavTab, setActiveNavTab }) {
   const id = useParams().id;
   const [receiptPrice, setReceiptPrice] = useState(0);
   const [userComment, setUserComment] = useState([]);
+
   // DB에서 데이터 가져오기
   useEffect(() => {
     const getProjects = async () => {
@@ -101,32 +102,37 @@ function Post({ activeNavTab, setActiveNavTab }) {
     };
     getProjects();
   }, []);
+
   // 데이터를 로딩중일 때
   if (projects.length <= 0) {
     return <div>로딩중입니다..!</div>;
   }
+
   // id에 해당하는 데이터 추출
   const foundProject = projects.find((project) => project.id === id);
+
   // quill.js 결과 HTML 파싱
   const dangerousHTML = { __html: foundProject.content };
+
   // 오픈 알림 신청
   const handleApplyOpenNotification = async (projectIdToDisplay) => {
-    await updateDoc(doc(db, 'projects', projectIdToDisplay), { myPageState: 'notificationSettings' });
+    await updateDoc(doc(db, 'projects', projectIdToDisplay), { isNotificated: true });
     const updatedProjects = projects.map((project) => {
       if (project.id === projectIdToDisplay) {
-        return { ...project, myPageState: 'notificationSettings' };
+        return { ...project, isNotificated: true };
       }
       return project;
     });
     setProject(updatedProjects);
     console.log(`프로젝트 ID ${projectIdToDisplay}에 대한 오픈 알림 신청`);
   };
+
   // 오픈 알림 취소
   const handleCancelOpenNotification = async (projectIdToDisplay) => {
-    await updateDoc(doc(db, 'projects', projectIdToDisplay), { myPageState: 'none' });
+    await updateDoc(doc(db, 'projects', projectIdToDisplay), { isNotificated: false });
     const updatedProjects = projects.map((project) => {
       if (project.id === projectIdToDisplay) {
-        return { ...project, myPageState: 'none' };
+        return { ...project, isNotificated: false };
       }
       return project;
     });
@@ -152,7 +158,8 @@ function Post({ activeNavTab, setActiveNavTab }) {
           {activeNavTab === 'scheduled' && (
             <>
               <ScheduledNotification
-                productIdToDisplay={67}
+                projects={projects}
+                projectIdToDisplay={id}
                 onApplyOpenNotification={handleApplyOpenNotification}
                 onCancelOpenNotification={handleCancelOpenNotification}
               />
