@@ -6,7 +6,7 @@ import SponsorTimeLine from 'components/SponsorTimeLine';
 import SponsorPercent from 'components/SponsorPercent';
 import HeartButton from './HeartButton';
 
-const SponsorBtn = ({ receiptPrice, setReceiptPrice }) => {
+const SponsorBtn = ({ foundProject, receiptPrice, setReceiptPrice }) => {
   const user = auth.currentUser;
 
   const [isAdd, setIsAdd] = useState(false);
@@ -25,7 +25,7 @@ const SponsorBtn = ({ receiptPrice, setReceiptPrice }) => {
     try {
       setIsAdd(true);
       await addDoc(collection(db, 'sponsorUser'), {
-        receiptPrice,
+        donatedPrice: receiptPrice,
         username: user.displayName,
         userId: user.uid,
         profile: user.photoURL,
@@ -34,6 +34,18 @@ const SponsorBtn = ({ receiptPrice, setReceiptPrice }) => {
       });
     } catch (e) {
       console.log(e);
+    }
+    try {
+      const projectQuery = query(collection(db, 'sponsorUser'));
+      const snapshot = await getDocs(projectQuery);
+
+      let total = 0;
+      snapshot.forEach((doc) => {
+        const donatedPrice = doc.data().donatedPrice;
+        total += donatedPrice;
+      });
+
+      setTotalPrice(total);
     } finally {
       setIsAdd(false);
     }
@@ -44,12 +56,12 @@ const SponsorBtn = ({ receiptPrice, setReceiptPrice }) => {
     <>
       <Achieve>
         <div>
-          <SponsorPercent />
+          <SponsorPercent foundProject={foundProject} totalPrice={totalPrice} />
           {/* <PointText color="var(--sub-color)">{totalPrice}</PointText>원 모금 */}
-          <PointText color="var(--main-color)">98%&nbsp;</PointText>달성
+          {/* <PointText color="var(--main-color)">98%&nbsp;</PointText>달성 */}
         </div>
         <div>
-          {/* <PointText color="var(--sub-color)">123123&nbsp;</PointText>원 달성 */}
+          {/* <PointText color="var(--sub-color)">{totalPrice}&nbsp;</PointText>원 달성 */}
           <SponsorTimeLine totalPrice={totalPrice} setTotalPrice={setTotalPrice} />
         </div>
       </Achieve>

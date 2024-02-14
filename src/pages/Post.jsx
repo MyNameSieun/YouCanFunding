@@ -101,7 +101,6 @@ function Post({ activeNavTab, setActiveNavTab }) {
   const [projects, setProject] = useState([]);
   const id = useParams().id;
   const [receiptPrice, setReceiptPrice] = useState(0);
-  const [userComment, setUserComment] = useState([]);
 
   // DB에서 데이터 가져오기
   useEffect(() => {
@@ -177,7 +176,7 @@ function Post({ activeNavTab, setActiveNavTab }) {
           <SubTitle>{foundProject.summary}</SubTitle>
 
           {activeNavTab === 'inProgress' && (
-            <SponsorBtn receiptPrice={receiptPrice} setReceiptPrice={setReceiptPrice} />
+            <SponsorBtn foundProject={foundProject} receiptPrice={receiptPrice} setReceiptPrice={setReceiptPrice} />
           )}
           {activeNavTab === 'scheduled' && (
             <>
@@ -206,7 +205,7 @@ function Post({ activeNavTab, setActiveNavTab }) {
         ) : (
           // <ScheduledComments />
 
-          <SponsorList userComment={userComment} setUserComment={setUserComment} />
+          <SponsorList />
 
           // <CompletedComments />
         )}
