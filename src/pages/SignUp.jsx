@@ -183,6 +183,18 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
         return;
       }
 
+      // 이메일 주소가 일치하지 않을 때
+      if (!isEmailMatching) {
+        alert('이메일 주소가 일치하지 않습니다.');
+        return;
+      }
+
+      // 비밀번호가 일치하지 않을 때
+      if (!isPasswordMatching) {
+        alert('비밀번호가 일치하지 않습니다.');
+        return;
+      }
+
       // Firebase Authentication으로 회원가입
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
