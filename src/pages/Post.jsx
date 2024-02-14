@@ -5,7 +5,6 @@ import SponsorBtn from 'components/post/SponsorBtn';
 import ScheduledNotification from 'components/post/ScheduledNotification';
 import ScheduledComments from 'components/post/ScheduledComments';
 import CompletedNotification from 'components/post/CompletedNotification';
-import CompletedComments from 'components/post/CompletedComments';
 import { useParams } from 'react-router';
 import { collection, getDocs, query, updateDoc, doc } from '@firebase/firestore';
 import { db } from '../firebase';
@@ -129,11 +128,11 @@ function Post({ activeNavTab, setActiveNavTab }) {
 
   // 오픈 알림 신청
   const handleApplyOpenNotification = async (projectIdToDisplay) => {
-    await updateDoc(doc(db, 'projects', projectIdToDisplay), { myPageState: 'notificationSettings' });
+    await updateDoc(doc(db, 'projects', projectIdToDisplay), { isNotificated: true });
 
     const updatedProjects = projects.map((project) => {
       if (project.id === projectIdToDisplay) {
-        return { ...project, myPageState: 'notificationSettings' };
+        return { ...project, isNotificated: true };
       }
       return project;
     });
@@ -145,10 +144,10 @@ function Post({ activeNavTab, setActiveNavTab }) {
 
   // 오픈 알림 취소
   const handleCancelOpenNotification = async (projectIdToDisplay) => {
-    await updateDoc(doc(db, 'projects', projectIdToDisplay), { myPageState: 'none' });
+    await updateDoc(doc(db, 'projects', projectIdToDisplay), { isNotificated: false });
     const updatedProjects = projects.map((project) => {
       if (project.id === projectIdToDisplay) {
-        return { ...project, myPageState: 'none' };
+        return { ...project, isNotificated: false };
       }
       return project;
     });
