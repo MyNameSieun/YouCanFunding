@@ -1,46 +1,47 @@
-import React, { useEffect, useState } from 'react';
-import { db } from '../../firebase';
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
-import SponsorList from './SponsorList';
+import React from 'react';
+import defaultUser from 'assets/defaultUser.png';
 import styled from 'styled-components';
 
-const SponsorItem = () => {
-  const [userComment, setUserComment] = useState([]);
-
-  useEffect(() => {
-    const fetchUserComment = async () => {
-      const userCommentQuery = query(collection(db, 'sponsorUser'), orderBy('createdAt', 'desc'));
-      const spanshot = await getDocs(userCommentQuery);
-      const userComment = spanshot.docs.map((doc) => {
-        const { profile, receiptPrice, username, createdAt } = doc.data();
-        return {
-          createdAt,
-          profile,
-          receiptPrice,
-          username
-        };
-      });
-      setUserComment(userComment);
-    };
-    fetchUserComment();
-  }, [userComment]);
-
+const SponsorItem = ({ username, receiptPrice, profile }) => {
   return (
-    <CommentContainer>
-      {userComment.map((item) => (
-        <SponsorList key={item.id} {...item} />
-      ))}
-    </CommentContainer>
+    <>
+      <CommentWrapper>
+        <UserImg src={profile ?? defaultUser} alt="User Profile" />
+        <CommentText>
+          {username ?? '유저 닉네임'}님이 &nbsp; <FontWeight>{receiptPrice.toLocaleString('ko-KR')}원 펀딩</FontWeight>
+          해 주셨어요.
+        </CommentText>
+      </CommentWrapper>
+    </>
   );
 };
 
 export default SponsorItem;
 
-const CommentContainer = styled.div`
+const CommentWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 15px;
-  margin: 50px auto;
+  border: 2px solid #dfdfdf;
+  width: 800px;
+  margin: 7px auto;
+  height: 70px;
+  border-radius: 30px;
+  background-color: white;
+`;
+
+const UserImg = styled.img`
+  margin-left: 30px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 15px;
+`;
+
+const CommentText = styled.p`
+  font-size: 16px;
+  display: flex;
+`;
+
+const FontWeight = styled.p`
+  font-weight: bold;
 `;
