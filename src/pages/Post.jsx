@@ -29,11 +29,12 @@ const ImageBox = styled.div`
   position: relative;
 
   & img {
-    background-size: 100%;
-    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 7px;
   }
 `;
-
 const TitleBox = styled.div`
   margin-left: 60px;
   width: 504px;
@@ -169,18 +170,22 @@ function Post({ activeNavTab, setActiveNavTab }) {
         <ImageBox>
           <img src={foundProject.mainImage} width="500px" height="298px" alt={foundProject.title} />
         </ImageBox>
+
         <TitleBox>
           <Title>{foundProject.title}</Title>
           <SubTitle>{foundProject.summary}</SubTitle>
-          <ScheduledNotification
-            productIdToDisplay={67}
-            onApplyOpenNotification={handleApplyOpenNotification}
-            onCancelOpenNotification={handleCancelOpenNotification}
-          />
 
-          {/*<SponsorBtn />*/}
-
-          {/* <CompletedNotification /> */}
+          {activeNavTab === 'inProgress' && <SponsorBtn />}
+          {activeNavTab === 'scheduled' && (
+            <>
+              <ScheduledNotification
+                productIdToDisplay={67}
+                onApplyOpenNotification={handleApplyOpenNotification}
+                onCancelOpenNotification={handleCancelOpenNotification}
+              />
+            </>
+          )}
+          {activeNavTab === 'completed' && <CompletedNotification />}
         </TitleBox>
       </ProjectIntroduction>
       <PostTab>

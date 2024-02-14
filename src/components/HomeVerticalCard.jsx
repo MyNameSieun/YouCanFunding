@@ -15,6 +15,7 @@ const CardItems = styled.div`
   border: 2px solid #dfdfdf;
   background-color: white;
   border-radius: 9px;
+  margin-top: 20px;
   width: 323px;
   height: 286px;
   position: relative;
@@ -36,7 +37,7 @@ const Title = styled.div`
   margin-right: 10px;
 `;
 
-function HomeVerticalCard({ activeTab, activeNavTab }) {
+function HomeVerticalCard({ activeTab, activeNavTab, search }) {
   const [projects, setProject] = useState([]);
   const navigate = useNavigate();
 
@@ -58,10 +59,9 @@ function HomeVerticalCard({ activeTab, activeNavTab }) {
 
   return (
     <CardContainer>
-      {/* activeNavTab에 따라 날짜 비교 로직 */}
       {projects
-        .filter((product) => activeTab === '전체' || activeTab === product.category)
 
+        .filter((product) => activeTab === '전체' || activeTab === product.category)
         .filter((item) => {
           if (activeNavTab === 'inProgress') {
             return currentDate >= new Date(item.startDate) && currentDate <= new Date(item.endDate);
@@ -72,6 +72,12 @@ function HomeVerticalCard({ activeTab, activeNavTab }) {
           if (activeNavTab === 'completed') {
             return currentDate > new Date(item.endDate);
           }
+        })
+        .filter((item) => {
+          if (!search) {
+            return true;
+          }
+          return item.title.includes(search);
         })
         .map((item) => (
           <CardItems key={item.id} onClick={() => navigate(`/post/${item.id}`)}>
