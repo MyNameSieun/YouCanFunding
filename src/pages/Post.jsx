@@ -8,6 +8,9 @@ import CompletedComments from 'components/post/CompletedComments';
 import CompletedNotification from 'components/post/CompletedNotification';
 import ProductsList from 'data/products.json';
 import HeartButton from 'components/HeartButton';
+import SponsorBtn from 'components/SponsorBtn';
+import SponsorItem from 'components/SponsorItem';
+
 
 const ProjectIntroduction = styled.div`
   display: flex;
@@ -68,7 +71,6 @@ const InProgress = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-
   input {
     padding: 12px;
     border: 1px solid #ddd;
@@ -167,6 +169,7 @@ const CommentText = styled.div`
 
 const FontWeight = styled.span`
   font-weight: bold;
+
 `;
 
 function Post({ activeNavTab, setActiveNavTab }) {
@@ -204,6 +207,7 @@ function Post({ activeNavTab, setActiveNavTab }) {
     console.log(`Cancel Open Notification for Project ID: ${productIdToDisplay}`);
   };
 
+
   const handleTabClick = (tab) => {
     setActivePostTab(tab);
   };
@@ -216,6 +220,7 @@ function Post({ activeNavTab, setActiveNavTab }) {
           <img src="assets" alt="" />
         </ImageBox>
         <TitleBox>
+
           <Title>{productToDisplay.name}</Title>
           <SubTitle>
             프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명 프로젝트 설명 프로젝트
@@ -240,8 +245,10 @@ function Post({ activeNavTab, setActiveNavTab }) {
             <button>후원하기</button>
             <HeartButton />
           </InProgress> */}
+         {/*<SponsorBtn />*/}
 
           {/* <CompletedNotification /> */}
+
 
         </TitleBox>
       </ProjectIntroduction>
@@ -291,7 +298,7 @@ function Post({ activeNavTab, setActiveNavTab }) {
           //     </CommentText>
           //   </CommentItem>
           // </CommentContainer>
-
+         //   <SponsorItem />
           // <CompletedComments />
         )}
       </BottomBox>

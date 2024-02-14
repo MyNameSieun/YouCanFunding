@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
 
-function Login() {
+function Login({ activeNavTab, setActiveNavTab }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   // 에러 메시지 상태 추가
@@ -174,10 +174,10 @@ function Login() {
   return (
     <>
       <Navbar activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} />
+
       <Body>
         <LoginContainer>
           <LoginTitle>이메일로 로그인</LoginTitle>
-
           <div>
             <LoginToSignUp>
               <p>아직 계정이 없으신가요? &nbsp;</p>

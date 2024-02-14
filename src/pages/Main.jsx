@@ -6,11 +6,9 @@ import HomeVerticalCard from 'components/HomeVerticalCard';
 import HomeAddBtn from 'components/HomeAddBtn';
 import Banner from 'components/Banner';
 
-function Main() {
-  const [activeTab, setActiveTab] = useState('전체');
+function Main({ activeNavTab, setActiveNavTab, activeTab, setActiveTab }) {
   const [search, setSearch] = useState();
   const [visibleProducts, setVisibleProducts] = useState(12);
-  const [activeNavTab, setActiveNavTab] = useState('inProgress');
 
   return (
     <>
@@ -21,14 +19,11 @@ function Main() {
       <HomeVerticalCard
         activeTab={activeTab}
         search={search}
-        activeNavTab={activeNavTab}
         visibleProducts={visibleProducts}
-      />
-      <HomeAddBtn
         activeNavTab={activeNavTab}
-        visibleProducts={visibleProducts}
-        setVisibleProducts={setVisibleProducts}
       />
+
+      <HomeAddBtn visibleProducts={visibleProducts} setVisibleProducts={setVisibleProducts} />
     </>
   );
 }

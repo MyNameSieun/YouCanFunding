@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
 
-function SignUp() {
+function SignUp({ activeNavTab, setActiveNavTab }) {
   // 닉네임
   const [nickname, setNickname] = useState('');
   const [isNicknameAvailable, setIsNicknameAvailable] = useState(true);
@@ -293,7 +293,7 @@ function SignUp() {
 
   return (
     <>
-      <Navbar />
+      <Navbar activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} />
       <Body>
         <SignUpContainer>
           <SignUpTitle>이메일로 회원가입</SignUpTitle>

@@ -1,8 +1,10 @@
 import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
 import { Link, NavLink } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { useEffect, useState } from 'react';
 import Logout from '../Logout';
+
 
 const NavContainer = styled.div`
   height: 90px;
@@ -21,25 +23,30 @@ const NavBar = styled.ul`
   width: 100%;
   justify-content: space-between;
 `;
+
 const Logo = styled.span`
   font-size: 30px;
   font-weight: bold;
   margin-right: 34px;
 `;
+
 const Tab = styled.span`
   cursor: pointer;
   margin-right: 24px;
-  color: ${(props) => (props.activeNavTab ? 'black' : '#878F97')};
+  color: ${(props) => (props.activeNavTab ? 'black' : '#878f97')};
 `;
+
 const LeftNav = styled.li`
   font-size: 22px;
   font-weight: bold;
   text-decoration: none;
+
   & li {
     display: inline-block;
     margin-right: 30px;
   }
 `;
+
 const RightNav = styled.li`
   font-size: 17px;
   font-weight: 550;
@@ -58,6 +65,9 @@ const Addbtn = styled.span`
   }
 `;
 function Navbar({ activeNavTab, setActiveNavTab }) {
+
+  const location = useLocation();
+  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoggedOut, setIsLoggedOut] = useState(false);
 
@@ -100,11 +110,13 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
             </Link>
           </Logo>
           <>
+
             <NavLink to="/main">
               <Tab activeNavTab={activeNavTab === 'scheduled'} onClick={() => setActiveNavTab('scheduled')}>
                 펀딩 예정
               </Tab>
             </NavLink>
+
             <Link to="/main">
               <Tab activeNavTab={activeNavTab === 'completed'} onClick={() => setActiveNavTab('completed')}>
                 펀딩 종료
@@ -156,4 +168,5 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
     </NavContainer>
   );
 }
+
 export default Navbar;
