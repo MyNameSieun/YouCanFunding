@@ -8,6 +8,7 @@ import { IoIosSettings } from 'react-icons/io';
 import { BsPencilSquare } from 'react-icons/bs';
 import { collection, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { updateProfile } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 const MyPage = ({ activeNavTab, setActiveNavTab }) => {
   const user = auth.currentUser;
@@ -19,6 +20,7 @@ const MyPage = ({ activeNavTab, setActiveNavTab }) => {
   const [isEditingName, setIsEditingName] = useState(false);
   const [activeMyTab, setActiveMyTab] = useState('내가 등록한 펀딩');
   const [pageScroll, setPageScroll] = useState(8);
+  const navigate = useNavigate();
 
   // DB에서 데이터 가져오기
   useEffect(() => {
@@ -212,12 +214,9 @@ const MyPage = ({ activeNavTab, setActiveNavTab }) => {
             )
             .slice(0, pageScroll)
             .map((project) => (
-              <CardLists key={project.id}>
-                <ProductImg src={project.image} alt="상품 이미지" />
-                <ProductName>{project.name}</ProductName>
-                <div>
-                  <ProductAchievementRate>{project.achievementRate}</ProductAchievementRate>
-                </div>
+              <CardLists key={project.id} onClick={() => navigate(`/post/${project.id}`)}>
+                <ProductImg src={project.mainImage} alt="상품 이미지" />
+                <ProductName>{project.title}</ProductName>
               </CardLists>
             ))}
         </CardContainer>
@@ -275,6 +274,11 @@ const CardLists = styled.div`
   gap: 10px;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 5px 5px 5px lightgray;
+  }
 `;
 
 const UserImg = styled.img`
