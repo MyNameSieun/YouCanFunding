@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
 import { Link, NavLink } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { useEffect, useState } from 'react';
@@ -111,6 +110,7 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
                 펀딩 예정
               </Tab>
             </NavLink>
+
             <Link to="/">
               <Tab activeNavTab={activeNavTab === 'completed'} onClick={() => setActiveNavTab('completed')}>
                 펀딩 종료
@@ -133,7 +133,7 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
                 </>
               ) : (
                 <>
-                  <Logout onLogout={handleLogout} />
+                  <Logout onLogout={handleLogout} setActiveNavTab={setActiveNavTab} />
                   <AuthLink to={'/mypage'}>
                     <Tab activeNavTab={activeNavTab === 'mypage'} onClick={() => setActiveNavTab('mypage')}>
                       마이페이지
