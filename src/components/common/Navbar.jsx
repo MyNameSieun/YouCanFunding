@@ -5,7 +5,6 @@ import { auth } from '../../firebase';
 import { useEffect, useState } from 'react';
 import Logout from '../Logout';
 
-
 const NavContainer = styled.div`
   height: 90px;
   display: flex;
@@ -13,9 +12,11 @@ const NavContainer = styled.div`
   justify-content: space-between;
   margin-bottom: 19px;
 `;
+
 const ColorBlue = styled.span`
   color: var(--main-color);
 `;
+
 const NavBar = styled.ul`
   display: flex;
   align-items: center;
@@ -51,10 +52,11 @@ const RightNav = styled.li`
   font-size: 17px;
   font-weight: 550;
 `;
+
 const AuthLink = styled(Link)`
   margin-right: 20px;
-  color: #8d8d8d !important;
 `;
+
 const Addbtn = styled.span`
   color: white;
   background-color: #3867d6;
@@ -64,10 +66,10 @@ const Addbtn = styled.span`
     background-color: #0056b3;
   }
 `;
-function Navbar({ activeNavTab, setActiveNavTab }) {
 
+function Navbar({ activeNavTab, setActiveNavTab }) {
   const location = useLocation();
-  
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoggedOut, setIsLoggedOut] = useState(false);
 
@@ -110,7 +112,6 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
             </Link>
           </Logo>
           <>
-
             <NavLink to="/main">
               <Tab activeNavTab={activeNavTab === 'scheduled'} onClick={() => setActiveNavTab('scheduled')}>
                 펀딩 예정
