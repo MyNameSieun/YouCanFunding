@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import calendar from 'assets/calendar.png';
 import gift from 'assets/gift.png';
 import { PiBellBold } from 'react-icons/pi';
 import { useNavigate, useParams } from 'react-router-dom';
 import { auth, db } from '../../firebase';
-import { deleteDoc, doc, getDoc, setDoc } from 'firebase/firestore';
+import { deleteDoc, doc, setDoc } from 'firebase/firestore';
 
 function ScheduledNotification({ projects, onApplyOpenNotification, onCancelOpenNotification }) {
   const [notificationRequested, setNotificationRequested] = useState(false);
