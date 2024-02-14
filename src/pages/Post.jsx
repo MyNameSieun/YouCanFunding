@@ -159,7 +159,6 @@ function Post({ activeNavTab, setActiveNavTab }) {
             <>
               <ScheduledNotification
                 projects={projects}
-                projectIdToDisplay={id}
                 onApplyOpenNotification={handleApplyOpenNotification}
                 onCancelOpenNotification={handleCancelOpenNotification}
               />
