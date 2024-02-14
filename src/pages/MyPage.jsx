@@ -207,10 +207,10 @@ const MyPage = ({ activeNavTab, setActiveNavTab }) => {
           {projects
             .filter(
               (project) =>
-                (activeMyTab === '내가 등록한 펀딩' && project.myPageState === 'register') ||
-                (activeMyTab === '스크랩한 펀딩' && project.myPageState === 'clipping') ||
-                (activeMyTab === '알림 신청한 펀딩' && project.myPageState === 'notificationSettings') ||
-                (activeMyTab === '내가 후원한 펀딩' && project.myPageState === 'support')
+                (activeMyTab === '내가 등록한 펀딩' && project.isRegistered === true) ||
+                (activeMyTab === '스크랩한 펀딩' && project.isScrapped === true) ||
+                (activeMyTab === '알림 신청한 펀딩' && project.isNotificated === true) ||
+                (activeMyTab === '내가 후원한 펀딩' && project.isSponsored === true)
             )
             .slice(0, pageScroll)
             .map((project) => (

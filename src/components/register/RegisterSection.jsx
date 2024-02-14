@@ -178,7 +178,10 @@ function RegisterSection() {
         startDate,
         endDate,
         content,
-        myPageState: 'register'
+        isRegistered: true,
+        isSponsored: false,
+        isScrapped: false,
+        isNotificated: false
       };
 
       // firebase db에 새로운 프로젝트 추가
