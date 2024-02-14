@@ -18,7 +18,7 @@ import 'react-quill/dist/quill.snow.css';
 import { data } from 'components/common/categories';
 import shortid from 'shortid';
 import { db, storage } from '../../firebase';
-import { addDoc, collection } from 'firebase/firestore';
+import { collection, doc, getDocs, query, setDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 function RegisterSection() {
@@ -42,7 +42,7 @@ function RegisterSection() {
 
   /* 상태(state) 리스트 */
   // 프로젝트 목록
-  const [projects, setProject] = useState('');
+  const [projects, setProject] = useState([]);
   // 카테고리
   const [category, setCategory] = useState('');
   // 제목
@@ -106,7 +106,7 @@ function RegisterSection() {
       ['bold', 'italic', 'underline', 'strike'],
       [{ color: [] }, { background: [] }],
       [{ align: [] }, { list: 'ordered' }, { list: 'bullet' }],
-      ['blockquote', 'link', 'image']
+      ['blockquote', 'link']
     ]
   };
 
@@ -123,8 +123,7 @@ function RegisterSection() {
     'list',
     'bullet',
     'blockquote',
-    'link',
-    'image'
+    'link'
   ];
 
   // 프로젝트 추가
@@ -178,15 +177,11 @@ function RegisterSection() {
         content
       };
 
-      // projects에 새로운 프로젝트 추가
-      setProject((prev) => {
-        return [...prev, newProject];
-      });
-
-      const collectionRef = collection(db, 'projects');
-
       // firebase db에 새로운 프로젝트 추가
-      await addDoc(collectionRef, newProject);
+
+      await setDoc(doc(db, 'projects', newProject.id), {
+        ...newProject
+      });
 
       // 기존 입력창 초기화
       setCategory('');
@@ -198,6 +193,17 @@ function RegisterSection() {
       setEndDate('');
       setContent('');
     }
+  };
+
+  // firebase DB의 데이터를 가져오는 함수
+  const getProjects = async () => {
+    const projectQuery = query(collection(db, 'projects'));
+    const querySnapshot = await getDocs(projectQuery);
+
+    const projectList = querySnapshot.docs.map((doc) => {
+      return doc.data();
+    });
+    setProject(projectList);
   };
 
   return (
@@ -293,6 +299,33 @@ function RegisterSection() {
           프로젝트 등록
         </AddProjectButton>
       </AddProjectButtonContainer>
+      {/* 임시 출력 공간 */}
+      {/* <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '50px' }}>
+        <button onClick={getProjects}>출력 버튼</button>
+        <p>
+          <strong>임시 출력 공간</strong>
+        </p>
+        {projects.map((item) => {
+          const dangerousHTML = { __html: item.content };
+          return (
+            <>
+              <p>카테고리 : {item.category}</p>
+              <p>제목 : {item.title}</p>
+              <p>개요 : {item.summary}</p>
+              <p>
+                메인 이미지 : <img src={item.mainImage} alt="프로젝트이미지" />
+              </p>
+              <p>목표 금액 : {item.targetPrice}</p>
+              <p>
+                <strong>펀딩 기간</strong>
+              </p>
+              <p>시작일 : {item.startDate}</p>
+              <p>종료일 : {item.endDate}</p>
+              <p dangerouslySetInnerHTML={dangerousHTML} />
+            </>
+          );
+        })}
+      </div> */}
     </RegisterContainer>
   );
 }
