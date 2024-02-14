@@ -12,8 +12,8 @@ const SponsorTimeLine = ({ totalPrice, setTotalPrice }) => {
 
         let total = 0;
         snapshot.forEach((doc) => {
-          const receiptPrice = doc.data().receiptPrice;
-          total += receiptPrice;
+          const donatedPrice = doc.data().donatedPrice;
+          total += donatedPrice;
         });
 
         setTotalPrice(total);
@@ -23,11 +23,11 @@ const SponsorTimeLine = ({ totalPrice, setTotalPrice }) => {
     };
 
     fetchReceiptPrices();
-  }, [setTotalPrice]);
+  }, []);
 
   return (
     <div>
-      <PointText color="var(--sub-color)">{totalPrice}</PointText>원 모금
+      <PointText color="var(--sub-color)">{totalPrice.toLocaleString('ko-KR')}</PointText> 원 모금
     </div>
   );
 };

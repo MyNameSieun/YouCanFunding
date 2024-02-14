@@ -1,27 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import SponsorItem from './SponsorItem';
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '../../firebase';
+import defaultUser from 'assets/defaultUser.png';
 
-const SponsorList = ({ receiptPrice, userComment, setUserComment }) => {
+const SponsorList = () => {
+  const [userComment, setUserComment] = useState([]);
+
+  // 무한루프 해결 방법 필요
   useEffect(() => {
     const fetchUserComment = async () => {
       const userCommentQuery = query(collection(db, 'sponsorUser'), orderBy('createdAt', 'desc'));
-      const spanshot = await getDocs(userCommentQuery);
-      const userComment = spanshot.docs.map((doc) => {
-        const { profile, receiptPrice, username, createdAt } = doc.data();
-        return {
-          createdAt,
-          profile,
-          receiptPrice,
-          username
-        };
+      const snapshot = await getDocs(userCommentQuery);
+      const userCommentList = snapshot.docs.map((doc) => {
+        return doc.data();
       });
-      setUserComment(userComment);
+      setUserComment(userCommentList);
     };
     fetchUserComment();
-  }, [setUserComment]);
+  }, []);
+
   return (
     <>
       {userComment.length === 0 ? (
@@ -32,7 +30,13 @@ const SponsorList = ({ receiptPrice, userComment, setUserComment }) => {
       ) : null}
       <CommentContainer>
         {userComment.map((item) => (
-          <SponsorItem key={item.id} {...item} receiptPrice={receiptPrice} />
+          <CommentWrapper>
+            <UserImg src={item.profile ?? defaultUser} alt="User Profile" />
+            <CommentText>
+              {item.username ?? '유저 닉네임'} 님이 &nbsp;{' '}
+              <FontWeight>{item.donatedPrice.toLocaleString('ko-KR')} 원을</FontWeight> &nbsp; 펀딩해주셨어요.
+            </CommentText>
+          </CommentWrapper>
         ))}
       </CommentContainer>
     </>
@@ -63,4 +67,32 @@ const CommentContainer = styled.div`
   font-size: 16px;
   gap: 15px;
   margin: 50px auto;
+`;
+
+const CommentWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  border: 2px solid #dfdfdf;
+  width: 800px;
+  margin: 7px auto;
+  height: 70px;
+  border-radius: 30px;
+  background-color: white;
+`;
+
+const UserImg = styled.img`
+  margin-left: 30px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 15px;
+`;
+
+const CommentText = styled.p`
+  font-size: 16px;
+  display: flex;
+`;
+
+const FontWeight = styled.p`
+  font-weight: bold;
 `;
