@@ -3,7 +3,7 @@ import { auth, db } from '../firebase';
 import styled from 'styled-components';
 import { addDoc, collection } from 'firebase/firestore';
 import SponsorTimeLine from 'components/SponsorTimeLine';
-import TotalReceiptPrice from 'components/TotalReceiptPrice';
+import SponsorPercent from 'components/SponsorPercent';
 
 const SponsorBtn = () => {
   const user = auth.currentUser;
@@ -44,13 +44,12 @@ const SponsorBtn = () => {
       <Achieve>
         <div>
           <PointText color="var(--main-color)">98%</PointText> 달성
-          <PointText color="var(--sub-color)">3000</PointText>원 모금
-          {/* <SponsorTimeLine /> */}
-          <TotalReceiptPrice />
+          <SponsorPercent />
+          <SponsorTimeLine />
         </div>
       </Achieve>
       <PriceForm onSubmit={handleOnSubmit}>
-        <Input
+        <input
           onChange={onChangeReceipt}
           value={receiptPrice.toLocaleString('ko-KR')}
           placeholder="후원 금액을 입력해주세요."
@@ -62,8 +61,6 @@ const SponsorBtn = () => {
 };
 
 export default SponsorBtn;
-
-const Input = styled.input``;
 
 const Achieve = styled.div`
   font-weight: bold;

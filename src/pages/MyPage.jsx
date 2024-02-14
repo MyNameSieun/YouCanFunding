@@ -12,8 +12,10 @@ import { updateProfile } from 'firebase/auth';
 
 const MyPage = ({ activeNavTab, setActiveNavTab }) => {
   const user = auth.currentUser;
+
   const [productLists, setProductLists] = useState(ProductsList);
   const [upLoadImg, setUpLoadImg] = useState(user?.photoURL);
+  const [userImg, setUserImg] = useState();
   const fileInput = useRef(null);
   const [isEditingImg, setIsEditingImg] = useState(false);
   const [userNickName, setUserNickName] = useState(user?.displayName);
@@ -121,12 +123,12 @@ const MyPage = ({ activeNavTab, setActiveNavTab }) => {
     default:
       break;
   }
-
+  console.log(user);
   return (
     <>
       <Navbar activeNavTab={activeNavTab} setActiveNavTab={setActiveNavTab} />
       <UserInfoWrapper>
-        <UserImg src={user?.photoURL ?? defaultUser} />
+        <UserImg src={user?.photoURL ?? defaultUser} alt={user?.photoURL} />
         <input
           type="file"
           style={{ display: 'none' }}

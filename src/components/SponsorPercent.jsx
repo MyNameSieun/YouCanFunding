@@ -1,41 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { db } from '../firebase';
 import { collection, getDocs, query } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
-const SponsorTimeLine = () => {
-  const [totalPrice, setTotalPrice] = useState(0);
+const SponsorPercent = ({ totalPrice }) => {
+  const [percent, setPercent] = useState('');
 
   useEffect(() => {
     const fetchReceiptPrices = async () => {
       try {
-        const projectQuery = query(collection(db, 'sponsorUser'));
+        const projectQuery = query(collection(db, 'projects'));
         const snapshot = await getDocs(projectQuery);
 
-        let total = 0;
+        let total = totalPrice;
         snapshot.forEach((doc) => {
-          const receiptPrice = doc.data().receiptPrice;
-          total += receiptPrice;
+          const targetPrice = doc.data().targetPrice;
         });
 
-        setTotalPrice(total);
+        setPercent(total);
       } catch (error) {
         console.error('Error fetching receipt prices: ', error);
       }
     };
 
     fetchReceiptPrices();
-  }, [totalPrice]);
+  }, []);
 
   return (
     <div>
-      <PointText color="var(--sub-color)">{totalPrice}</PointText>원 모금
+      <PointText color="var(--main-color)">{percent}</PointText> 달성
     </div>
   );
 };
 
-export default SponsorTimeLine;
-
+export default SponsorPercent;
 const PointText = styled.span`
   color: ${(props) => props.color};
   font-size: 24px;
