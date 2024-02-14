@@ -1,16 +1,17 @@
-import { db } from '../firebase';
-import { ref } from 'firebase/storage';
 import React, { useState, useEffect } from 'react';
-import firebase from 'firebase/app';
-import { collection, getDocs } from 'firebase/firestore';
+// import firebase from './firebase/app';
+import { db } from '../firebase';
+import { doc } from 'firebase/firestore';
+// import 'firebase/firestore';
 
-const SponsorTimeLine = () => {
+const TotalReceiptPrice = ({ receiptPrice }) => {
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     const fetchReceiptPrices = async () => {
       try {
-        const sponsorUserRef = db.collection('sponsorUser', 'receiptPrice');
+        const docRef = doc(db, sponsorUser, receiptPrice);
+        const sponsorUserRef = db.collection('sponsorUser');
         const snapshot = await sponsorUserRef.get();
 
         let total = 0;
@@ -30,9 +31,9 @@ const SponsorTimeLine = () => {
 
   return (
     <div>
-      <h2>Total Price: {totalPrice}</h2>
+      <h2>Total Receipt Price: {totalPrice}</h2>
     </div>
   );
 };
 
-export default SponsorTimeLine;
+export default TotalReceiptPrice;

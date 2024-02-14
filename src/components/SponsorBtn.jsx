@@ -3,6 +3,8 @@ import { auth, db } from '../firebase';
 import styled from 'styled-components';
 import { addDoc, collection } from 'firebase/firestore';
 import SponsorTimeLine from 'components/SponsorTimeLine';
+import TotalReceiptPrice from 'components/TotalReceiptPrice';
+
 const SponsorBtn = () => {
   const user = auth.currentUser;
 
@@ -37,22 +39,14 @@ const SponsorBtn = () => {
     setReceiptPrice('');
   };
 
-  const getTotalPrice = (receiptPrice) => {
-    const sum = 0;
-    for (let i = 0; i < receiptPrice.length; i++) {
-      sum += parseInt(receiptPrice[i] + 1);
-    }
-    return sum;
-    console.log(receiptPrice);
-  };
-
   return (
     <>
       <Achieve>
         <div>
           <PointText color="var(--main-color)">98%</PointText> 달성
-          <PointText color="var(--sub-color)">3,000</PointText>원 모금
+          <PointText color="var(--sub-color)">3000</PointText>원 모금
           {/* <SponsorTimeLine /> */}
+          <TotalReceiptPrice />
         </div>
       </Achieve>
       <PriceForm onSubmit={handleOnSubmit}>
