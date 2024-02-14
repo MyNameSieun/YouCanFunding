@@ -121,7 +121,7 @@ function Post({ activeNavTab, setActiveNavTab }) {
     return <div>로딩중입니다..!</div>;
   }
 
-  // id에 해당하는 데이터 추출출
+  // id에 해당하는 데이터 추출
   const foundProject = projects.find((project) => project.id === id);
 
   // quill.js 결과 HTML 파싱

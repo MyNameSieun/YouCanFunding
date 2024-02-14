@@ -70,6 +70,7 @@ const Addbtn = styled.span`
 function Navbar({ activeNavTab, setActiveNavTab }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoggedOut, setIsLoggedOut] = useState(false);
+  const location = useLocation().pathname;
 
   useEffect(() => {
     // 컴포넌트가 마운트 될 때 로그인 상태를 확인하고 업데이트
@@ -96,6 +97,10 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
 
   const handleTabActivation = () => {
     setActiveNavTab('inProgress');
+  };
+
+  const warnNotLoggedIn = () => {
+    alert('로그인을 먼저 수행해주세요.');
   };
 
   return (
@@ -161,9 +166,25 @@ function Navbar({ activeNavTab, setActiveNavTab }) {
               </AuthLink>
             </>
           )}
-          <Link to={'/register'}>
-            <Addbtn onClick={handleTabActivation}>프로젝트 등록</Addbtn>
-          </Link>
+          {location === '/register' ? (
+            <>
+              <Link to={'/'}>
+                <Addbtn>나가기</Addbtn>
+              </Link>
+            </>
+          ) : (
+            <>
+              {isLoggedIn ? (
+                <Link to={'/register'}>
+                  <Addbtn onClick={handleTabActivation}>프로젝트 등록</Addbtn>
+                </Link>
+              ) : (
+                <Link to={'/login'}>
+                  <Addbtn onClick={warnNotLoggedIn}>프로젝트 등록</Addbtn>
+                </Link>
+              )}
+            </>
+          )}
         </RightNav>
       </NavBar>
     </NavContainer>

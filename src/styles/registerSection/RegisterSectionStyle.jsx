@@ -101,7 +101,7 @@ const ProjectInfoTextArea = styled.textarea`
 
 // 등록 button
 const AddProjectButton = styled.button`
-  width: 200px;
+  width: 180px;
   height: 50px;
   background-color: var(--main-color);
   border: none;
