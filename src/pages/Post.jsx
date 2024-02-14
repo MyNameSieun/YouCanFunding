@@ -62,18 +62,19 @@ const PostTab = styled.div`
 const TabItem = styled.div`
   font-size: 24px;
   font-weight: bold;
+  margin-top: 20px;
+  padding-bottom: 5px;
   cursor: pointer;
   color: ${(props) => (props.activePostTab ? 'black' : '#878f97')};
-  font-weight: ${(props) => (props.activePostTab ? 'bold' : 'normal')};
+  font-weight: ${(props) => (props.activePostTab ? 'bold' : 'bolder')};
 
-  /* ${(props) => (props.$activePostTab === props.children ? 'border-bottom: 1px solid var(--main-color)' : 'none')} */
-  border-bottom: ${(props) => (props.activePostTab ? '4px solid var(--main-color)' : 'none')};
+  border-bottom: ${(props) => (props.activePostTab ? '3px solid var(--main-color)' : 'none')};
   margin-bottom: ${(props) => (props.activePostTab ? '-23px' : '0')};
 `;
 
 const Hr = styled.div`
   border: 2px solid #e6e6e6;
-  margin-top: -40px;
+  margin-top: -60px;
 `;
 
 const BottomBox = styled.div`

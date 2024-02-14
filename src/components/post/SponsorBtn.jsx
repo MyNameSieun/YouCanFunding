@@ -42,10 +42,10 @@ const SponsorBtn = () => {
     <>
       <Achieve>
         <div>
-          <PointText color="var(--main-color)">98%</PointText> 달성
+          <PointText color="var(--main-color)">98%&nbsp;</PointText>달성
         </div>
         <div>
-          <PointText color="var(--sub-color)">123123</PointText>원 모금
+          <PointText color="var(--sub-color)">123123&nbsp;</PointText>원 달성
         </div>
       </Achieve>
       <PriceForm onSubmit={handleOnSubmit}>
