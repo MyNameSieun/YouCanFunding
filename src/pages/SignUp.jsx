@@ -11,6 +11,8 @@ import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
+import google from 'assets/google.png';
+import github from 'assets/github.png';
 
 function SignUp({ activeNavTab, setActiveNavTab }) {
   // 닉네임
@@ -406,8 +408,14 @@ function SignUp({ activeNavTab, setActiveNavTab }) {
             </SignUpWithOtherMethodPTag>
 
             <SignUpWithOtherMethodButtonSet>
-              <button onClick={handleGoogleSignUp}>구글로 회원가입</button>
-              <button onClick={handleGithubSignUp}>깃허브로 회원가입</button>
+              <button onClick={handleGoogleSignUp}>
+                <img src={google} alt="구글로고" />
+                구글로 회원가입
+              </button>
+              <button onClick={handleGithubSignUp}>
+                <img src={github} alt="깃허브로고" />
+                깃허브로 회원가입
+              </button>
             </SignUpWithOtherMethodButtonSet>
           </SignUpWithOtherMethod>
         </SignUpContainer>
@@ -571,7 +579,8 @@ const SignUpWithOtherMethodButtonSet = styled.div`
 
   & button {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-evenly;
+    gap: 8px;
     width: 100%;
     padding: 12px;
     border: 1.5px solid rgb(228, 228, 228);
@@ -583,6 +592,11 @@ const SignUpWithOtherMethodButtonSet = styled.div`
 
     &:hover {
       background-color: rgb(228, 228, 228);
+    }
+
+    & img {
+      width: 20px;
+      height: 20px;
     }
   }
 `;
