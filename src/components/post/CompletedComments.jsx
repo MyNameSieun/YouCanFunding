@@ -1,8 +1,8 @@
 import React from 'react';
-import SponsorItem from './SponsorItem';
+import SponsorList from './SponsorList';
 
-function CompletedComments() {
-  return <SponsorItem />;
+function CompletedComments({ userComment, setUserComment }) {
+  return <SponsorList userComment={userComment} setUserComment={setUserComment} />;
 }
 
 export default CompletedComments;
