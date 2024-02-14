@@ -11,7 +11,6 @@ const SponsorPercent = ({ totalPrice }) => {
       try {
         const projectQuery = query(collection(db, 'projects'));
         const snapshot = await getDocs(projectQuery);
-
         let total = totalPrice;
         snapshot.forEach((doc) => {
           const targetPrice = doc.data().targetPrice;
@@ -24,7 +23,7 @@ const SponsorPercent = ({ totalPrice }) => {
     };
 
     fetchReceiptPrices();
-  }, []);
+  }, [totalPrice]);
 
   return (
     <div>

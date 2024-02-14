@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { db } from '../firebase';
 import { collection, getDocs, query } from 'firebase/firestore';
 
-const SponsorTimeLine = () => {
-  const [totalPrice, setTotalPrice] = useState(0);
-
+const SponsorTimeLine = ({ totalPrice, setTotalPrice }) => {
   useEffect(() => {
     const fetchReceiptPrices = async () => {
       try {
@@ -25,7 +23,7 @@ const SponsorTimeLine = () => {
     };
 
     fetchReceiptPrices();
-  }, [totalPrice]);
+  }, [setTotalPrice]);
 
   return (
     <div>
