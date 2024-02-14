@@ -6,6 +6,7 @@ import ScheduledNotification from 'components/post/ScheduledNotification';
 import ScheduledComments from 'components/post/ScheduledComments';
 import CompletedComments from 'components/post/CompletedComments';
 import CompletedNotification from 'components/post/CompletedNotification';
+import ProductsList from 'data/products.json';
 
 const ProjectIntroduction = styled.div`
   display: flex;
@@ -57,10 +58,6 @@ const Achieve = styled.div`
   }
 `;
 
-const Achievement = styled.div``;
-
-const Collection = styled.div``;
-
 const PointText = styled.span`
   color: ${(props) => props.color};
   font-size: 24px;
@@ -99,10 +96,18 @@ const PostTab = styled.div`
   display: flex;
   justify-content: space-between;
   width: 350px;
-  margin: 60px auto;
+  margin: 80px auto;
   font-size: 24px;
   font-weight: bold;
 `;
+const TabItem = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  color: ${(props) => (props.activePostTab ? 'black' : '#878f97')};
+  font-weight: ${(props) => (props.activePostTab ? 'bold' : 'normal')};
+`;
+
 const Hr = styled.div`
   border: 2px solid #e6e6e6;
   margin-top: -40px;
@@ -119,14 +124,6 @@ const ProjectInfoContainer = styled.div`
   font-size: 16px;
   line-height: 1.8;
   margin: 50px auto;
-`;
-
-const TabItem = styled.div`
-  font-size: 24px;
-  font-weight: bold;
-  cursor: pointer;
-  color: ${(props) => (props.activePostTab ? 'black' : '#878f97')};
-  font-weight: ${(props) => (props.activePostTab ? 'bold' : 'normal')};
 `;
 
 const CommentContainer = styled.div`
@@ -166,6 +163,38 @@ const FontWeight = styled.span`
 
 function Post({ activeNavTab, setActiveNavTab }) {
   const [activePostTab, setActivePostTab] = useState('project');
+  const [productLists, setProductLists] = useState(ProductsList);
+
+  const productIdToDisplay = 67;
+  const productToDisplay = productLists.productList.find((product) => product.id === productIdToDisplay);
+
+  // 오픈 알림 신청
+  const handleApplyOpenNotification = async (productIdToDisplay) => {
+    const updatedProductList = productLists.productList.map((product) => {
+      if (product.id === productIdToDisplay) {
+        return { ...product, myPageState: 'notificationSettings' };
+      }
+      return product;
+    });
+
+    setProductLists({ ...productLists, productList: updatedProductList });
+
+    console.log(`프로젝트 ID ${productIdToDisplay}에 대한 오픈 알림 신청`);
+  };
+
+  // 오픈 알림 취소
+  const handleCancelOpenNotification = async (productIdToDisplay) => {
+    const updatedProductList = productLists.productList.map((product) => {
+      if (product.id === productIdToDisplay) {
+        return { ...product, myPageState: 'schedule' };
+      }
+      return product;
+    });
+
+    setProductLists({ ...productLists, productList: updatedProductList });
+
+    console.log(`Cancel Open Notification for Project ID: ${productIdToDisplay}`);
+  };
 
   const handleTabClick = (tab) => {
     setActivePostTab(tab);
@@ -179,24 +208,28 @@ function Post({ activeNavTab, setActiveNavTab }) {
           <img src="assets" alt="" />
         </ImageBox>
         <TitleBox>
-          <Title>[캣닢 장난감] 고양이를 사랑한 오렌지</Title>
+          <Title>{productToDisplay.name}</Title>
           <SubTitle>
             프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명프로젝트 설명 프로젝트 설명
           </SubTitle>
-          {/* <ScheduledNotification /> */}
+          <ScheduledNotification
+            productIdToDisplay={67}
+            onApplyOpenNotification={handleApplyOpenNotification}
+            onCancelOpenNotification={handleCancelOpenNotification}
+          />
 
-          <Achieve>
-            <Achievement>
+          {/* <Achieve>
+            <div>
               <PointText color="var(--main-color)">98%</PointText> 달성
-            </Achievement>
-            <Collection>
+            </div>
+            <div>
               <PointText color="var(--sub-color)">123123</PointText>원 모금
-            </Collection>
+            </div>
           </Achieve>
           <InProgress>
             <input placeholder="후원 금액을 입력해주세요." />
             <button>후원하기</button>
-          </InProgress>
+          </InProgress> */}
 
           {/* <CompletedNotification /> */}
         </TitleBox>
@@ -224,28 +257,28 @@ function Post({ activeNavTab, setActiveNavTab }) {
             esse
           </ProjectInfoContainer>
         ) : (
-          // <ScheduledComments />
+          <ScheduledComments />
 
-          <CommentContainer>
-            <CommentItem>
-              <CommentImage src={defaultUser} alt="User Profile" />
-              <CommentText>
-                박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
-              </CommentText>
-            </CommentItem>
-            <CommentItem>
-              <CommentImage src={defaultUser} alt="User Profile" />
-              <CommentText>
-                박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
-              </CommentText>
-            </CommentItem>
-            <CommentItem>
-              <CommentImage src={defaultUser} alt="User Profile" />
-              <CommentText>
-                박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
-              </CommentText>
-            </CommentItem>
-          </CommentContainer>
+          // <CommentContainer>
+          //   <CommentItem>
+          //     <CommentImage src={defaultUser} alt="User Profile" />
+          //     <CommentText>
+          //       박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
+          //     </CommentText>
+          //   </CommentItem>
+          //   <CommentItem>
+          //     <CommentImage src={defaultUser} alt="User Profile" />
+          //     <CommentText>
+          //       박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
+          //     </CommentText>
+          //   </CommentItem>
+          //   <CommentItem>
+          //     <CommentImage src={defaultUser} alt="User Profile" />
+          //     <CommentText>
+          //       박시은님이 <FontWeight>165,000원</FontWeight> 펀딩했어요.
+          //     </CommentText>
+          //   </CommentItem>
+          // </CommentContainer>
 
           // <CompletedComments />
         )}

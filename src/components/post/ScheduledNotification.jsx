@@ -4,17 +4,23 @@ import calendar from 'assets/calendar.png';
 import gift from 'assets/gift.png';
 import { PiBellBold } from 'react-icons/pi';
 
-function ScheduledNotification() {
+function ScheduledNotification({ productIdToDisplay, onApplyOpenNotification, onCancelOpenNotification }) {
   const [notificationRequested, setNotificationRequested] = useState(false);
-  const applyOpenNotification = () => {
+
+  // 오픈 알림 신청
+  const applyOpenNotification = async () => {
+    await onApplyOpenNotification(productIdToDisplay);
+
     window.alert('오픈 알림 신청이 완료되었습니다.');
     setNotificationRequested(true);
   };
 
-  const cancelOpenNotification = () => {
+  // 오픈 알림 취소
+  const cancelOpenNotification = async () => {
     const isCancled = window.confirm('정말 취소하시겠습니까?\n오픈 알림과 혜택을 받을 수 없습니다.');
 
     if (isCancled) {
+      await onCancelOpenNotification(productIdToDisplay);
       setNotificationRequested(false);
     }
   };
