@@ -3,9 +3,21 @@ import styled from 'styled-components';
 import calendar from 'assets/calendar.png';
 import gift from 'assets/gift.png';
 import { PiBellBold } from 'react-icons/pi';
+import { useParams } from 'react-router-dom';
 
-function ScheduledNotification({ projectIdToDisplay, onApplyOpenNotification, onCancelOpenNotification }) {
+function ScheduledNotification({ projects, projectIdToDisplay, onApplyOpenNotification, onCancelOpenNotification }) {
   const [notificationRequested, setNotificationRequested] = useState(false);
+  const id = useParams().id;
+
+  // projects 배열에서 현재 페이지의 프로젝트 가져오기
+  const foundProject = projects.find((project) => project.id === id);
+
+  // 현재 페이지의 프로젝트가 없는 경우 처리
+  if (!foundProject) {
+    return <div>프로젝트를 찾을 수 없습니다.</div>;
+  }
+
+  const { startDate } = foundProject;
 
   // 오픈 알림 신청
   const applyOpenNotification = async () => {
@@ -25,11 +37,21 @@ function ScheduledNotification({ projectIdToDisplay, onApplyOpenNotification, on
     }
   };
 
+  // 날짜 형식 변경 함수
+  const formattedDate = (date) => {
+    return new Date(date).toLocaleDateString('ko-KR', {
+      year: '2-digit',
+      month: 'long',
+      day: 'numeric',
+      weekday: 'long'
+    });
+  };
+
   return (
     <OpeningContainer>
       <OpeningDate>
         <img src={calendar} alt="캘린더"></img>
-        <p>?월 ?일 ?요일 ?시 오픈 예정</p>
+        <p>{`${formattedDate(startDate)}`} 10시 오픈 예정</p>
       </OpeningDate>
       <OpeningGift>
         <img src={gift} alt="선물"></img>
@@ -67,7 +89,7 @@ const OpeningDate = styled.div`
   }
 
   & p {
-    font-size: 15px;
+    font-size: 16px;
   }
 `;
 
@@ -82,7 +104,7 @@ const OpeningGift = styled.div`
   }
 
   & p {
-    font-size: 15px;
+    font-size: 16px;
   }
 `;
 
