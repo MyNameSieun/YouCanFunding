@@ -178,15 +178,30 @@ function Post({ activeNavTab, setActiveNavTab }) {
         <TitleBox>
           <Title>{foundProject.title}</Title>
           <SubTitle>{foundProject.summary}</SubTitle>
-          <ScheduledNotification
-            productIdToDisplay={67}
-            onApplyOpenNotification={handleApplyOpenNotification}
-            onCancelOpenNotification={handleCancelOpenNotification}
-          />
 
-          {/*<SponsorBtn />*/}
+          {activeNavTab === 'inProgress' && (
+            <ScheduledNotification
+              productIdToDisplay={67}
+              onApplyOpenNotification={handleApplyOpenNotification}
+              onCancelOpenNotification={handleCancelOpenNotification}
+            />
+          )}
+
+          {/* <SponsorBtn /> */}
+          {activeNavTab === 'scheduled' && (
+            <>
+              <SponsorBtn />
+              <SponsorItem />
+            </>
+          )}
 
           {/* <CompletedNotification /> */}
+          {activeNavTab === 'completed' && (
+            <>
+              <CompletedNotification />
+              <CompletedComments />
+            </>
+          )}
         </TitleBox>
       </ProjectIntroduction>
       <PostTab>
