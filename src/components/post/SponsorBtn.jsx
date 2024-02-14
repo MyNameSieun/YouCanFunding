@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { auth, db } from '../../firebase';
 import styled from 'styled-components';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, getDocs, query } from 'firebase/firestore';
+import SponsorTimeLine from 'components/SponsorTimeLine';
+import SponsorPercent from 'components/SponsorPercent';
 import HeartButton from './HeartButton';
 
-const SponsorBtn = () => {
+const SponsorBtn = ({ receiptPrice, setReceiptPrice }) => {
   const user = auth.currentUser;
 
   const [isAdd, setIsAdd] = useState(false);
-  const [receiptPrice, setReceiptPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const onChangeReceipt = (event) => {
     const rawValue = event.target.value;
@@ -42,14 +44,17 @@ const SponsorBtn = () => {
     <>
       <Achieve>
         <div>
+          <SponsorPercent />
+          {/* <PointText color="var(--sub-color)">{totalPrice}</PointText>원 모금 */}
           <PointText color="var(--main-color)">98%&nbsp;</PointText>달성
         </div>
         <div>
-          <PointText color="var(--sub-color)">123123&nbsp;</PointText>원 달성
+          {/* <PointText color="var(--sub-color)">123123&nbsp;</PointText>원 달성 */}
+          <SponsorTimeLine totalPrice={totalPrice} setTotalPrice={setTotalPrice} />
         </div>
       </Achieve>
       <PriceForm onSubmit={handleOnSubmit}>
-        <Input
+        <input
           onChange={onChangeReceipt}
           value={receiptPrice.toLocaleString('ko-KR')}
           placeholder="후원 금액을 입력해주세요."
@@ -62,8 +67,6 @@ const SponsorBtn = () => {
 };
 
 export default SponsorBtn;
-
-const Input = styled.input``;
 
 const Achieve = styled.div`
   display: flex;

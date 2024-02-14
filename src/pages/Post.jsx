@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from 'components/common/Navbar';
 import styled from 'styled-components';
-import ProductsList from 'data/products.json';
 import SponsorBtn from 'components/post/SponsorBtn';
 import SponsorItem from 'components/post/SponsorItem';
 import ScheduledNotification from 'components/post/ScheduledNotification';
@@ -9,8 +8,9 @@ import ScheduledComments from 'components/post/ScheduledComments';
 import CompletedNotification from 'components/post/CompletedNotification';
 import CompletedComments from 'components/post/CompletedComments';
 import { useParams } from 'react-router';
-import { collection, getDocs, query } from '@firebase/firestore';
+import { collection, getDocs, query, updateDoc, doc } from '@firebase/firestore';
 import { db } from '../firebase';
+import SponsorList from 'components/post/SponsorList';
 
 const ProjectIntroduction = styled.div`
   display: flex;
@@ -98,9 +98,10 @@ const ProjectInfoContainer = styled.div`
 
 function Post({ activeNavTab, setActiveNavTab }) {
   const [activePostTab, setActivePostTab] = useState('project');
-  const [productLists, setProductLists] = useState(ProductsList);
   const [projects, setProject] = useState([]);
   const id = useParams().id;
+  const [receiptPrice, setReceiptPrice] = useState(0);
+  const [userComment, setUserComment] = useState([]);
 
   // DB에서 데이터 가져오기
   useEffect(() => {
@@ -122,41 +123,41 @@ function Post({ activeNavTab, setActiveNavTab }) {
     return <div>로딩중입니다..!</div>;
   }
 
-  // id에 해당하는 데이터 추출출
+  // id에 해당하는 데이터 추출
   const foundProject = projects.find((project) => project.id === id);
 
   // quill.js 결과 HTML 파싱
   const dangerousHTML = { __html: foundProject.content };
 
-  const productIdToDisplay = 67;
-  const productToDisplay = productLists.productList.find((product) => product.id === productIdToDisplay);
-
   // 오픈 알림 신청
-  const handleApplyOpenNotification = async (productIdToDisplay) => {
-    const updatedProductList = productLists.productList.map((product) => {
-      if (product.id === productIdToDisplay) {
-        return { ...product, myPageState: 'notificationSettings' };
+  const handleApplyOpenNotification = async (projectIdToDisplay) => {
+    await updateDoc(doc(db, 'projects', projectIdToDisplay), { myPageState: 'notificationSettings' });
+
+    const updatedProjects = projects.map((project) => {
+      if (project.id === projectIdToDisplay) {
+        return { ...project, myPageState: 'notificationSettings' };
       }
-      return product;
+      return project;
     });
 
-    setProductLists({ ...productLists, productList: updatedProductList });
+    setProject(updatedProjects);
 
-    console.log(`프로젝트 ID ${productIdToDisplay}에 대한 오픈 알림 신청`);
+    console.log(`프로젝트 ID ${projectIdToDisplay}에 대한 오픈 알림 신청`);
   };
 
   // 오픈 알림 취소
-  const handleCancelOpenNotification = async (productIdToDisplay) => {
-    const updatedProductList = productLists.productList.map((product) => {
-      if (product.id === productIdToDisplay) {
-        return { ...product, myPageState: 'schedule' };
+  const handleCancelOpenNotification = async (projectIdToDisplay) => {
+    await updateDoc(doc(db, 'projects', projectIdToDisplay), { myPageState: 'none' });
+    const updatedProjects = projects.map((project) => {
+      if (project.id === projectIdToDisplay) {
+        return { ...project, myPageState: 'none' };
       }
-      return product;
+      return project;
     });
 
-    setProductLists({ ...productLists, productList: updatedProductList });
+    setProject(updatedProjects);
 
-    console.log(`Cancel Open Notification for Project ID: ${productIdToDisplay}`);
+    console.log(`프로젝트 ID ${projectIdToDisplay}에 대한 오픈 알림 취소`);
   };
 
   const handleTabClick = (tab) => {
@@ -201,9 +202,9 @@ function Post({ activeNavTab, setActiveNavTab }) {
         {activePostTab === 'project' ? (
           <ProjectInfoContainer dangerouslySetInnerHTML={dangerousHTML} />
         ) : (
-          <ScheduledComments />
+          // <ScheduledComments />
 
-          // <SponsorItem />
+          <SponsorList userComment={userComment} setUserComment={setUserComment} />
 
           // <CompletedComments />
         )}

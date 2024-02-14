@@ -4,12 +4,12 @@ import calendar from 'assets/calendar.png';
 import gift from 'assets/gift.png';
 import { PiBellBold } from 'react-icons/pi';
 
-function ScheduledNotification({ productIdToDisplay, onApplyOpenNotification, onCancelOpenNotification }) {
+function ScheduledNotification({ projectIdToDisplay, onApplyOpenNotification, onCancelOpenNotification }) {
   const [notificationRequested, setNotificationRequested] = useState(false);
 
   // 오픈 알림 신청
   const applyOpenNotification = async () => {
-    await onApplyOpenNotification(productIdToDisplay);
+    await onApplyOpenNotification(projectIdToDisplay);
 
     window.alert('오픈 알림 신청이 완료되었습니다.');
     setNotificationRequested(true);
@@ -20,7 +20,7 @@ function ScheduledNotification({ productIdToDisplay, onApplyOpenNotification, on
     const isCancled = window.confirm('정말 취소하시겠습니까?\n오픈 알림과 혜택을 받을 수 없습니다.');
 
     if (isCancled) {
-      await onCancelOpenNotification(productIdToDisplay);
+      await onCancelOpenNotification(projectIdToDisplay);
       setNotificationRequested(false);
     }
   };
@@ -94,7 +94,7 @@ const OpeningButton = styled.div`
     gap: 10px;
 
     width: 100%;
-    margin-top: 20px;
+    margin-top: 25px;
     padding: 15px;
     border-color: ${(props) => (props.completed ? 'var(--main-color)' : 'transparent')};
     border-radius: 9px;
