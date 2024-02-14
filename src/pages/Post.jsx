@@ -126,6 +126,9 @@ function Post({ activeNavTab, setActiveNavTab }) {
   // id에 해당하는 데이터 추출
   const foundProject = projects.find((project) => project.id === id);
 
+  // 파이어베이스 아이디와 post id 값이 같은 것만 userComment 출력
+  // id === foundProject.id;
+
   // quill.js 결과 HTML 파싱
   const dangerousHTML = { __html: foundProject.content };
 
