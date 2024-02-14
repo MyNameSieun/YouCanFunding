@@ -2,13 +2,24 @@ import React, { useState } from 'react';
 import { auth, db } from '../../firebase';
 import styled from 'styled-components';
 import { addDoc, collection } from 'firebase/firestore';
-import HeartButton from './HeartButton';
+import { useParams } from 'react-router-dom';
+// import HeartButton from './HeartButton';
 
-const SponsorBtn = () => {
+const SponsorBtn = ({ projects }) => {
   const user = auth.currentUser;
-
   const [isAdd, setIsAdd] = useState(false);
   const [receiptPrice, setReceiptPrice] = useState(0);
+  const id = useParams().id;
+
+  // projects 배열에서 현재 페이지의 프로젝트 가져오기
+  const foundProject = projects.find((project) => project.id === id);
+
+  // 현재 페이지의 프로젝트가 없는 경우 처리
+  if (!foundProject) {
+    return <div>프로젝트를 찾을 수 없습니다.</div>;
+  }
+
+  const { startDate, endDate } = foundProject;
 
   const onChangeReceipt = (event) => {
     const rawValue = event.target.value;
@@ -38,8 +49,20 @@ const SponsorBtn = () => {
     setReceiptPrice('');
   };
 
+  // 날짜 형식 변경 함수
+  const formattedDate = (date) => {
+    return new Date(date).toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    });
+  };
+
   return (
-    <>
+    <SponsorContainer>
+      <FundingPeriod>
+        <BoldText>펀딩 기간</BoldText> &nbsp;&nbsp; {`${formattedDate(startDate)} ~ ${formattedDate(endDate)}`}
+      </FundingPeriod>
       <Achieve>
         <div>
           <PointText color="var(--main-color)">98%&nbsp;</PointText>달성
@@ -57,13 +80,24 @@ const SponsorBtn = () => {
         <button type="submit">후원하기</button>
         {/* <HeartButton /> */}
       </PriceForm>
-    </>
+    </SponsorContainer>
   );
 };
 
 export default SponsorBtn;
 
-const Input = styled.input``;
+const SponsorContainer = styled.div`
+  margin-top: 50px;
+`;
+
+const FundingPeriod = styled.div`
+  display: flex;
+  font-size: 18px;
+`;
+
+const BoldText = styled.p`
+  font-weight: 600;
+`;
 
 const Achieve = styled.div`
   display: flex;
@@ -112,3 +146,5 @@ const PriceForm = styled.form`
     }
   }
 `;
+
+const Input = styled.input``;
