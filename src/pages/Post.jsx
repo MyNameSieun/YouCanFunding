@@ -29,6 +29,8 @@ const ImageBox = styled.div`
   position: relative;
 
   & img {
+    width: 100%;
+    height: 100%;
     background-size: 100%;
     background-repeat: no-repeat;
   }
@@ -128,11 +130,11 @@ function Post({ activeNavTab, setActiveNavTab }) {
 
   // 오픈 알림 신청
   const handleApplyOpenNotification = async (projectIdToDisplay) => {
-    await updateDoc(doc(db, 'projects', projectIdToDisplay), { myPageState: 'notificationSettings' });
+    await updateDoc(doc(db, 'projects', projectIdToDisplay), { isNotificated: true });
 
     const updatedProjects = projects.map((project) => {
       if (project.id === projectIdToDisplay) {
-        return { ...project, myPageState: 'notificationSettings' };
+        return { ...project, isNotificated: true };
       }
       return project;
     });
@@ -144,10 +146,10 @@ function Post({ activeNavTab, setActiveNavTab }) {
 
   // 오픈 알림 취소
   const handleCancelOpenNotification = async (projectIdToDisplay) => {
-    await updateDoc(doc(db, 'projects', projectIdToDisplay), { myPageState: 'none' });
+    await updateDoc(doc(db, 'projects', projectIdToDisplay), { isNotificated: false });
     const updatedProjects = projects.map((project) => {
       if (project.id === projectIdToDisplay) {
-        return { ...project, myPageState: 'none' };
+        return { ...project, isNotificated: false };
       }
       return project;
     });
@@ -172,12 +174,13 @@ function Post({ activeNavTab, setActiveNavTab }) {
           <Title>{foundProject.title}</Title>
           <SubTitle>{foundProject.summary}</SubTitle>
           {/* <ScheduledNotification
+            projects={projects}
             projectIdToDisplay={foundProject.id}
             onApplyOpenNotification={handleApplyOpenNotification}
             onCancelOpenNotification={handleCancelOpenNotification}
           /> */}
 
-          {/* <SponsorBtn /> */}
+          {/* <SponsorBtn projects={projects} /> */}
 
           <CompletedNotification />
         </TitleBox>

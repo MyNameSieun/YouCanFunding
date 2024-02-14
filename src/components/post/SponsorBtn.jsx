@@ -92,7 +92,7 @@ const SponsorContainer = styled.div`
 
 const FundingPeriod = styled.div`
   display: flex;
-  font-size: 18px;
+  font-size: 16px;
 `;
 
 const BoldText = styled.p`
