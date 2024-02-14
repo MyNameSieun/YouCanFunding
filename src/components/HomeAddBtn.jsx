@@ -22,7 +22,7 @@ const Button = styled.button`
 
 function HomeAddBtn({ activeNavTab, setVisibleProducts }) {
   const MoreBtn = () => {
-    setVisibleProducts((visibleProducts) => visibleProducts + 12);
+    setVisibleProducts((visibleProducts) => visibleProducts + 8);
   };
   let buttonText = '더 보기';
 

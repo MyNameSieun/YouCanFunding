@@ -8,7 +8,7 @@ import Banner from 'components/Banner';
 
 function Main({ activeNavTab, setActiveNavTab, activeTab, setActiveTab }) {
   const [search, setSearch] = useState();
-  const [visibleProducts, setVisibleProducts] = useState(12);
+  const [visibleProducts, setVisibleProducts] = useState(8);
 
   return (
     <>
@@ -19,11 +19,10 @@ function Main({ activeNavTab, setActiveNavTab, activeTab, setActiveTab }) {
       <HomeVerticalCard
         activeTab={activeTab}
         search={search}
-        visibleProducts={visibleProducts}
         activeNavTab={activeNavTab}
+        visibleProducts={visibleProducts}
       />
-
-      <HomeAddBtn visibleProducts={visibleProducts} setVisibleProducts={setVisibleProducts} />
+      <HomeAddBtn activeNavTab={activeNavTab} setVisibleProducts={setVisibleProducts} />
     </>
   );
 }

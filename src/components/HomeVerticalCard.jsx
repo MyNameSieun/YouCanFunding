@@ -38,7 +38,7 @@ const Title = styled.div`
   margin-right: 10px;
 `;
 
-function HomeVerticalCard({ activeTab, activeNavTab, search }) {
+const HomeVerticalCard = ({ activeTab, activeNavTab, search, visibleProducts }) => {
   const [projects, setProject] = useState([]);
   const navigate = useNavigate();
 
@@ -79,6 +79,7 @@ function HomeVerticalCard({ activeTab, activeNavTab, search }) {
           }
           return item.title.includes(search);
         })
+        .slice(0, visibleProducts)
         .map((item) => (
           <CardItems key={item.id} onClick={() => navigate(`/post/${item.id}`)}>
             <Image src={item.mainImage} alt={item.title} />
@@ -88,6 +89,6 @@ function HomeVerticalCard({ activeTab, activeNavTab, search }) {
         ))}
     </CardContainer>
   );
-}
+};
 
 export default HomeVerticalCard;

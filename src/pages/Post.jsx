@@ -202,11 +202,16 @@ function Post({ activeNavTab, setActiveNavTab }) {
         {activePostTab === 'project' ? (
           <ProjectInfoContainer dangerouslySetInnerHTML={dangerousHTML} />
         ) : (
-          // <ScheduledComments />
 
-          <SponsorList />
-
-          // <CompletedComments />
+          <>
+            {activeNavTab === 'scheduled' && <ScheduledComments />}
+            {activeNavTab === 'inProgress' && (
+              <>
+                <SponsorList userComment={userComment} setUserComment={setUserComment} />
+              </>
+            )}
+            {activeNavTab === 'completed' && <SponsorList userComment={userComment} setUserComment={setUserComment} />}
+          </>
         )}
       </BottomBox>
     </>
