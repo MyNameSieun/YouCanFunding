@@ -178,7 +178,7 @@ function RegisterSection() {
         startDate,
         endDate,
         content,
-        myPageState: 'none'
+        myPageState: 'register'
       };
 
       // firebase db에 새로운 프로젝트 추가

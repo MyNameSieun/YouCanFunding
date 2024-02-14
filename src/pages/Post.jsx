@@ -171,15 +171,15 @@ function Post({ activeNavTab, setActiveNavTab }) {
         <TitleBox>
           <Title>{foundProject.title}</Title>
           <SubTitle>{foundProject.summary}</SubTitle>
-          <ScheduledNotification
+          {/* <ScheduledNotification
             projectIdToDisplay={foundProject.id}
             onApplyOpenNotification={handleApplyOpenNotification}
             onCancelOpenNotification={handleCancelOpenNotification}
-          />
+          /> */}
 
           {/* <SponsorBtn /> */}
 
-          {/* <CompletedNotification /> */}
+          <CompletedNotification />
         </TitleBox>
       </ProjectIntroduction>
       <PostTab>
@@ -195,11 +195,11 @@ function Post({ activeNavTab, setActiveNavTab }) {
         {activePostTab === 'project' ? (
           <ProjectInfoContainer dangerouslySetInnerHTML={dangerousHTML} />
         ) : (
-          <ScheduledComments />
+          // <ScheduledComments />
 
           // <SponsorItem />
 
-          // <CompletedComments />
+          <CompletedComments />
         )}
       </BottomBox>
     </>
