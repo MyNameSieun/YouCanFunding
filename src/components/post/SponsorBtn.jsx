@@ -7,7 +7,7 @@ import SponsorTimeLine from 'components/SponsorTimeLine';
 import SponsorPercent from 'components/SponsorPercent';
 import HeartButton from './HeartButton';
 
-const SponsorBtn = ({ projects, receiptPrice, setReceiptPrice }) => {
+const SponsorBtn = ({ activeNavTab, projects, receiptPrice, setReceiptPrice }) => {
   const user = auth.currentUser;
   const [isAdd, setIsAdd] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -78,23 +78,41 @@ const SponsorBtn = ({ projects, receiptPrice, setReceiptPrice }) => {
       <FundingPeriod>
         <BoldText>펀딩 기간</BoldText> &nbsp;&nbsp; {`${formattedDate(startDate)} ~ ${formattedDate(endDate)}`}
       </FundingPeriod>
-      <Achieve>
-        <div>
-          <SponsorPercent foundProject={foundProject} totalPrice={totalPrice} />
-        </div>
-        <div>
-          <SponsorTimeLine totalPrice={totalPrice} setTotalPrice={setTotalPrice} />
-        </div>
-      </Achieve>
-      <PriceForm onSubmit={handleOnSubmit}>
-        <input
-          onChange={onChangeReceipt}
-          value={receiptPrice.toLocaleString('ko-KR')}
-          placeholder="후원 금액을 입력해주세요."
-        />
-        <button type="submit">후원하기</button>
-        <HeartButton />
-      </PriceForm>
+      {activeNavTab === 'inProgress' ? (
+        <>
+          <Achieve>
+            <div>
+              <SponsorPercent foundProject={foundProject} totalPrice={totalPrice} />
+            </div>
+            <div>
+              <SponsorTimeLine totalPrice={totalPrice} setTotalPrice={setTotalPrice} />
+            </div>
+          </Achieve>
+          <PriceForm onSubmit={handleOnSubmit}>
+            <input
+              onChange={onChangeReceipt}
+              value={receiptPrice.toLocaleString('ko-KR')}
+              placeholder="후원 금액을 입력해주세요."
+            />
+            <button type="submit">후원하기</button>
+            <HeartButton />
+          </PriceForm>
+        </>
+      ) : (
+        <>
+          <Achieve>
+            <div>
+              <SponsorPercent foundProject={foundProject} totalPrice={totalPrice} />
+            </div>
+            <div>
+              <SponsorTimeLine totalPrice={totalPrice} setTotalPrice={setTotalPrice} />
+            </div>
+          </Achieve>
+          <CompletedText>
+            <p>펀딩이 종료되었습니다.</p>
+          </CompletedText>
+        </>
+      )}
     </SponsorContainer>
   );
 };
@@ -126,11 +144,6 @@ const Achieve = styled.div`
   }
 `;
 
-const PointText = styled.span`
-  color: ${(props) => props.color};
-  font-size: 24px;
-`;
-
 const PriceForm = styled.form`
   display: flex;
   align-items: center;
@@ -160,4 +173,11 @@ const PriceForm = styled.form`
       background-color: #ff3300f6;
     }
   }
+`;
+
+const CompletedText = styled.div`
+  margin: 0px auto;
+  color: var(--sub-color);
+  font-size: 18px;
+  font-weight: 600;
 `;

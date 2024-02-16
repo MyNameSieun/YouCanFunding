@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import SponsorBtn from 'components/post/SponsorBtn';
 import ScheduledNotification from 'components/post/ScheduledNotification';
 import ScheduledComments from 'components/post/ScheduledComments';
-import CompletedNotification from 'components/post/CompletedNotification';
 import { useParams } from 'react-router';
 import { collection, getDocs, query, updateDoc, doc } from '@firebase/firestore';
 import { db } from '../firebase';
@@ -176,10 +175,7 @@ function Post({ activeNavTab, setActiveNavTab }) {
           <Title>{foundProject.title}</Title>
           <SubTitle>{foundProject.summary}</SubTitle>
 
-          {activeNavTab === 'inProgress' && (
-            <SponsorBtn projects={projects} receiptPrice={receiptPrice} setReceiptPrice={setReceiptPrice} />
-          )}
-          {activeNavTab === 'scheduled' && (
+          {activeNavTab === 'scheduled' ? (
             <>
               <ScheduledNotification
                 projects={projects}
@@ -187,8 +183,16 @@ function Post({ activeNavTab, setActiveNavTab }) {
                 onCancelOpenNotification={handleCancelOpenNotification}
               />
             </>
+          ) : (
+            <>
+              <SponsorBtn
+                activeNavTab={activeNavTab}
+                projects={projects}
+                receiptPrice={receiptPrice}
+                setReceiptPrice={setReceiptPrice}
+              />
+            </>
           )}
-          {activeNavTab === 'completed' && <CompletedNotification />}
         </TitleBox>
       </ProjectIntroduction>
       <PostTab>
